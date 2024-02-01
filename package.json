@@ -22,7 +22,7 @@
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-watch": "^1.1.0",
     "jquery": "^3.5.1",
-    "openpgp": "5.2.1",
+    "openpgp": "5.10.1",
     "cipherguard-styleguide": "^4.4.1"
   }
 }
