@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 namespace App\Model\Traits\Cleanup;
@@ -35,7 +35,7 @@ trait TableCleanupTrait
     public function cleanupSoftDeleted(string $association, ?bool $dryRun = false, ?Query $query = null): int
     {
         if (!isset($query)) {
-            $query = $this->query()
+            $query = $this->selectQuery()
                 ->select(['id'])
                 ->leftJoinWith($association)
                 ->where([$this->getModelNameFromAssociation($association) . '.deleted' => true]);
@@ -62,7 +62,7 @@ trait TableCleanupTrait
     public function cleanupHardDeleted(string $association, ?bool $dryRun = false, ?Query $query = null): int
     {
         if (!isset($query)) {
-            $query = $this->query()
+            $query = $this->selectQuery()
                 ->select(['id'])
                 ->leftJoinWith($association)
                 ->whereNull($this->getModelNameFromAssociation($association) . '.id');
@@ -136,7 +136,7 @@ trait TableCleanupTrait
          */
 
         // Sub query that finds the duplicated tuples.
-        $duplicatedTuplesQuery = $this->query()
+        $duplicatedTuplesQuery = $this->selectQuery()
             ->select($combinedKey)
             ->group($combinedKey)
             ->having('count(*) > 1');
@@ -166,7 +166,7 @@ trait TableCleanupTrait
         }
 
         // Find all the rows corresponding to the identified duplicated tuples.
-        $duplicatedRowsQuery = $this->query()
+        $duplicatedRowsQuery = $this->selectQuery()
             ->select(array_merge(['id'], $combinedKey))
             ->join([
                 'table' => $duplicatedTuplesQuery,

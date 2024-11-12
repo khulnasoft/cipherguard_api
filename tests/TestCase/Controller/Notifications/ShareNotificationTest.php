@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 
@@ -42,8 +42,8 @@ class ShareNotificationTest extends ShareControllerTest
 
     public function tearDown(): void
     {
-        parent::tearDown();
         $this->unloadNotificationSettings();
+        parent::tearDown();
     }
 
     public function testShareNotificationSuccess(): void
@@ -99,13 +99,13 @@ class ShareNotificationTest extends ShareControllerTest
         $this->assertSuccess();
 
         // check email notification
-        $this->assertEmailInBatchContains('shared a password with you', 'edith@cipherguard.khulnasoft.com');
-        $this->assertEmailInBatchContains('Name: cakephp', 'edith@cipherguard.khulnasoft.com');
-        $this->assertEmailInBatchContains('Username: cake', 'edith@cipherguard.khulnasoft.com');
-        $this->assertEmailInBatchContains('The rapid and tasty php development framework', 'edith@cipherguard.khulnasoft.com');
-        $this->assertEmailInBatchContains('URL: cakephp.org', 'edith@cipherguard.khulnasoft.com');
-        $this->assertEmailInBatchContains('BEGIN PGP MESSAGE', 'edith@cipherguard.khulnasoft.com');
+        $this->assertEmailInBatchContains('shared a password with you', 'edith@cipherguard.github.io');
+        $this->assertEmailInBatchContains('Name: cakephp', 'edith@cipherguard.github.io');
+        $this->assertEmailInBatchContains('Username: cake', 'edith@cipherguard.github.io');
+        $this->assertEmailInBatchContains('The rapid and tasty php development framework', 'edith@cipherguard.github.io');
+        $this->assertEmailInBatchContains('URL: cakephp.org', 'edith@cipherguard.github.io');
+        $this->assertEmailInBatchContains('BEGIN PGP MESSAGE', 'edith@cipherguard.github.io');
 
-        $this->assertEmailInBatchContains('shared a password with you', 'frances@cipherguard.khulnasoft.com');
+        $this->assertEmailInBatchContains('shared a password with you', 'frances@cipherguard.github.io');
     }
 }

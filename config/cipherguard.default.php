@@ -1,19 +1,19 @@
 <?php
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 /**
- * CIPHERGURD CONFIGURATION FILE TEMPLATE
+ * CIPHERGUARD CONFIGURATION FILE TEMPLATE
  *
  * By default cipherguard tries to use the environment variables or falls back to the default values as
  * defined in default.php. You can use cipherguard.default.php as a basis to set your own configuration
@@ -26,9 +26,9 @@
  * To see all available options, you can refer to the default.php file, and modify passsbolt.php accordingly.
  * Do not modify default.php or you may break your upgrade process.
  *
- * Read more about how to install cipherguard: https://www.cipherguard.khulnasoft.com/help/tech/install
- * Any issue, check out our FAQ: https://www.cipherguard.khulnasoft.com/faq
- * An installation issue? Ask for help to the community: https://community.cipherguard.khulnasoft.com/
+ * Read more about how to install cipherguard: https://www.cipherguard.github.io/help/tech/install
+ * Any issue, check out our FAQ: https://www.cipherguard.github.io/faq
+ * An installation issue? Ask for help to the community: https://community.cipherguard.github.io/
  */
 return [
 
@@ -87,7 +87,7 @@ return [
     ],
 
     /**
-     * DEFAULT CIPHERGURD CONFIGURATION
+     * DEFAULT CIPHERGUARD CONFIGURATION
      *
      * This is the default configuration.
      * It enforces the use of ssl, and does not provide a default OpenPGP key.

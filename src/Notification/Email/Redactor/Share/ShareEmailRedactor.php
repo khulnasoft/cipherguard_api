@@ -3,21 +3,20 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.13.0
  */
 
 namespace App\Notification\Email\Redactor\Share;
 
-use App\Controller\Share\ShareController;
 use App\Model\Entity\Resource;
 use App\Model\Entity\User;
 use App\Model\Table\UsersTable;
@@ -25,6 +24,7 @@ use App\Notification\Email\Email;
 use App\Notification\Email\EmailCollection;
 use App\Notification\Email\SubscribedEmailRedactorInterface;
 use App\Notification\Email\SubscribedEmailRedactorTrait;
+use App\Service\Resources\ResourcesShareService;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
@@ -59,8 +59,16 @@ class ShareEmailRedactor implements SubscribedEmailRedactorInterface
     public function getSubscribedEvents(): array
     {
         return [
-            ShareController::SHARE_SUCCESS_EVENT_NAME,
+            ResourcesShareService::SHARE_SUCCESS_EVENT_NAME,
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getNotificationSettingPath(): ?string
+    {
+        return 'send.password.share';
     }
 
     /**
@@ -72,12 +80,11 @@ class ShareEmailRedactor implements SubscribedEmailRedactorInterface
         $emailCollection = new EmailCollection();
 
         $resource = $event->getData('resource');
-        $changes = $event->getData('changes');
+        $secrets = $event->getData('secrets') ?? [];
         $ownerId = $event->getData('ownerId');
 
         // for now only handle the new share
         // e.g. we don't notify when permission changes or are removed
-        $secrets = $changes['secrets'] ?? [];
         $userIds = Hash::extract($secrets, '{n}.user_id');
         if (!empty($userIds)) {
             // Get the details of whoever did the changes
@@ -87,7 +94,7 @@ class ShareEmailRedactor implements SubscribedEmailRedactorInterface
             if (empty($users)) {
                 return $emailCollection;
             }
-            $secrets = Hash::combine($changes['secrets'], '{n}.user_id', '{n}.data');
+            $secrets = Hash::combine($secrets, '{n}.user_id', '{n}.data');
 
             foreach ($users as $user) {
                 $emailCollection->addEmail(

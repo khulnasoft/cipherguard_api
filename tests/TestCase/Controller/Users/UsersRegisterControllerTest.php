@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 namespace App\Test\TestCase\Controller\Users;
@@ -27,6 +27,7 @@ use Cake\I18n\FrozenTime;
 use Cake\ORM\TableRegistry;
 use Cipherguard\Locale\Service\GetOrgLocaleService;
 use Cipherguard\Locale\Service\GetUserLocaleService;
+use Cipherguard\SelfRegistration\SelfRegistrationPlugin;
 use Cipherguard\SelfRegistration\Test\Lib\SelfRegistrationTestTrait;
 
 /**
@@ -45,7 +46,20 @@ class UsersRegisterControllerTest extends AppIntegrationTestCase
     public function setUp(): void
     {
         parent::setUp();
+
+        $this->enableFeaturePlugin(SelfRegistrationPlugin::class);
         $this->setSelfRegistrationSettingsData();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function tearDown(): void
+    {
+        // Reset timezone to UTC
+        date_default_timezone_set('UTC');
+
+        parent::tearDown();
     }
 
     public function testUsersRegisterController_Get_Success(): void
@@ -58,26 +72,29 @@ class UsersRegisterControllerTest extends AppIntegrationTestCase
     {
         return [
             ['chinese_name' => [
-                'username' => 'ping.fu@cipherguard.khulnasoft.com',
+                'username' => 'ping.fu@cipherguard.github.io',
                 'profile' => [
                     'first_name' => '傅',
                     'last_name' => '苹',
                 ],
+                'timezone' => 'UTC',
             ]],
             ['slavic_name' => [
-                'username' => 'borka@cipherguard.khulnasoft.com',
+                'username' => 'borka@cipherguard.github.io',
                 'profile' => [
                     'first_name' => 'Borka',
                     'last_name' => 'Jerman Blažič',
                 ],
+                'timezone' => 'UTC',
             ]],
             ['french_name' => [
-                'username' => 'aurore@cipherguard.khulnasoft.com',
+                'username' => 'aurore@cipherguard.github.io',
                 'profile' => [
                     'first_name' => 'Aurore',
                     'last_name' => 'Avarguès-Weber',
                 ],
                 'locale' => 'fr-FR',
+                'timezone' => 'Europe/Paris',
             ]],
         ];
     }
@@ -87,7 +104,10 @@ class UsersRegisterControllerTest extends AppIntegrationTestCase
      */
     public function testUsersRegisterController_Success(array $data): void
     {
+        date_default_timezone_set($data['timezone']);
+
         $this->postJson('/users/register.json', $data);
+
         $this->assertResponseSuccess();
 
         // Check user was saved
@@ -120,6 +140,12 @@ class UsersRegisterControllerTest extends AppIntegrationTestCase
             'subject' => "Welcome to cipherguard, {$data['profile']['first_name']}!",
             'template' => 'AN/user_register_self',
         ]);
+
+        // Check timezone displaying alongside the datetime
+        $this->assertEmailInBatchContains(
+            sprintf('%s (%s)', FrozenTime::parse($user->get('created'))->nice(), $data['timezone']),
+            $data['username']
+        );
     }
 
     public function testUsersRegisterController_Success_CannotModifyNotAccessibleFields(): void
@@ -137,7 +163,7 @@ class UsersRegisterControllerTest extends AppIntegrationTestCase
             'deleted' => 1,
             'created' => $date,
             'modified' => $date,
-            'username' => 'aurore@cipherguard.khulnasoft.com',
+            'username' => 'aurore@cipherguard.github.io',
             'role_id' => $adminRoleId,
             'profile' => [
                 'first_name' => 'Aurore',
@@ -176,22 +202,22 @@ class UsersRegisterControllerTest extends AppIntegrationTestCase
                 ],
             ],
             'profile is missing' => [
-                'username' => 'valid@cipherguard.khulnasoft.com',
+                'username' => 'valid@cipherguard.github.io',
             ],
             'last name is missing' => [
-                'username' => 'valid@cipherguard.khulnasoft.com',
+                'username' => 'valid@cipherguard.github.io',
                 'profile' => [
                     'first_name' => 'valid_first_name',
                 ],
             ],
             'first name is missing' => [
-                'username' => 'valid@cipherguard.khulnasoft.com',
+                'username' => 'valid@cipherguard.github.io',
                 'profile' => [
                     'last_name' => 'valid_last_name',
                 ],
             ],
             'first name is not a utf8 string' => [
-                'username' => 'valid@cipherguard.khulnasoft.com',
+                'username' => 'valid@cipherguard.github.io',
                 'profile' => [
                     'first_name' => '🙈🙉🙊',
                     'last_name' => 'valid_last_name',
@@ -221,7 +247,7 @@ class UsersRegisterControllerTest extends AppIntegrationTestCase
     public function testUsersRegisterController_Error_NotJson(): void
     {
         $data = [
-            'username' => 'aurore@cipherguard.khulnasoft.com',
+            'username' => 'aurore@cipherguard.github.io',
             'profile' => [
                 'first_name' => 'Aurore',
                 'last_name' => 'Avarguès-Weber',

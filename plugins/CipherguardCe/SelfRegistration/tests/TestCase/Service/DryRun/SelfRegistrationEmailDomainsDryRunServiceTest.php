@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.10.0
  */
 
@@ -73,7 +73,7 @@ class SelfRegistrationEmailDomainsDryRunServiceTest extends TestCase
 
     public function testSelfRegistrationEmailDomainsDryRunService_canGuestSelfRegister_Valid()
     {
-        $email = 'johndoe@cipherguard.khulnasoft.com';
+        $email = 'johndoe@cipherguard.github.io';
         $this->setSelfRegistrationSettingsData();
         $this->assertTrue(
             $this->service->canGuestSelfRegister(compact('email'))
@@ -82,7 +82,7 @@ class SelfRegistrationEmailDomainsDryRunServiceTest extends TestCase
 
     public function testSelfRegistrationEmailDomainsDryRunService_canGuestSelfRegister_Soft_Deleted_User_Already_In_DB_Should_Succeed()
     {
-        $email = 'johndoe@cipherguard.khulnasoft.com';
+        $email = 'johndoe@cipherguard.github.io';
         $this->setSelfRegistrationSettingsData();
         UserFactory::make()->setField('username', $email)->deleted()->persist();
         $this->assertTrue(
@@ -92,7 +92,7 @@ class SelfRegistrationEmailDomainsDryRunServiceTest extends TestCase
 
     public function testSelfRegistrationEmailDomainsDryRunService_canGuestSelfRegister_No_Settings_Should_Throw_Forbidden_Exception()
     {
-        $email = 'johndoe@not-cipherguard.khulnasoft.com';
+        $email = 'johndoe@not-cipherguard.github.io';
         $this->expectException(ForbiddenException::class);
         $this->expectExceptionMessage('The self registration is disabled.');
         $this->service->canGuestSelfRegister(compact('email'));
@@ -100,7 +100,7 @@ class SelfRegistrationEmailDomainsDryRunServiceTest extends TestCase
 
     public function testSelfRegistrationEmailDomainsDryRunService_canGuestSelfRegister_Email_Not_Allowed_Should_Throw_Validation_Exception()
     {
-        $email = 'johndoe@not-cipherguard.khulnasoft.com';
+        $email = 'johndoe@not-cipherguard.github.io';
         $this->setSelfRegistrationSettingsData();
         $this->expectException(CustomValidationException::class);
         $this->expectExceptionMessage('The self registration data could not be validated.');
@@ -125,7 +125,7 @@ class SelfRegistrationEmailDomainsDryRunServiceTest extends TestCase
 
     public function testSelfRegistrationEmailDomainsDryRunService_canGuestSelfRegister_Not_Deleted_User_Already_In_DB_Should_Throw_Forbidden_Exception()
     {
-        $email = 'johndoe@cipherguard.khulnasoft.com';
+        $email = 'johndoe@cipherguard.github.io';
         $this->setSelfRegistrationSettingsData();
         UserFactory::make()->setField('username', $email)->persist();
         $this->expectException(ForbiddenException::class);
@@ -135,7 +135,7 @@ class SelfRegistrationEmailDomainsDryRunServiceTest extends TestCase
 
     public function testSelfRegistrationEmailDomainsDryRunService_Invalid_Data_In_DB_Should_Throw_An_Internal_Error()
     {
-        $email = 'johndoe@cipherguard.khulnasoft.com';
+        $email = 'johndoe@cipherguard.github.io';
         $this->setSelfRegistrationSettingsData('provider', 'invalid data');
         $this->expectException(InternalErrorException::class);
         $this->expectExceptionMessage('Could not validate the self registration settings found in database.');

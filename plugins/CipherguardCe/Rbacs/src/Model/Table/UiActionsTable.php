@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd'RL (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SARL (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         4.1.0
  */
 
@@ -33,10 +33,10 @@ use Cipherguard\Rbacs\Model\Entity\UiAction;
  * @method \Cipherguard\Rbacs\Model\Entity\UiAction[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \Cipherguard\Rbacs\Model\Entity\UiAction|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \Cipherguard\Rbacs\Model\Entity\UiAction saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \Cipherguard\Rbacs\Model\Entity\UiAction[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \Cipherguard\Rbacs\Model\Entity\UiAction[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \Cipherguard\Rbacs\Model\Entity\UiAction[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \Cipherguard\Rbacs\Model\Entity\UiAction[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method iterable<\Cipherguard\Rbacs\Model\Entity\UiAction>|iterable<\Cake\Datasource\EntityInterface>|false saveMany(iterable $entities, $options = [])
+ * @method iterable<\Cipherguard\Rbacs\Model\Entity\UiAction>|iterable<\Cake\Datasource\EntityInterface> saveManyOrFail(iterable $entities, $options = [])
+ * @method iterable<\Cipherguard\Rbacs\Model\Entity\UiAction>|iterable<\Cake\Datasource\EntityInterface>|false deleteMany(iterable $entities, $options = [])
+ * @method iterable<\Cipherguard\Rbacs\Model\Entity\UiAction>|iterable<\Cake\Datasource\EntityInterface> deleteManyOrFail(iterable $entities, $options = [])
  */
 class UiActionsTable extends Table
 {

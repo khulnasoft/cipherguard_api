@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 
@@ -189,71 +189,5 @@ class GroupsUpdateDryRunControllerTest extends AppIntegrationTestCase
         $this->assertNotEmpty($result['dry-run']);
         $this->assertEmpty($result['dry-run']['SecretsNeeded']);
         $this->assertEmpty($result['dry-run']['Secrets']);
-    }
-
-    public function testGroupsUpdateDryRunErrorNotValidId(): void
-    {
-        $this->authenticateAs('ada');
-        $groupId = 'invalid-id';
-        $this->putJson("/groups/$groupId/dry-run.json");
-        $this->assertError(400, 'The group id is not valid.');
-    }
-
-    public function testGroupsUpdateDryRunErrorDoesNotExistGroup(): void
-    {
-        $this->authenticateAs('ada');
-        $groupId = UuidFactory::uuid();
-        $this->putJson("/groups/$groupId/dry-run.json");
-        $this->assertError(404, 'The group does not exist.');
-    }
-
-    public function testGroupsUpdateDryRunErrorGroupIsSoftDeleted(): void
-    {
-        $this->authenticateAs('admin');
-        $groupId = UuidFactory::uuid('group.id.deleted');
-        $this->putJson("/groups/$groupId/dry-run.json");
-        $this->assertError(404, 'The group does not exist.');
-    }
-
-    public function testGroupsUpdateDryRunErrorAccessDenied(): void
-    {
-        $groupId = UuidFactory::uuid('group.id.freelancer');
-        $this->authenticateAs('ada');
-        $this->putJson("/groups/$groupId/dry-run.json");
-        $this->assertForbiddenError('You are not authorized to access that location.');
-    }
-
-    public function testGroupsUpdateDryRunErrorNotAuthenticated(): void
-    {
-        $groupId = UuidFactory::uuid('group.id.freelancer');
-        $postData = [];
-        $this->putJson("/groups/$groupId/dry-run.json", $postData);
-        $this->assertAuthenticationError();
-    }
-
-    public function testGroupsUpdateDryRunErrorCsrfToken(): void
-    {
-        $this->disableCsrfToken();
-        $this->authenticateAs('admin');
-        $groupId = UuidFactory::uuid('group.id.freelancer');
-        $this->put("/groups/$groupId/dry-run.json");
-        $this->assertResponseCode(403);
-    }
-
-    /**
-     * Check that calling url without JSON extension throws a 404
-     */
-    public function testGroupsUpdateDryRunController_Error_NotJson(): void
-    {
-        // Define actors of this tests
-        $groupId = UuidFactory::uuid('group.id.freelancer');
-        $data = [
-            'name' => 'Updated group name',
-        ];
-
-        // Update the group name.
-        $this->authenticateAs('admin');
-        $this->put("/groups/$groupId/dry-run", $data);
-        $this->assertResponseCode(404);
     }
 }

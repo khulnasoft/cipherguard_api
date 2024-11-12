@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.5.0
  */
 namespace Cipherguard\WebInstaller\Test\Lib;
@@ -40,7 +40,6 @@ class WebInstallerIntegrationTestCase extends AppIntegrationTestCase
 
     public function tearDown(): void
     {
-        parent::tearDown();
         if ($this->_recover) {
             if ($this->_configured !== null) {
                 Configure::write('cipherguard.webInstaller.configured', $this->_configured);
@@ -51,6 +50,7 @@ class WebInstallerIntegrationTestCase extends AppIntegrationTestCase
         if ($this->isWebInstallerFriendly()) {
             $this->restoreTestConnection();
         }
+        parent::tearDown();
     }
 
     public function mockCipherguardIsNotconfigured()

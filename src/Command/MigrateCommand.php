@@ -3,19 +3,21 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.1.0
  */
 namespace App\Command;
 
+use App\Service\Command\ProcessUserService;
+use App\Service\Subscriptions\SubscriptionCheckInCommandServiceInterface;
 use Cake\Command\CacheClearallCommand;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
@@ -28,13 +30,40 @@ class MigrateCommand extends CipherguardCommand
 {
     use DatabaseAwareCommandTrait;
 
+    protected ProcessUserService $processUserService;
+
+    protected SubscriptionCheckInCommandServiceInterface $subscriptionCheckInCommandService;
+
+    /**
+     * @param \App\Service\Command\ProcessUserService $processUserService Process user service.
+     * @param \App\Service\Subscriptions\SubscriptionCheckInCommandServiceInterface $subscriptionCheckInCommandService Service checking the subscription validity.
+     */
+    public function __construct(
+        ProcessUserService $processUserService,
+        SubscriptionCheckInCommandServiceInterface $subscriptionCheckInCommandService
+    ) {
+        parent::__construct();
+
+        $this->processUserService = $processUserService;
+        $this->subscriptionCheckInCommandService = $subscriptionCheckInCommandService;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function getCommandDescription(): string
+    {
+        return __('Run database migrations.');
+    }
+
     /**
      * @inheritDoc
      */
     public function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
+        $parser = parent::buildOptionParser($parser);
+
         $parser
-            ->setDescription(__('Migration shell for the Cipherguard application.'))
             ->addOption('backup', [
                 'help' => 'Make a database backup to be used in case something goes wrong.',
                 'boolean' => true,
@@ -60,7 +89,7 @@ class MigrateCommand extends CipherguardCommand
 
         // Root user is not allowed to execute this command.
         // This command needs to be executed with the same user as the webserver.
-        $this->assertCurrentProcessUser($io);
+        $this->assertCurrentProcessUser($io, $this->processUserService);
 
         // Backup
         if ($this->backup($args, $io)) {
@@ -68,6 +97,9 @@ class MigrateCommand extends CipherguardCommand
         } else {
             return $this->errorCode();
         }
+
+        // Normal mode
+        $this->subscriptionCheckInCommandService->check($this, $args, $io);
 
         // Migration task
         $io->out(' ' . __('Running migration scripts.'));
@@ -100,7 +132,7 @@ class MigrateCommand extends CipherguardCommand
     protected function backup(Arguments $args, ConsoleIo $io): bool
     {
         if ($args->getOption('backup')) {
-            $result = $this->executeCommand(MysqlExportCommand::class, $this->formatOptions($args, ['--force']), $io);
+            $result = $this->executeCommand(SqlExportCommand::class, $this->formatOptions($args, ['--force']), $io);
 
             return $result === self::CODE_SUCCESS;
         }

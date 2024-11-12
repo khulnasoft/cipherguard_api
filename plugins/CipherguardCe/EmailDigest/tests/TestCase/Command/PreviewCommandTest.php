@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.1.0
  */
 namespace Cipherguard\EmailDigest\Test\TestCase\Command;
@@ -27,6 +27,7 @@ use Cake\Core\Configure;
 use Cake\I18n\I18n;
 use Cake\Mailer\Mailer;
 use Cipherguard\EmailDigest\Command\PreviewCommand;
+use Cipherguard\EmailDigest\EmailDigestPlugin;
 use Cipherguard\EmailDigest\Test\Factory\EmailQueueFactory;
 use Cipherguard\EmailDigest\Test\Lib\EmailDigestMockTestTrait;
 use Cipherguard\Locale\Test\Lib\DummyTranslationTestTrait;
@@ -53,6 +54,7 @@ class PreviewCommandTest extends AppIntegrationTestCase
         $this->loadRoutes();
         $this->setDummyFrenchTranslator();
         (new AvatarsConfigurationService())->loadConfiguration();
+        $this->enableFeaturePlugin(EmailDigestPlugin::class);
     }
 
     /**
@@ -155,6 +157,7 @@ class PreviewCommandTest extends AppIntegrationTestCase
             ->setRecipient($recipient)
             ->setTemplate(ResourceCreateEmailRedactor::TEMPLATE)
             ->setField('template_vars.body.user', $operator)
+            ->setField('template_vars.locale', 'en-UK')
             ->persist();
 
         $this->exec('cipherguard email_digest preview');
@@ -163,6 +166,6 @@ class PreviewCommandTest extends AppIntegrationTestCase
         $this->assertMailCount(0); // Make sure preview doesn't send emails
         $this->assertOutputContains('From: No reply <no-reply@test.test>');
         $this->assertOutputContains('To: john@test.test');
-        $this->assertOutputContains('Subject: ' . $operator->profile->full_name . ' has made changes on several resources');
+        $this->assertOutputContains('Subject: ' . h($operator->profile->full_name) . ' has made changes on several resources');
     }
 }

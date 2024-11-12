@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 namespace App\Test\TestCase\Controller\Users;
@@ -43,7 +43,7 @@ class UsersAddControllerTest extends AppIntegrationTestCase
         $userRoleId = $roles->getIdByName(Role::USER);
         $success = [
             'admin role' => [
-                'username' => 'ping.fu@cipherguard.khulnasoft.com',
+                'username' => 'ping.fu@cipherguard.github.io',
                 'role_id' => $adminRoleId,
                 'profile' => [
                     'first_name' => '傅',
@@ -51,7 +51,7 @@ class UsersAddControllerTest extends AppIntegrationTestCase
                 ],
             ],
             'user role' => [
-                'username' => 'borka@cipherguard.khulnasoft.com',
+                'username' => 'borka@cipherguard.github.io',
                 'role_id' => $userRoleId,
                 'profile' => [
                     'first_name' => 'Borka',
@@ -59,7 +59,7 @@ class UsersAddControllerTest extends AppIntegrationTestCase
                 ],
             ],
             'no role' => [
-                'username' => 'aurore@cipherguard.khulnasoft.com',
+                'username' => 'aurore@cipherguard.github.io',
                 'profile' => [
                     'first_name' => 'Aurore',
                     'last_name' => 'Avarguès-Weber',
@@ -111,7 +111,7 @@ class UsersAddControllerTest extends AppIntegrationTestCase
             'disabled' => FrozenTime::now(),
             'created' => $date,
             'modified' => $date,
-            'username' => 'aurore@cipherguard.khulnasoft.com',
+            'username' => 'aurore@cipherguard.github.io',
             'profile' => [
                 'first_name' => 'Aurore',
                 'last_name' => 'Avarguès-Weber',
@@ -139,7 +139,7 @@ class UsersAddControllerTest extends AppIntegrationTestCase
 
         $this->logInAs($admin);
         $data = [
-            'username' => 'aurore@cipherguard.khulnasoft.com',
+            'username' => 'aurore@cipherguard.github.io',
             'profile' => [
                 'first_name' => 'Aurore',
                 'last_name' => 'Avarguès-Weber',
@@ -148,11 +148,11 @@ class UsersAddControllerTest extends AppIntegrationTestCase
         $this->postJson('/users.json', $data);
         $this->assertResponseSuccess();
 
-        $this->assertEmailInBatchContains('created an account for you', 'aurore@cipherguard.khulnasoft.com');
+        $this->assertEmailInBatchContains('created an account for you', 'aurore@cipherguard.github.io');
         /** @var \App\Model\Entity\AuthenticationToken $token */
         $token = AuthenticationTokenFactory::find()->firstOrFail();
         $user = Router::url('/setup/start/' . $token->user_id . '/' . $token->token, true);
-        $this->assertEmailInBatchContains($user, 'aurore@cipherguard.khulnasoft.com');
+        $this->assertEmailInBatchContains($user, 'aurore@cipherguard.github.io');
     }
 
     public function testUsersAddController_Error_NotLoggedIn(): void
@@ -161,7 +161,7 @@ class UsersAddControllerTest extends AppIntegrationTestCase
         RoleFactory::make()->user()->persist();
         UserFactory::make()->admin()->persist();
         $data = [
-            'username' => 'notallowed@cipherguard.khulnasoft.com',
+            'username' => 'notallowed@cipherguard.github.io',
             'profile' => [
                 'first_name' => 'not',
                 'last_name' => 'allowed',
@@ -178,7 +178,7 @@ class UsersAddControllerTest extends AppIntegrationTestCase
 
         $this->logInAs($user);
         $data = [
-            'username' => 'notallowed@cipherguard.khulnasoft.com',
+            'username' => 'notallowed@cipherguard.github.io',
             'profile' => [
                 'first_name' => 'not',
                 'last_name' => 'allowed',
@@ -228,7 +228,7 @@ class UsersAddControllerTest extends AppIntegrationTestCase
 
         $this->logInAs($admin);
         $data = [
-            'username' => 'ada@cipherguard.khulnasoft.com',
+            'username' => 'ada@cipherguard.github.io',
             'profile' => [
                 'first_name' => 'ada',
                 'last_name' => 'lovelace',

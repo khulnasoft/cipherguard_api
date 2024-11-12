@@ -137,7 +137,8 @@ use Cake\Routing\Router;
             </div>
             <?= $this->Form->create($setupForm, $formContext); ?>
                 <div class="actions-wrapper">
-                    <a href="<?= Router::url('/mfa/setup/select', true); ?>" class="button cancel"><?= __('Cancel'); ?></a>
+                    <!-- Note: Router is not used there to allow the parent frame navigation -->
+                    <a href="app/settings/mfa" target="_top" rel="noopener noreferrer" class="button cancel"><?= __('Cancel'); ?></a>
                     <button type="submit" class="button primary"><?= __('Get started'); ?></button>
                 </div>
             <?= $this->Form->end(); ?>
@@ -149,7 +150,7 @@ use Cake\Routing\Router;
                     <?= __('To proceed, you need to install the Duo mobile application or to have a device to authenticate which is supported by Duo.'); ?> <?= __('For the list of supported devices, see:'); ?>
                     <a href="https://duo.com/product/multi-factor-authentication-mfa/authentication-methods" target="_blank" rel="noopener noreferrer"><?= __('Duo authentication methods'); ?></a>.
                 </p>
-                <a href="https://help.cipherguard.khulnasoft.com/configure/mfa/duo.html" target="_blank" rel="noopener noreferrer" class="button"><?= __('Learn more'); ?></a>
+                <a href="https://help.cipherguard.github.io/configure/mfa/duo.html" target="_blank" rel="noopener noreferrer" class="button"><?= __('Learn more'); ?></a>
             </div>
         </div>
     </div>

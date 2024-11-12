@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 
@@ -23,7 +23,9 @@ use App\Test\Lib\Utility\UserAccessControlTrait;
 use Cipherguard\MultiFactorAuthentication\Test\Lib\MfaIntegrationTestCase;
 use Cipherguard\MultiFactorAuthentication\Test\Lib\MfaOrgSettingsTestTrait;
 use Cipherguard\MultiFactorAuthentication\Test\Scenario\Duo\MfaDuoScenario;
+use Cipherguard\MultiFactorAuthentication\Test\Scenario\Multi\MfaTotpDuoScenario;
 use Cipherguard\MultiFactorAuthentication\Test\Scenario\Totp\MfaTotpUserOnlyScenario;
+use Cipherguard\MultiFactorAuthentication\Test\Scenario\Yubikey\MfaYubikeyOrganizationOnlyScenario;
 
 class UsersIndexControllerTest extends MfaIntegrationTestCase
 {
@@ -101,7 +103,7 @@ class UsersIndexControllerTest extends MfaIntegrationTestCase
         RoleFactory::make()->guest()->persist();
         $admin = $this->logInAsAdmin();
         $userWithMfa = UserFactory::make()->user()->persist();
-        $this->loadFixtureScenario(MfaDuoScenario::class, $userWithMfa);
+        $this->loadFixtureScenario(MfaTotpDuoScenario::class, $userWithMfa);
 
         $this->getJson('/users.json?filter[is-mfa-enabled]=1&contain[is_mfa_enabled]=1');
         $this->assertSuccess();
@@ -123,11 +125,18 @@ class UsersIndexControllerTest extends MfaIntegrationTestCase
     /**
      * @return void
      */
-    public function testMfaUsersIndex_Is_Mfa_Enabled_Filter_Without_Contain_Should_Throw_Bad_Request()
+    public function testMfaUsersIndex_Is_Mfa_Enabled_Filter_Without_Contain_Should_Not_Throw_Exception()
     {
         RoleFactory::make()->guest()->persist();
-        $this->logInAsAdmin();
-        $this->getJson('/users.json?filter[is-mfa-enabled]=1');
-        $this->assertBadRequestError('The property is_mfa_enabled should be contained in order to filter by is-mfa-enabled.');
+        $admin = $this->logInAsAdmin();
+        $this->loadFixtureScenario(MfaYubikeyOrganizationOnlyScenario::class);
+
+        $this->getJson('/users.json?filter[is-mfa-enabled]=0');
+        $this->assertSuccess();
+        $responseJsonBody = (array)$this->_responseJsonBody;
+        $this->assertSame(1, count($responseJsonBody));
+        $userInResponse = array_pop($responseJsonBody);
+        $this->assertFalse(isset($userInResponse->is_mfa_enabled));
+        $this->assertSame($admin->get('id'), $userInResponse->id);
     }
 }

@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 namespace App\Test\TestCase\Controller\Notifications;
@@ -33,7 +33,7 @@ class UsersRecoverNotificationTest extends AppIntegrationTestCase
         $this->setSelfRegistrationSettingsData();
         $this->setEmailNotificationSetting('send.user.recover', true);
 
-        $username = 'setup@cipherguard.khulnasoft.com';
+        $username = 'setup@cipherguard.github.io';
         UserFactory::make()->user()
             ->patchData(['username' => $username])
             ->inactive()
@@ -49,7 +49,7 @@ class UsersRecoverNotificationTest extends AppIntegrationTestCase
         $this->setSelfRegistrationSettingsData();
         $this->setEmailNotificationSetting('send.user.recover', true);
 
-        $username = 'recover@cipherguard.khulnasoft.com';
+        $username = 'recover@cipherguard.github.io';
         UserFactory::make()->user()
             ->patchData(['username' => $username])
             ->active()
@@ -64,7 +64,7 @@ class UsersRecoverNotificationTest extends AppIntegrationTestCase
     {
         $this->setEmailNotificationSetting('send.user.create', false);
 
-        $username = 'setup@cipherguard.khulnasoft.com';
+        $username = 'setup@cipherguard.github.io';
         UserFactory::make()->user()
             ->patchData(['username' => $username])
             ->inactive()
@@ -72,14 +72,14 @@ class UsersRecoverNotificationTest extends AppIntegrationTestCase
 
         $this->postJson('/users/recover.json', compact('username'));
         $this->assertSuccess();
-        $this->assertEmailWithRecipientIsInNotQueue('ruth@cipherguard.khulnasoft.com');
+        $this->assertEmailWithRecipientIsInNotQueue('ruth@cipherguard.github.io');
     }
 
     public function testUsersRecoverNotificationDisabled_Recover(): void
     {
         $this->setEmailNotificationSetting('send.user.recover', false);
 
-        $username = 'recover@cipherguard.khulnasoft.com';
+        $username = 'recover@cipherguard.github.io';
         UserFactory::make()->user()
             ->patchData(['username' => $username])
             ->active()
@@ -87,6 +87,6 @@ class UsersRecoverNotificationTest extends AppIntegrationTestCase
 
         $this->postJson('/users/recover.json', compact('username'));
         $this->assertSuccess();
-        $this->assertEmailWithRecipientIsInNotQueue('ada@cipherguard.khulnasoft.com');
+        $this->assertEmailWithRecipientIsInNotQueue('ada@cipherguard.github.io');
     }
 }

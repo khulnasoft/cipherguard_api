@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.11.0
  */
 namespace Cipherguard\SmtpSettings\Test\TestCase\Command;
@@ -60,7 +60,7 @@ class SmtpSettingsEmailDigestSenderCommandTest extends TestCase
     public function testSmtpSettingsEmailDigestSenderCommand_Success_Path_On_DB_Settings()
     {
         $this->enableFeaturePlugin('SmtpSettings');
-        $senderEmail = 'phpunit@cipherguard.khulnasoft.com';
+        $senderEmail = 'phpunit@cipherguard.github.io';
         $senderName = 'phpunit';
         $data = $this->getSmtpSettingsData();
         $data['sender_email'] = $senderEmail;
@@ -92,7 +92,7 @@ class SmtpSettingsEmailDigestSenderCommandTest extends TestCase
     public function testSmtpSettingsEmailDigestSenderCommand_With_DB_Settings_Plugin_Unload_Should_Rely_On_File()
     {
         $SettingsInDB = $this->getSmtpSettingsData();
-        $SettingsInDB['sender_email'] = 'phpunit@cipherguard.khulnasoft.com';
+        $SettingsInDB['sender_email'] = 'phpunit@cipherguard.github.io';
         $SettingsInDB['sender_name'] = 'phpunit';
         $this->encryptAndPersistSmtpSettings($SettingsInDB);
 

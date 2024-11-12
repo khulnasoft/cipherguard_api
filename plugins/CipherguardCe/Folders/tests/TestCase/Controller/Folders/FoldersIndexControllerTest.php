@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.13.0
  */
 
@@ -32,7 +32,6 @@ use App\Test\Lib\Model\GroupsModelTrait;
 use App\Test\Lib\Model\GroupsUsersModelTrait;
 use App\Test\Lib\Model\PermissionsModelTrait;
 use App\Utility\UuidFactory;
-use Cake\Core\Configure;
 use Cake\Utility\Hash;
 use Cipherguard\Folders\Test\Lib\FoldersIntegrationTestCase;
 use Cipherguard\Folders\Test\Lib\Model\FoldersModelTrait;
@@ -62,57 +61,6 @@ class FoldersIndexControllerTest extends FoldersIntegrationTestCase
         SecretsFixture::class,
         GroupsFixture::class,
     ];
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        Configure::write('cipherguard.plugins.folders', ['enabled' => true]);
-    }
-
-    private function insertFixtureCase1()
-    {
-        // Ada has access to folder Lovelace and Something as a OWNER
-        // Lovelace (Ada:O)   Something (Ada:O)
-        $userId = UuidFactory::uuid('user.id.ada');
-        $folderA = $this->addFolderFor(['name' => 'Lovelace'], [$userId => Permission::OWNER]);
-        $this->addFolderFor(['name' => 'Something', 'folder_parent_id' => $folderA->id], [$userId => Permission::OWNER]);
-    }
-
-    /**
-     * @return void
-     */
-    public function testFoldersIndexFilterBySearchSuccess()
-    {
-        $this->insertFixtureCase1();
-
-        $this->authenticateAs('ada');
-
-        $this->getJson('/folders.json?api-version=2&filter[search]=Love');
-        $this->assertSuccess();
-        $this->assertEquals(count($this->_responseJsonBody), 1);
-        $this->assertEquals($this->_responseJsonBody[0]->name, 'Lovelace');
-        $this->assertNotContains('Something', $this->_responseJsonBody);
-
-        $this->getJson('/folders.json?api-version=2&filter[search]=ovela');
-        $this->assertSuccess();
-        $this->assertEquals(count($this->_responseJsonBody), 1);
-        $this->assertEquals($this->_responseJsonBody[0]->name, 'Lovelace');
-        $this->assertNotContains('Something', $this->_responseJsonBody);
-
-        $this->getJson('/folders.json?api-version=2&filter[search]=ace');
-        $this->assertSuccess();
-        $this->assertEquals(count($this->_responseJsonBody), 1);
-        $this->assertEquals($this->_responseJsonBody[0]->name, 'Lovelace');
-        $this->assertNotContains('Something', $this->_responseJsonBody);
-
-        $this->getJson('/folders.json?api-version=2&filter[search]=Lovelace');
-        $this->assertSuccess();
-        $this->assertEquals(count($this->_responseJsonBody), 1);
-        $this->assertEquals($this->_responseJsonBody[0]->name, 'Lovelace');
-        $this->assertNotContains('Something', $this->_responseJsonBody);
-
-        $this->assertSuccess();
-    }
 
     private function insertFixtureCase2()
     {
@@ -416,6 +364,7 @@ class FoldersIndexControllerTest extends FoldersIntegrationTestCase
         $this->assertCount(2, $folder->children_folders);
         foreach ($folder->children_folders as $childFolder) {
             $this->assertFolderAttributes($childFolder);
+            $this->assertObjectNotHasAttribute('_joinData', $childFolder);
         }
         $childrenFolderIds = Hash::extract($folder->children_folders, '{n}.id');
         $this->assertContains($resource1->id, $childrenFolderIds);

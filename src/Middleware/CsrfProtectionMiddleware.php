@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.1.0
  */
 namespace App\Middleware;
@@ -26,7 +26,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class CsrfProtectionMiddleware extends \Cake\Http\Middleware\CsrfProtectionMiddleware
 {
-    public const CIPHERGURD_SECURITY_CSRF_PROTECTION_ACTIVE_CONFIG = 'cipherguard.security.csrfProtection.active';
+    public const CIPHERGUARD_SECURITY_CSRF_PROTECTION_ACTIVE_CONFIG = 'cipherguard.security.csrfProtection.active';
 
     /**
      * @inheritDoc
@@ -82,7 +82,7 @@ class CsrfProtectionMiddleware extends \Cake\Http\Middleware\CsrfProtectionMiddl
             }
         }
 
-        if (!Configure::read(self::CIPHERGURD_SECURITY_CSRF_PROTECTION_ACTIVE_CONFIG)) {
+        if (!Configure::read(self::CIPHERGUARD_SECURITY_CSRF_PROTECTION_ACTIVE_CONFIG)) {
             return true;
         }
         if (in_array($request->getParam('action'), $unlockedActions)) {
@@ -97,12 +97,12 @@ class CsrfProtectionMiddleware extends \Cake\Http\Middleware\CsrfProtectionMiddl
      *
      * @param \Cake\Http\ServerRequest $request Server request
      * @return void
-     * @TODO deprecate this method in v5: secure should be isSsl OR CIPHERGURD_SECURITY_COOKIES_SECURE_CONFIG true
+     * @TODO deprecate this method in v5: secure should be isSsl OR CIPHERGUARD_SECURITY_COOKIES_SECURE_CONFIG true
      * @deprecated since v4.2.0 use isSslOrCookiesSecure() instead, remove this in v5.
      * @see AbstractSecureCookieService::isSslOrCookiesSecure()
      */
     public function makeCsrfCookieSecureIfRequestIsSsl(ServerRequest $request): void
     {
-        $this->_config['secure'] = $request->is('ssl');
+        $this->_config['secure'] = $request->is('https');
     }
 }

@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 namespace App\Test\Lib;
@@ -21,7 +21,6 @@ use App\Authenticator\SessionIdentificationServiceInterface;
 use App\Middleware\CsrfProtectionMiddleware;
 use App\Middleware\SslForceMiddleware;
 use App\Test\Factory\UserFactory;
-use App\Test\Lib\Model\AvatarsModelTrait;
 use App\Test\Lib\Model\GpgkeysModelTrait;
 use App\Test\Lib\Model\PermissionsModelTrait;
 use App\Test\Lib\Model\ProfilesModelTrait;
@@ -49,11 +48,12 @@ use CakephpFixtureFactories\Scenario\ScenarioAwareTrait;
 use CakephpTestSuiteLight\Fixture\TruncateDirtyTables;
 use Cipherguard\EmailDigest\Utility\Digest\DigestTemplateRegistry;
 use Cipherguard\EmailNotificationSettings\Utility\EmailNotificationSettings;
+use Cipherguard\MultiFactorAuthentication\MultiFactorAuthenticationPlugin;
+use Cipherguard\MultiFactorAuthentication\Utility\MfaSettings;
 
 abstract class AppIntegrationTestCase extends TestCase
 {
     use ArrayTrait;
-    use AvatarsModelTrait;
     use EntityTrait;
     use ErrorIntegrationTestTrait;
     use FeaturePluginAwareTrait;
@@ -84,14 +84,17 @@ abstract class AppIntegrationTestCase extends TestCase
         $this->loadRoutes();
 
         // Disable feature plugins listed in default.php
-        $this->disableFeaturePlugin('Tags');
-        $this->disableFeaturePlugin('MultiFactorAuthentication');
+        $plugins = array_keys(Configure::read('cipherguard.plugins'));
+        foreach ($plugins as $plugin) {
+            $this->disableFeaturePlugin(ucfirst($plugin));
+        }
         $this->disableFeaturePlugin('Log');
         $this->disableFeaturePlugin('Folders');
+        $this->disableFeaturePlugin(MultiFactorAuthenticationPlugin::class);
 
-        Configure::write(CsrfProtectionMiddleware::CIPHERGURD_SECURITY_CSRF_PROTECTION_ACTIVE_CONFIG, true);
+        Configure::write(CsrfProtectionMiddleware::CIPHERGUARD_SECURITY_CSRF_PROTECTION_ACTIVE_CONFIG, true);
         // Disable SSL Force since all requests in tests are made on http
-        Configure::write(SslForceMiddleware::CIPHERGURD_SSL_FORCE_CONFIG_NAME, false);
+        Configure::write(SslForceMiddleware::CIPHERGUARD_SSL_FORCE_CONFIG_NAME, false);
     }
 
     /**
@@ -104,6 +107,7 @@ abstract class AppIntegrationTestCase extends TestCase
         DigestTemplateRegistry::clearInstance();
         EmailNotificationSettings::flushCache();
         $this->clearPlugins();
+        MfaSettings::clear();
         parent::tearDown();
     }
 
@@ -126,7 +130,7 @@ abstract class AppIntegrationTestCase extends TestCase
         if ($user === null) {
             $user = UserFactory::make([
                 'id' => $userId,
-                'username' => $userFirstName . '@cipherguard.khulnasoft.com',
+                'username' => $userFirstName . '@cipherguard.github.io',
                 'profile' => [
                     'first_name' => $userFirstName,
                     'last_name' => 'testing',

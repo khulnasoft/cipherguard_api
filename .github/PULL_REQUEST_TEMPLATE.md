@@ -1,11 +1,11 @@
 ##IMPORTANT: PLEASE READ
 
 The best way to propose a feature is to open an issue on the community forum and discuss your 
-ideas there before implementing them: https://community.cipherguard.khulnasoft.com/
+ideas there before implementing them: https://community.cipherguard.github.io/
 
 This is only a issue tracker for issues related to the Cipherguard API.
 For cipherguard docker, browser extension, command line interface, in short any other issues 
-please use this [the other relevant repositories](https://github.com/khulnasoft).
+please use this [the other relevant repositories](https://github.com/cipherguard).
 
 Always follow the contribution guidelines when submitting a pull request.
 In particular, make sure existing tests still pass, and add unit and selenium tests for all new behavior. When fixing a bug, 

@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd'RL (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SARL (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd'RL (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SARL (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.8.0
  */
 
@@ -95,7 +95,7 @@ class ResourcesControllerLogTest extends LogIntegrationTestCase
         $user = $this->logInAsUser();
         ResourceTypeFactory::make()->default()->persist();
         RoleFactory::make()->guest()->persist();
-        $resourceId = ResourceFactory::make()->withPermissionsFor([$user])->persist()->id;
+        $resourceId = ResourceFactory::make()->withPermissionsFor([$user])->persist()->get('id');
 
         $resource = [
             'id' => $resourceId,
@@ -135,6 +135,7 @@ class ResourcesControllerLogTest extends LogIntegrationTestCase
         $users = UserFactory::make(4)->persist();
         $this->logInAs($users[0]);
 
+        /** @var \App\Model\Entity\Resource $resource */
         $resource = ResourceFactory::make()
             ->withPermissionsFor($users)
             ->withSecretsFor($users)
@@ -193,6 +194,7 @@ class ResourcesControllerLogTest extends LogIntegrationTestCase
     {
         RoleFactory::make()->guest()->persist();
         $user = UserFactory::make()->user()->persist();
+        /** @var \App\Model\Entity\Resource $resource */
         $resource = ResourceFactory::make()->withCreatorAndPermission($user)->persist();
         $resourceId = $resource->id;
         $this->logInAs($user);

@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.4.0
  */
 namespace Cipherguard\MultiFactorAuthentication\Utility;
@@ -30,9 +30,9 @@ use ParagonIE\ConstantTime\Base32;
 
 class MfaOtpFactory
 {
-    public const CIPHERGURD_PLUGINS_MFA_TOTP_SECRET_LENGTH = 'cipherguard.plugins.multiFactorAuthentication.totp.secretLength'; //phpcs:ignore
-    public const CIPHERGURD_PLUGINS_MFA_TOTP_DEFAULT_SECRET_LENGTH = 32;
-    public const CIPHERGURD_PLUGINS_MFA_TOTP_MINIMUM_SECRET_LENGTH = 16;
+    public const CIPHERGUARD_PLUGINS_MFA_TOTP_SECRET_LENGTH = 'cipherguard.plugins.multiFactorAuthentication.totp.secretLength'; //phpcs:ignore
+    public const CIPHERGUARD_PLUGINS_MFA_TOTP_DEFAULT_SECRET_LENGTH = 32;
+    public const CIPHERGUARD_PLUGINS_MFA_TOTP_MINIMUM_SECRET_LENGTH = 16;
 
     /**
      * Return Issuer
@@ -90,12 +90,12 @@ class MfaOtpFactory
      */
     public static function getAndSanitizeSecretLengthFromConfig(): int
     {
-        $default = self::CIPHERGURD_PLUGINS_MFA_TOTP_DEFAULT_SECRET_LENGTH;
-        $secretLength = Configure::read(self::CIPHERGURD_PLUGINS_MFA_TOTP_SECRET_LENGTH, $default);
+        $default = self::CIPHERGUARD_PLUGINS_MFA_TOTP_DEFAULT_SECRET_LENGTH;
+        $secretLength = Configure::read(self::CIPHERGUARD_PLUGINS_MFA_TOTP_SECRET_LENGTH, $default);
         if (is_object($secretLength) || is_array($secretLength)) {
             return $default;
         }
-        $min = self::CIPHERGURD_PLUGINS_MFA_TOTP_MINIMUM_SECRET_LENGTH;
+        $min = self::CIPHERGUARD_PLUGINS_MFA_TOTP_MINIMUM_SECRET_LENGTH;
         // catches wrong types like booleans, float, etc...
         $secretLength = intval($secretLength);
         if ($secretLength === 0) {

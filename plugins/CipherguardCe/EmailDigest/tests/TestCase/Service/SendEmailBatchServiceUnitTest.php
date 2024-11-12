@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         4.5.0
  */
 namespace Cipherguard\EmailDigest\Test\TestCase\Service;
@@ -112,6 +112,7 @@ class SendEmailBatchServiceUnitTest extends TestCase
         $this->service->sendNextEmailsBatch([$email]);
 
         $this->assertMailCount(1);
+        $this->assertIsString($this->getMailAt()->getMessageId());
         $this->assertMailSentToAt(0, [$email->get('email') => $email->get('email')]);
         $this->assertMailSubjectContainsAt(0, $subjectTranslated);
         $this->assertMailContainsAt(0, $subjectTranslated);
@@ -131,7 +132,7 @@ class SendEmailBatchServiceUnitTest extends TestCase
         $operator->profile->avatar = null;
         $resourceDeleted = ResourceFactory::make()->getEntity();
         $subjectTranslated = 'Le sujet';
-        $recipient = 'foo@cipherguard.khulnasoft.com';
+        $recipient = 'foo@cipherguard.github.io';
         $nEmails = rand(2, 10);
         $emails = ResourceDeleteEmailQueueFactory::make($nEmails)
             ->setId()
@@ -146,6 +147,7 @@ class SendEmailBatchServiceUnitTest extends TestCase
 
         if ($withDigestTemplate) {
             $this->assertMailCount(1);
+            $this->assertIsString($this->getMailAt()->getMessageId());
             $this->assertMailSentToAt(0, [$recipient => $recipient]);
             $this->assertMailSubjectContainsAt(0, $operator->profile->full_name . ' a apporté des modifications à plusieurs ressources');
             $this->assertMailContainsAt(0, $subjectTranslated);
@@ -154,6 +156,7 @@ class SendEmailBatchServiceUnitTest extends TestCase
             $this->assertMailCount($nEmails);
             foreach ($emails as $i => $email) {
                 $this->assertMailSentToAt($i, [$recipient => $recipient]);
+                $this->assertIsString($this->getMailAt($i)->getMessageId());
                 $this->assertMailSubjectContainsAt($i, $subjectTranslated);
                 $this->assertMailContainsAt($i, $subjectTranslated);
                 $this->assertMailContainsAt($i, 'Nom: ' . $resourceDeleted->name);
@@ -170,8 +173,8 @@ class SendEmailBatchServiceUnitTest extends TestCase
         if (!$withDigestTemplate) {
             DigestTemplateRegistry::clearInstance();
         }
-        $recipient1 = 'foo@cipherguard.khulnasoft.com';
-        $recipient2 = 'bar@cipherguard.khulnasoft.com';
+        $recipient1 = 'foo@cipherguard.github.io';
+        $recipient2 = 'bar@cipherguard.github.io';
         $operator = UserFactory::make()->withAvatarNull()->getEntity();
         [$resourceDeleted1, $resourceDeleted2] = ResourceFactory::make(2)->getEntities();
         $subject = 'Subject';
@@ -235,7 +238,7 @@ class SendEmailBatchServiceUnitTest extends TestCase
         if (!$withDigestTemplate) {
             DigestTemplateRegistry::clearInstance();
         }
-        $recipient = 'foo@cipherguard.khulnasoft.com';
+        $recipient = 'foo@cipherguard.github.io';
         // Operator 1 is the recipient too. This changes the subject
         [$operator1, $operator2] = UserFactory::make([['username' => $recipient], []])->withAvatarNull()->getEntities();
         [$resourceDeleted1, $resourceDeleted2] = ResourceFactory::make(2)->getEntities();
@@ -305,7 +308,7 @@ class SendEmailBatchServiceUnitTest extends TestCase
         [$operator1, $operator2] = UserFactory::make(2)->withAvatarNull()->getEntities();
         [$resourceDeleted1, $resourceDeleted2] = ResourceFactory::make(2)->getEntities();
         $subjectTranslated = 'Le sujet';
-        $recipient = 'foo@cipherguard.khulnasoft.com';
+        $recipient = 'foo@cipherguard.github.io';
         $nEmails1 = 12;
         $nEmails2 = 2;
         // These emails are above the threshold
@@ -375,7 +378,7 @@ class SendEmailBatchServiceUnitTest extends TestCase
         [$resourceDeleted1, $resourceDeleted2] = ResourceFactory::make(2)->getEntities();
         [$groupDeleted1, $groupDeleted2] = GroupFactory::make(2)->getEntities();
         $subjectTranslated = 'Le sujet';
-        $recipient = 'foo@cipherguard.khulnasoft.com';
+        $recipient = 'foo@cipherguard.github.io';
         $nEmailsResourceDeleted1 = rand(11, 20);
         $nEmailsResourceDeleted2 = rand(11, 20);
         $nEmailsGroupDeleted1 = rand(11, 20);
@@ -429,19 +432,20 @@ class SendEmailBatchServiceUnitTest extends TestCase
 
     public function testSendEmailBatchServiceUnitTest_On_Multiple_Full_Base_Url()
     {
-        $recipient = 'test@cipherguard.khulnasoft.com';
-        $subject = 'Some subject';
+        $recipient = 'test@cipherguard.github.io';
+        $fullBaseUrl1 = 'cipherguard.local/orga-1';
+        $fullBaseUrl2 = 'cipherguard.local/orga-2';
         $operator = UserFactory::make()->withAvatarNull()->getEntity();
         $emails1 = ResourceDeleteEmailQueueFactory::make(2)
             ->setRecipient($recipient)
             ->setOperator($operator)
-            ->setFullBaseUrl('foo')
+            ->setFullBaseUrl($fullBaseUrl1)
             ->getEntities();
 
         $emails2 = ResourceDeleteEmailQueueFactory::make(2)
             ->setRecipient($recipient)
             ->setOperator($operator)
-            ->setFullBaseUrl('bar')
+            ->setFullBaseUrl($fullBaseUrl2)
             ->getEntities();
 
         $allEmails = array_merge($emails1, $emails2);
@@ -449,5 +453,9 @@ class SendEmailBatchServiceUnitTest extends TestCase
         $this->service->sendNextEmailsBatch($allEmails);
 
         $this->assertMailCount(2);
+        $this->assertMailContainsAt(0, $fullBaseUrl1);
+        $this->assertMailContainsAt(0, $fullBaseUrl1 . '/img/logo/logo.png');
+        $this->assertMailContainsAt(1, $fullBaseUrl2);
+        $this->assertMailContainsAt(1, $fullBaseUrl2 . '/img/logo/logo.png');
     }
 }

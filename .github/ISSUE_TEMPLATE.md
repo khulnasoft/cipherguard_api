@@ -3,13 +3,13 @@
 Only use github issues for bugs.
 
 We will be more than happy to help you on the community forum for:
-- feature requests: https://community.cipherguard.khulnasoft.com/c/backlog
-- issues related to installations: https://community.cipherguard.khulnasoft.com/c/installation-issues
-- general questions: https://community.cipherguard.khulnasoft.com/c/uncategorized
+- feature requests: https://community.cipherguard.github.io/c/backlog
+- issues related to installations: https://community.cipherguard.github.io/c/installation-issues
+- general questions: https://community.cipherguard.github.io/c/uncategorized
 
 This is only a issue tracker for bugs related to the Cipherguard API.
 For cipherguard docker, browser extension, command line interface, in short any other bugs 
-please use [the other relevant repositories](https://github.com/khulnasoft).
+please use [the other relevant repositories](https://github.com/cipherguard).
 
 If you are certain this is a new API bug please use the following format:
 

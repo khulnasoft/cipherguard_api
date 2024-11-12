@@ -3,20 +3,21 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.3.0
  */
 namespace Cipherguard\JwtAuthentication;
 
 use App\Middleware\CsrfProtectionMiddleware;
+use App\Service\Healthcheck\HealthcheckServiceCollector;
 use Authentication\Middleware\AuthenticationMiddleware;
 use Cake\Core\BasePlugin;
 use Cake\Core\ContainerInterface;
@@ -35,6 +36,8 @@ use Cipherguard\JwtAuthentication\Middleware\JwtDestroySessionMiddleware;
 use Cipherguard\JwtAuthentication\Middleware\JwtRouteFilterMiddleware;
 use Cipherguard\JwtAuthentication\Notification\Email\Redactor\JwtAuthenticationEmailRedactorPool;
 use Cipherguard\JwtAuthentication\Service\AccessToken\JwksGetService;
+use Cipherguard\JwtAuthentication\Service\Healthcheck\DirectoryNotWritableJwtHealthcheck;
+use Cipherguard\JwtAuthentication\Service\Healthcheck\ValidKeyPairJwtHealthcheck;
 
 class JwtAuthenticationPlugin extends BasePlugin
 {
@@ -85,5 +88,12 @@ class JwtAuthenticationPlugin extends BasePlugin
     {
         $container->add(JwtArmoredChallengeInterface::class, JwtArmoredChallengeService::class);
         $container->add(JwksGetService::class);
+
+        $container->add(DirectoryNotWritableJwtHealthcheck::class);
+        $container->add(ValidKeyPairJwtHealthcheck::class);
+        $container
+            ->extend(HealthcheckServiceCollector::class)
+            ->addMethodCall('addService', [DirectoryNotWritableJwtHealthcheck::class])
+            ->addMethodCall('addService', [ValidKeyPairJwtHealthcheck::class]);
     }
 }

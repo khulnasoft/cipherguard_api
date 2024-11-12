@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.13.0
  */
 
@@ -48,10 +48,10 @@ use Cipherguard\Folders\Service\FoldersRelations\FoldersRelationsAddItemsToUserT
  * @method \Cipherguard\Folders\Model\Entity\FoldersRelation[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \Cipherguard\Folders\Model\Entity\FoldersRelation findOrCreate($search, ?callable $callback = null, $options = [])
  * @method \Cipherguard\Folders\Model\Entity\FoldersRelation newEmptyEntity()
- * @method \Cipherguard\Folders\Model\Entity\FoldersRelation[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \Cipherguard\Folders\Model\Entity\FoldersRelation[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \Cipherguard\Folders\Model\Entity\FoldersRelation[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \Cipherguard\Folders\Model\Entity\FoldersRelation[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method iterable<\Cipherguard\Folders\Model\Entity\FoldersRelation>|iterable<\Cake\Datasource\EntityInterface>|false saveMany(iterable $entities, $options = [])
+ * @method iterable<\Cipherguard\Folders\Model\Entity\FoldersRelation>|iterable<\Cake\Datasource\EntityInterface> saveManyOrFail(iterable $entities, $options = [])
+ * @method iterable<\Cipherguard\Folders\Model\Entity\FoldersRelation>|iterable<\Cake\Datasource\EntityInterface>|false deleteMany(iterable $entities, $options = [])
+ * @method iterable<\Cipherguard\Folders\Model\Entity\FoldersRelation>|iterable<\Cake\Datasource\EntityInterface> deleteManyOrFail(iterable $entities, $options = [])
  * @method \Cake\ORM\Query findByForeignId(string $id)
  * @method \Cake\ORM\Query findById(string $id)
  * @method \Cake\ORM\Query findByUserId(string $userId)
@@ -248,7 +248,7 @@ class FoldersRelationsTable extends Table
      */
     private function cleanupSoftDeletedForeignId(string $modelName, ?bool $dryRun = false): int
     {
-        $query = $this->query()
+        $query = $this->selectQuery()
             ->select(['id'])
             ->leftJoinWith($modelName)
             ->where([
@@ -279,7 +279,7 @@ class FoldersRelationsTable extends Table
      */
     private function cleanupHardDeletedForeignId(string $modelName, $dryRun = false): int
     {
-        $query = $this->query()
+        $query = $this->selectQuery()
             ->select(['id'])
             ->leftJoinWith($modelName)
             ->whereNull($modelName . '.id')

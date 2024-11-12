@@ -1,16 +1,25 @@
-Release song: https://youtu.be/6JNwqRF32ZI
+Release song: https://www.youtube.com/watch?v=W8PTWqE2SVw
 
-Cipherguard version 4.4.2 has been released, primarily as a maintenance update to address specific issues reported by users. This version includes two main fixes.
+Cipherguard is pleased to announce the immediate availability of version v4.9.1.
 
-The first fix concerns the Time-based One-Time Password (TOTP) feature. In the previous version, there was an issue where users could accidentally delete the TOTP secret for a resource while editing its description from the sidebar. This has been corrected in the latest update.
+Cipherguard v4.9.1 is a maintenance update that fixes issues reported by the community.
+Among other fixes, this version addresses a compatibility issue with the PostgreSQL database, where users encountered
+difficulties sharing passwords with users or groups when different cases were involved in their names.
 
-The second fix improves the performance of the application, specifically when users are retrieving their resources. This update is part of an ongoing effort to enhance the overall performance of the application, with further improvements planned for future releases.
+Additionally, system administrator tools have been improved to better handle the purge of action logs on large datasets.
 
-We extend our gratitude to the community member who reported this issue.
+We would like to express our appreciation to the community for their assistance in improving Cipherguard!
 
-## [4.4.2] - 2023-11-28
-### Improved
-- PB-27616 As a user I should see improved performances when retrieving resources on the GET resources.json entry point
-
+## [4.9.1] - 2024-08-13
 ### Fixed
-- PB-28991 As a user emails should be resent if the first attempt failed
+- PB-34220 As a user I can search by users and groups case insensitively on PostgreSQL
+
+### Improved
+- PB-34246 As an administrator purging the action logs table, I can set a limit option (100k per default)
+- PB-34247 Adds a set of actions to be purged by the cipherguard action_logs_purge command
+- PB-33939 As an administrator when running bin/cake cipherguard -h, I should see all the cipherguard commands listed
+
+### Maintenance
+- PB-32991 Optimizes CI pipeline run time on api repositories
+- PB-34219 Adds validation to retention days option in the action_logs_purge command
+- PB-33333 Refactor various tests to use fixture factories

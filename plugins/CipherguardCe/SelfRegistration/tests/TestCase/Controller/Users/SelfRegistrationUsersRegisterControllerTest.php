@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.10.0
  */
 namespace Cipherguard\SelfRegistration\Test\TestCase\Controller\Users;
@@ -21,6 +21,7 @@ use App\Test\Factory\UserFactory;
 use App\Test\Lib\AppIntegrationTestCase;
 use App\Test\Lib\Model\EmailQueueTrait;
 use Cake\ORM\TableRegistry;
+use Cipherguard\SelfRegistration\SelfRegistrationPlugin;
 use Cipherguard\SelfRegistration\Test\Lib\SelfRegistrationTestTrait;
 
 /**
@@ -30,6 +31,12 @@ class SelfRegistrationUsersRegisterControllerTest extends AppIntegrationTestCase
 {
     use EmailQueueTrait;
     use SelfRegistrationTestTrait;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->enableFeaturePlugin(SelfRegistrationPlugin::class);
+    }
 
     public function testSelfRegistrationUsersRegisterController_SelfRegistrationClosed()
     {
@@ -56,7 +63,7 @@ class SelfRegistrationUsersRegisterControllerTest extends AppIntegrationTestCase
         $nAdmins = 2;
         $admins = UserFactory::make($nAdmins)->admin()->persist();
         RoleFactory::make()->user()->persist();
-        $username = 'johndoe@cipherguard.khulnasoft.com';
+        $username = 'johndoe@cipherguard.github.io';
         $this->setSelfRegistrationSettingsData();
         $firstName = 'John';
         $lastName = 'Doe';
@@ -83,7 +90,7 @@ class SelfRegistrationUsersRegisterControllerTest extends AppIntegrationTestCase
 
     public function testSelfRegistrationUsersRegisterController_ExistingDeletedUserWithSameUsername()
     {
-        $username = 'john@cipherguard.khulnasoft.com';
+        $username = 'john@cipherguard.github.io';
         $existingUser = UserFactory::make(compact('username'))->user()->persist();
         $this->setSelfRegistrationSettingsData();
 

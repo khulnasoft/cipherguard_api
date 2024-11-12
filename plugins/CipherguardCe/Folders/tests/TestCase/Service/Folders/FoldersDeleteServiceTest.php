@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.13.0
  */
 
@@ -104,8 +104,8 @@ class FoldersDeleteServiceTest extends FoldersTestCase
 
     public function tearDown(): void
     {
-        parent::tearDown();
         $this->unloadNotificationSettings();
+        parent::tearDown();
     }
 
     /* COMMON & VALIDATION */
@@ -138,10 +138,10 @@ class FoldersDeleteServiceTest extends FoldersTestCase
         $this->service->delete($uac, $folderA->id);
 
         $this->assertEmailQueueCount(2);
-        $this->assetEmailSubject('ada@cipherguard.khulnasoft.com', 'You deleted the folder A');
-        $this->assertEmailInBatchContains('You deleted a folder', 'ada@cipherguard.khulnasoft.com');
-        $this->assetEmailSubject('betty@cipherguard.khulnasoft.com', 'Ada deleted the folder A');
-        $this->assertEmailInBatchContains('Ada deleted a folder', 'betty@cipherguard.khulnasoft.com');
+        $this->assertEmailSubject('ada@cipherguard.github.io', 'You deleted the folder A');
+        $this->assertEmailInBatchContains('You deleted a folder', 'ada@cipherguard.github.io');
+        $this->assertEmailSubject('betty@cipherguard.github.io', 'Ada deleted the folder A');
+        $this->assertEmailInBatchContains('Ada deleted a folder', 'betty@cipherguard.github.io');
     }
 
     /* PERSONAL FOLDER */

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 41c2572bd9bd4cc908d3e09e0cbed6e5\n"
-"POT-Creation-Date: 2023-10-27 11:15+0000\n"
-"PO-Revision-Date: 2023-11-17 17:37\n"
+"POT-Creation-Date: 2024-07-17 04:36+0000\n"
+"PO-Revision-Date: 2024-07-24 02:14\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Korean\n"
 "MIME-Version: 1.0\n"
@@ -39,6 +39,9 @@ msgstr "구성에서 정의한 OpenPGP 서버 키를 사용하여 복호화할 �
 
 msgid "Could not import the user OpenPGP key."
 msgstr "사용자 OpenPGP 키를 가져올 수 없습니다."
+
+msgid "Invalid verify token type."
+msgstr "확인 토큰 유형이 잘못되었습니다."
 
 msgid "Invalid verify token format, "
 msgstr "토큰 형식이 확인이 잘못되었습니다, "
@@ -243,6 +246,9 @@ msgstr "그룹이 존재하지 않습니다."
 
 msgid "All checks ran successfully!"
 msgstr "모든 검사가 성공적으로 실행되었습니다."
+
+msgid "Healthcheck security index endpoint disabled."
+msgstr "상태 확인 보안 인덱스 엔드포인티를 사용하지 않도록 설정했습니다."
 
 msgid "OK"
 msgstr "확인"
@@ -752,7 +758,7 @@ msgid "The identifier of the access request object should not be empty."
 msgstr "접근 요청 개체 식별자는 비워 둘 수 없습니다."
 
 msgid "A permission already exists for the given access control object and access request object."
-msgstr "지정된 접근 제어 개체 및 액세스 요청 개체에 대한 사용 권한이 이미 있습니다."
+msgstr "지정된 접근 제어 개체 및 접근 요청 개체에 대한 사용 권한이 이미 있습니다."
 
 msgid "The access control object does not exist."
 msgstr "접근 제어 개체가 없습니다."
@@ -898,9 +904,6 @@ msgstr "메시지는 비워둘 수 없습니다."
 msgid "A secret already exists for the given user and resource."
 msgstr "지정한 사용자 및 리소스에 대한 비밀번호가 이미 있습니다."
 
-msgid "The name should be a valid BMP-UTF8 string."
-msgstr "이름은 유효한 BMP-UTF8 문자열이어야합니다."
-
 msgid "The user identifier by should be a valid UUID."
 msgstr "사용자 식별자는 유효한 UUID여야 합니다."
 
@@ -955,6 +958,9 @@ msgstr "생성 날짜는 과거 날짜로 설정해야 합니다."
 msgid "The key should not already be expired."
 msgstr "키가 이미 만료되지 않아야 합니다."
 
+msgid "The date could not be parsed."
+msgstr "날짜를 읽을 수 없습니다."
+
 msgid "The email should be a valid email address."
 msgstr "이메일은 유효한 이메일 주소여야 합니다."
 
@@ -976,6 +982,21 @@ msgstr "삭제된 상태는 유효한 부울이어야 합니다."
 msgid "The key identifier should be a string of 8 hexadecimal characters."
 msgstr "키 식별자는 8개의 16진수 문자로 구성된 문자열이어야 합니다."
 
+msgid "{0} updated your memberships in several groups"
+msgstr "{0} 이(가) 여러 그룹의 구성원 자격을 업데이트함"
+
+msgid "{0} deleted several group memberships"
+msgstr "{0} 이(가) 여러 그룹 구성원을 삭제함"
+
+msgid "You made changes on several resources"
+msgstr "여러 리소스를 변경함"
+
+msgid "{0} has made changes on several resources"
+msgstr "{0} 이(가) 여러 리소스를 수정함"
+
+msgid "{0} shared several items with you"
+msgstr "{0} 이(가) 몇개의 아이템을 당신과 공유함"
+
 msgid "{0} just activated their account on cipherguard"
 msgstr "{0} 이(가) 패스볼트에서 계정을 활성화했습니다."
 
@@ -993,6 +1014,9 @@ msgstr "{1} 그룹에 {0} 에 의해 당신이 추가됨"
 
 msgid "{0} requested you to add members to {1}"
 msgstr "{0} 이(가) {1} 에 구성원 추가를 요청함"
+
+msgid "You have been requested to add members to {0}"
+msgstr "{0} 에 구성원을 추가하도록 요청되었습니다"
 
 msgid "{0} removed you from the group {1}"
 msgstr "{1} 그룹에 {0} 에 의해 당신이 삭제됨"
@@ -1013,7 +1037,10 @@ msgid "You added the password {0}"
 msgstr "{0} 암호가 추가되었습니다"
 
 msgid "{0} deleted the password {1}"
-msgstr "{0} 에 의해 {1} 비밀번호가 삭제됨"
+msgstr "{0} 에 의해 {1} 암호가 삭제됨"
+
+msgid "You edited the password {0}"
+msgstr "{0} 암호를 수정함"
 
 msgid "{0} edited the password {1}"
 msgstr "{0} 에 의해 {1} 비밀번호가 수정됨"
@@ -1022,7 +1049,7 @@ msgid "{0} can not complete the account recovery process!"
 msgstr "{0} 이(가) 계정 복구 작업이 완료할 수 없습니다."
 
 msgid "{0} shared the password {1}"
-msgstr "{0} 에 의해 {1} 비밀번호가 공유됨"
+msgstr "{0} 에 의해 {1} 암호가 공유됨"
 
 msgid "You deleted administrator {0}"
 msgstr "관리자 {0} 이(가) 삭제됨"
@@ -1049,31 +1076,7 @@ msgid "{0} has been suspended"
 msgstr "{0} 이(가) 중지되었습니다."
 
 msgid "Welcome to cipherguard, {0}!"
-msgstr "패스볼트에 어서 오세요, {0}!"
-
-msgid "{0} updated your memberships in several groups"
-msgstr "{0} 이(가) 여러 그룹의 구성원 자격을 업데이트함"
-
-msgid "Your membership in several groups changed in cipherguard"
-msgstr "패스볼트에서 여러 그룹의 구성원 자격이 변경되었습니다"
-
-msgid "{0} deleted several groups"
-msgstr "{0} 이(가) 여러 그룹을 삭제함"
-
-msgid "Several groups were deleted in cipherguard"
-msgstr "패스볼트에서 여러 그룹을 삭제함"
-
-msgid "{0} has made changes on several resources"
-msgstr "{0} 이(가) 여러 리소스를 수정함"
-
-msgid "Multiple passwords have been changed in cipherguard"
-msgstr "패스볼트에서 여러 개의 암호가 변경됨"
-
-msgid "{0} shared several items with you"
-msgstr "{0} 이(가) 몇개의 아이템을 당신과 공유함"
-
-msgid "Multiple passwords have been shared with you in cipherguard"
-msgstr "패스볼트에서 여러 개의 패스워드가 공유됨"
+msgstr "패스볼트에 오신 것을 환영합니다, {0}!"
 
 msgid "The purify subject setting should be a boolean."
 msgstr "정화된 제목 설정은 부울이어야 합니다."
@@ -1123,17 +1126,20 @@ msgstr "그룹에 사용자 수정시 보내기 설정은 부울이어야 합니
 msgid "The send on group manager updated setting should be a boolean."
 msgstr "그룹에 관리자 수정시 보내기 설정은 부울이어야 합니다."
 
+msgid "The send on group manager request add user should be a boolean."
+msgstr "그룹에 관리자 요청시 보내기 설정은 부울이어야 합니다."
+
 msgid "The send on password created setting should be a boolean."
-msgstr "비밀번호 생성시 보내기 설정은 부울이어야 합니다."
+msgstr "암호 생성 시 보내기 설정은 참 또는 거짓이어야 합니다."
 
 msgid "The send on password shared setting should be a boolean."
-msgstr "비밀번호 공유시 보내기 설정은 부울이어야 합니다."
+msgstr "암호 공유 시 보내기 설정은 참 또는 거짓이어야 합니다."
 
 msgid "The send on password updated setting should be a boolean."
-msgstr "비밀번호 수정시 보내기 설정은 부울이어야 합니다."
+msgstr "암호 수정 시 보내기 설정은 참 또는 거짓이어야 합니다."
 
 msgid "The send on password deleted setting should be a boolean."
-msgstr "비밀번호 삭제시 보내기 설정은 부울이어야 합니다."
+msgstr "암호 삭제 시 보내기 설정은 참 또는 거짓이어야 합니다."
 
 msgid "The send on user created setting should be a boolean."
 msgstr "사용자 생성시 보내기 설정은 부울이어야 합니다."
@@ -1236,6 +1242,534 @@ msgstr "{0} 그룹에 대한 유효성 검증 성공"
 
 msgid "Could not validate group user data."
 msgstr "그룹 사용자 데이터를 검사할 수 없습니다."
+
+msgid "All email notifications will be sent."
+msgstr "모든 이메일 알림이 전송됩니다."
+
+msgid "Some email notifications are disabled by the administrator."
+msgstr "관리자가 일부 이메일 알림을 비활성화했습니다."
+
+msgid "Host availability will be checked."
+msgstr "호스트 가용성이 확인됩니다."
+
+msgid "Host availability checking is disabled."
+msgstr "호스트 가용성 확인이 비활성화되었습니다."
+
+msgid "Make sure this instance is not publicly available on the internet."
+msgstr "이 인스턴스가 인터넷에서 공개적으로 사용 가능하지 않은지 확인하세요."
+
+msgid "Or set the CIPHERGUARD_EMAIL_VALIDATE_MX environment variable to true."
+msgstr "또는 CIPHERGUARD_EMAIL_VALIDATE_MX 환경 변수를 true로 설정합니다."
+
+msgid "Or set cipherguard.email.validate.mx to true in {0}."
+msgstr "또는 {0}에서 cipherguard.email.validate.mx를 true로 설정합니다."
+
+msgid "Serving the compiled version of the javascript app."
+msgstr "자바스크립트 앱의 컴파일된 버전을 제공합니다."
+
+msgid "Using non-compiled Javascript. Cipherguard will be slower."
+msgstr "컴파일되지 않은 자바스크립트를 사용하면 패스볼트 속도가 느려집니다."
+
+msgid "Set cipherguard.js.build to production in {0}"
+msgstr "{0}에서 cipherguard.js.build를 프로덕션으로 설정"
+
+msgid "undefined"
+msgstr "미정"
+
+msgid "Could not read tag information on github repository"
+msgstr "github 리포지토리에 태그 정보를 읽을 수 없습니다."
+
+msgid "Using latest cipherguard version ({0})."
+msgstr "최신 패스볼트 버전({0})을 사용."
+
+msgid "Could connect to cipherguard repository to check versions."
+msgstr "버전을 확인하기 위해 패스볼트 저장소에 연결할 수 있습니다."
+
+msgid "This installation is not up to date. Currently using {0} and it should be {1}."
+msgstr "이 설치는 최신 상태가 아닙니다. 현재 {0}을(를) 사용하고 있으며 {1}이어야 합니다."
+
+msgid "Could not connect to cipherguard repository to check versions."
+msgstr "버전을 확인하기 위해 패스볼트 저장소에 연결할 수 없습니다."
+
+msgid "It is not possible to check if your version is up-to-date."
+msgstr "버전이 최신인지 확인할 수 없습니다."
+
+msgid "See https://www.cipherguard.github.io/help/tech/update"
+msgstr "https://www.cipherguard.github.io/help/tech/update 를 참조하세요."
+
+msgid "Check the network configuration to allow this script to check for updates."
+msgstr "이 스크립트가 업데이트를 확인할 수 있도록 네트워크 구성을 확인하세요."
+
+msgid "Search engine robots are told not to index content."
+msgstr "검색 엔진 로봇들은 콘텐츠를 인덱싱하지 말라고 지시됩니다."
+
+msgid "Search engine robots are not told not to index content."
+msgstr "검색 엔진 로봇들에게 콘텐츠를 인덱싱하지 말라고 지시되지 않습니다."
+
+msgid "Set cipherguard.meta.robots to false in {0}."
+msgstr "{0}에서 cipherguard.meta.roots를 false로 설정합니다."
+
+msgid "Selenium API endpoints are disabled."
+msgstr "Selenium API 엔드포인트가 비활성화되었습니다."
+
+msgid "Selenium API endpoints are active. This setting should be used for testing only."
+msgstr "Selenium API 엔드포인트가 활성화되어 있습니다. 이 설정은 테스트 용도로만 사용해야 합니다."
+
+msgid "Set cipherguard.selenium.active to false in {0}."
+msgstr "{0}에서 cipherguard.selenium.active를 false로 설정합니다."
+
+msgid "The Self Registration plugin is enabled."
+msgstr "자체 등록 플러그인이 활성화되었습니다."
+
+msgid "The Self Registration plugin is disabled."
+msgstr "자체 등록 플러그인이 비활성화되었습니다."
+
+msgid "Enable the plugin in order to define self registration settings."
+msgstr "자체 등록 설정을 정의하려면 플러그인을 사용합니다."
+
+msgid "Registration is closed, only administrators can add users."
+msgstr "등록이 종료되었습니다. 사용자를 추가할 수 있는 권한은 관리자에게만 있습니다."
+
+msgid "The self registration provider is: {0}."
+msgstr "자체 등록 제공자 : {0}."
+
+msgid "The deprecated self registration public setting was not found in {0}."
+msgstr "더 이상 사용되지 않는 자체 등록 공개 설정을 {0} 에서 찾을 수 없습니다."
+
+msgid "The deprecated self registration public setting was found in {0}."
+msgstr "더 이상 사용되지 않는 자체 등록 공개 설정이 {0} 에서 발견되었습니다."
+
+msgid "You may remove the \"cipherguard.registration.public\" setting."
+msgstr "\"cipherguard.registration.public\" 설정을 제거할 수 있습니다."
+
+msgid "Cipherguard is configured to force SSL use."
+msgstr "패스볼트가 SSL을 강제로 사용하도록 구성되어 있습니다."
+
+msgid "Cipherguard is not configured to force SSL use."
+msgstr "패스볼트가 SSL을 강제로 사용하도록 구성되지 않았습니다."
+
+msgid "Set cipherguard.ssl.force to true in {0}."
+msgstr "{0}에서 cipherguard.ssl.force를 true로 설정합니다."
+
+msgid "App.fullBaseUrl is set to HTTPS."
+msgstr "App.fullBaseUrl이 HTTPS로 설정되었습니다."
+
+msgid "App.fullBaseUrl is not set to HTTPS."
+msgstr "App.fullBaseUrl이 HTTPS로 설정되지 않았습니다."
+
+msgid "Check App.fullBaseUrl url scheme in {0}."
+msgstr "{0}에서 App.fullBaseUrl url 스킴을 확인하세요."
+
+msgid "The application config file is present"
+msgstr "애플리케이션 구성 파일이 존재합니다."
+
+msgid "The application config file is missing in {0}"
+msgstr "{0} 에 애플리케이션 구성 파일이 없습니다."
+
+msgid "Copy {0} to {1}"
+msgstr "{0} 을(를) {1} 에 복사"
+
+msgid "The cipherguard config file is present"
+msgstr "패스볼트 구성 파일이 존재합니다."
+
+msgid "The cipherguard config file is missing in {0}"
+msgstr "{0} 에 패스볼트 구성 파일이 없습니다."
+
+msgid "The cipherguard config file is not required if cipherguard is configured with environment variables"
+msgstr "패스볼트가 환경 변수로 구성된 경우 패스볼트 구성 파일이 필요하지 않습니다."
+
+msgid "Cache is working."
+msgstr "캐시가 작동 중입니다."
+
+msgid "Cache is NOT working."
+msgstr "캐시가 작동 중이지 않습니다."
+
+msgid "Check the settings in {0}"
+msgstr "{0} 의 설정을 확인하세요."
+
+msgid "Debug mode is off."
+msgstr "디버그 모드가 꺼져 있습니다."
+
+msgid "Debug mode is on."
+msgstr "디버그 모드가 켜져 있습니다."
+
+msgid "Set debug to false in {0}"
+msgstr "{0} 에서 디버그를 false로 설정"
+
+msgid "Full base url is set to {0}"
+msgstr "전체 기본 url이 {0} (으)로 설정됨"
+
+msgid "Full base url is not set. The application is using: {0}."
+msgstr "전체 기본 url이 설정되지 않았습니다. 애플리케이션이 {0} 을(를) 사용하고 있습니다."
+
+msgid "Edit App.fullBaseUrl in {0}"
+msgstr "{0}에서 App.fullBaseUrl을 편집하세요."
+
+msgid "/healthcheck/status is reachable."
+msgstr "/healthcheck/status에 접근할 수 있습니다."
+
+msgid "Could not reach the /healthcheck/status with the url specified in App.fullBaseUrl"
+msgstr "App.fullBaseUrl에 지정된 URL로 /healthcheck/status에 도달할 수 없습니다."
+
+msgid "Check that the domain name is correct in {0}"
+msgstr "{0} 의 도메인 이름이 올바른지 확인하세요."
+
+msgid "Check the network settings"
+msgstr "네트워크 설정을 확인하세요"
+
+msgid "Unique value set for security.salt"
+msgstr "security.salt에 대해 고유한 값이 설정되었습니다."
+
+msgid "Default value found for security.salt"
+msgstr "security.salt에 대한 기본값이 발견되었습니다."
+
+msgid "Edit the security.salt in {0}"
+msgstr "{0}에서 security.salt를 편집하세요."
+
+msgid "App.fullBaseUrl validation OK."
+msgstr "App.fullBaseUrl 유효성 검사가 완료되었습니다."
+
+msgid "App.fullBaseUrl does not validate. {0}."
+msgstr "App.fullBaseUrl이 유효성을 검사하지 않습니다. {0}."
+
+msgid "Select a valid domain name as defined by section 2.3.1 of http://www.ietf.org/rfc/rfc1035.txt"
+msgstr "http://www.ietf.org/rfc/rfc1035.txt의 섹션 2.3.1에 정의된 대로 유효한 도메인 이름을 선택하세요."
+
+msgid "The application is able to connect to the database"
+msgstr "애플리케이션이 데이터베이스에 연결할 수 있습니다."
+
+msgid "The driver defined in the database configuration is not supported."
+msgstr "데이터베이스 구성에 정의된 드라이버가 지원되지 않습니다."
+
+msgid "The application is not able to connect to the database."
+msgstr "애플리케이션이 데이터베이스에 연결할 수 없습니다."
+
+msgid "Ensure that the driver defined in {0} is one of the following: {1}."
+msgstr "{0} 에 정의된 드라이버가 다음 중 하나인지 확인하세요: {1}."
+
+msgid "Double check the host, database name, username and password in {0}."
+msgstr "{0} 에서 호스트, 데이터베이스 이름, 사용자 이름 및 암호를 다시 확인하세요."
+
+msgid "Make sure the database exists and is accessible for the given database user."
+msgstr "데이터베이스가 존재하고 지정된 데이터베이스 사용자가 접근할 수 있는지 확인하십시오."
+
+msgid "Some default content is present."
+msgstr "일부 기본 콘텐츠가 있습니다."
+
+msgid "No default content found."
+msgstr "기본 콘텐츠를 찾을 수 없습니다."
+
+msgid "Run the install script to install the database tables"
+msgstr "설치 스크립트를 실행하여 데이터베이스 테이블을 설치하세요"
+
+msgid "The database schema is up to date."
+msgstr "데이터베이스 스키마가 최신 상태입니다."
+
+msgid "The database schema is not up to date."
+msgstr "데이터베이스 스키마가 최신 상태가 아닙니다."
+
+msgid "Run the migration scripts:"
+msgstr "마이그레이션 스크립트를 실행하세요:"
+
+msgid "{0} tables found."
+msgstr "{0} 테이블이 발견됨."
+
+msgid "No table found."
+msgstr "테이블을 찾을 수 없습니다."
+
+msgid "GD or Imagick extension is installed."
+msgstr "GD 또는 Imagick 확장 프로그램이 설치되어 있습니다."
+
+msgid "You must enable the gd or imagick extensions to use Cipherguard."
+msgstr "패스볼트를 사용하려면 gd 또는 imagick 확장을 활성화해야 합니다."
+
+msgid "See. https://secure.php.net/manual/en/book.image.php"
+msgstr "https://secure.php.net/manual/en/book.image.php 를 참조하세요."
+
+msgid "See. https://secure.php.net/manual/en/book.imagick.php"
+msgstr "https://secure.php.net/manual/en/book.imagick.php 를 참조하세요."
+
+msgid "Intl extension is installed."
+msgstr "intl 확장이 설치되었습니다."
+
+msgid "You must enable the intl extension to use Cipherguard."
+msgstr "패스볼트를 사용하려면 intl 확장을 활성화해야 합니다."
+
+msgid "See. https://secure.php.net/manual/en/book.intl.php"
+msgstr "https://secure.php.net/manual/en/book.intl.php 를 참조하세요."
+
+msgid "The logs directory and its content are writable."
+msgstr "로그 디렉터리와 해당 콘텐츠는 쓰기 가능합니다."
+
+msgid "The logs directory and its content are not writable."
+msgstr "로그 디렉터리와 해당 콘텐츠는 쓰기 가능지 않습니다."
+
+msgid "Ensure the logs directory and its content are writable by the user the webserver user."
+msgstr "웹 서버 사용자가 로그 디렉터리와 해당 내용을 쓸 수 있는지 확인하세요."
+
+msgid "you can try:"
+msgstr "시도해볼 것:"
+
+msgid "Mbstring extension is installed."
+msgstr "mbstring 확장이 설치되었습니다."
+
+msgid "You must enable the mbstring extension to use Cipherguard."
+msgstr "패스볼트를 사용하려면 mbstring 확장을 활성화해야 합니다."
+
+msgid "See. https://secure.php.net/manual/en/book.mbstring.php"
+msgstr "https://secure.php.net/manual/en/book.mbstring.php 를 참조하세요."
+
+msgid "PHP version is {0} or above."
+msgstr "PHP 버전은 {0} 이상입니다."
+
+msgid "PHP version less than {0} will soon be not supported by cipherguard, so consider upgrading your operating system or PHP environment."
+msgstr "{0} 미만의 PHP 버전은 곧 패스볼트에서 지원되지 않으므로 운영 체제나 PHP 환경을 업그레이드하는 것이 좋습니다."
+
+msgid "PCRE compiled with unicode support."
+msgstr "유니코드 지원으로 컴파일된 PCRE."
+
+msgid "PCRE has not been compiled with Unicode support."
+msgstr "PCRE는 유니코드 지원으로 컴파일되지 않았습니다."
+
+msgid "Recompile PCRE with Unicode support by adding --enable-unicode-properties when configuring."
+msgstr "구성 시 --enable-unicode-properties 를 추가하여 유니코드 지원으로 PCRE를 다시 컴파일하십시오."
+
+msgid "PHP version {0}."
+msgstr "PHP 버전 {0}."
+
+msgid "PHP version is too low, cipherguard need PHP {0} or higher."
+msgstr "PHP 버전이 너무 낮습니다. 패스볼트는 PHP {0} 이상이 필요합니다."
+
+msgid "The temporary directory and its content are writable and not executable."
+msgstr "임시 디렉터리와 해당 콘텐츠는 쓰기 가능하지만 실행 가능하지 않습니다."
+
+msgid "The temporary directory and its content are not writable, or are executable."
+msgstr "임시 디렉터리와 해당 콘텐츠는 쓸 수 없거나 실행 가능합니다."
+
+msgid "Ensure the temporary directory and its content are writable by the webserver user."
+msgstr "웹 서버 사용자가 임시 디렉토리와 해당 컨텐츠를 쓸 수 있는지 확인하십시오."
+
+msgid "The private key can be used to decrypt a message."
+msgstr "개인 키를 사용하여 메시지를 해독할 수 있습니다."
+
+msgid "The private key cannot be used to decrypt a message"
+msgstr "개인 키는 메시지를 해독하는 데 사용할 수 없습니다."
+
+msgid "The private key can be used to decrypt and verify a message."
+msgstr "개인 키는 메시지를 해독하고 확인하는 데 사용될 수 있습니다."
+
+msgid "The private key cannot be used to decrypt and verify a message"
+msgstr "개인 키는 메시지를 해독하고 확인하는 데 사용할 수 없습니다."
+
+msgid "The public key can be used to encrypt a message."
+msgstr "공개 키를 사용하여 메시지를 해독할 수 있습니다."
+
+msgid "The public key cannot be used to encrypt a message"
+msgstr "공개 키는 메시지를 해독하는 데 사용할 수 없습니다."
+
+msgid "Make sure that the server private key is valid and that there is no passphrase."
+msgstr "서버 개인 키가 유효한지, 패스프레이즈가 없는지 확인하세요."
+
+msgid "Make sure you imported the private server key in the keyring of the webserver user."
+msgstr "웹 서버 사용자의 키링에 있는 개인 서버 키를 가져왔는지 확인하세요."
+
+msgid "The public and private keys can be used to encrypt and sign a message."
+msgstr "공개 키와 개인 키를 사용하여 메시지를 암호화하고 서명할 수 있습니다."
+
+msgid "The public and private keys cannot be used to encrypt and sign a message"
+msgstr "공개 키와 개인 키는 메시지를 암호화하고 서명하는 데 사용할 수 없습니다."
+
+msgid "The private key can be used to sign a message."
+msgstr "개인 키를 사용하여 메시지에 서명할 수 있습니다."
+
+msgid "The private key cannot be used to sign a message"
+msgstr "개인 키를 사용하여 메시지에 서명할 수 없습니다."
+
+msgid "The public key can be used to verify a signature."
+msgstr "공개 키를 사용하여 서명을 확인할 수 있습니다."
+
+msgid "The public key cannot be used to verify a signature."
+msgstr "공개 키는 서명을 확인하는 데 사용할 수 없습니다."
+
+msgid "The server key fingerprint matches the one defined in {0}."
+msgstr "서버 키 지문이 {0} 에 정의된 지문과 일치합니다."
+
+msgid "The server key fingerprint doesn't match the one defined in {0}."
+msgstr "서버 키 지문이 {0} 에 정의된 지문과 일치하지 않습니다."
+
+msgid "Double check the key fingerprint, example: "
+msgstr "키 지문을 다시 확인하세요. 예: "
+
+msgid "SERVER_KEY_EMAIL: The email you used when you generated the server key."
+msgstr "SERVER_KEY_EMAIL: 서버 키를 생성할 때 사용한 이메일입니다."
+
+msgid "See. https://www.cipherguard.github.io/help/tech/install#toc_gpg"
+msgstr "https://www.cipherguard.github.io/help/tech/install#toc_gpg 를 참고하세요."
+
+msgid "The server private key format is Gopengpg compatible."
+msgstr "서버 개인 키 형식은 Gopengpg와 호환됩니다."
+
+msgid "The server private key format is not Gopengpg compatible."
+msgstr "서버 개인 키 형식은 Gopengpg와 호환되지 않습니다."
+
+msgid "The server public key format is Gopengpg compatible."
+msgstr "서버 공개 키 형식은 Gopengpg와 호환됩니다."
+
+msgid "The server public key format is not Gopengpg compatible."
+msgstr "서버 공개 키 형식은 Gopengpg와 호환되지 않습니다."
+
+msgid "The environment variable GNUPGHOME is set to {0}."
+msgstr "환경 변수 GNUPGOME이 {0} (으)로 설정되었습니다."
+
+msgid "The environment variable GNUPGHOME is set to {0}, but the directory does not exist."
+msgstr "환경 변수 GNUPGHOME이 {0} 으로 설정되었지만 디렉터리가 존재하지 않습니다."
+
+msgid "Ensure the keyring location exists and is accessible by the webserver user."
+msgstr "키링 위치가 존재하고 웹 서버 사용자가 접근할 수 있는지 확인하세요."
+
+msgid "You can change the location of the keyring by editing the GPG.env.setenv and GPG.env.home variables in {0}."
+msgstr "{0} 에서 GPG.env.setenv 및 GPG.env.home 변수를 편집하여 키링 위치를 변경할 수 있습니다."
+
+msgid "The directory {0} containing the keyring is writable by the webserver user."
+msgstr "키링이 포함된 {0} 디렉터리는 웹 서버 사용자가 쓸 수 있습니다."
+
+msgid "The directory {0} containing the keyring is not writable by the webserver user."
+msgstr "키링이 포함된 {0} 디렉터리는 웹 서버 사용자가 쓸 수 없습니다."
+
+msgid "Ensure the keyring location is accessible by the webserver user."
+msgstr "웹 서버 사용자가 키링 위치에 접근할 수 있는지 확인하세요."
+
+msgid "The server OpenPGP key is not the default one."
+msgstr "서버 OpenPGP 키는 기본 키가 아닙니다."
+
+msgid "Do not use the default OpenPGP key for the server."
+msgstr "서버에 기본 OpenPGP 키를 사용하지 마십시오."
+
+msgid "The server OpenPGP key is not set."
+msgstr "서버 OpenPGP 키가 설정되지 않았습니다."
+
+msgid "Create a key, export it and add the fingerprint to {0}"
+msgstr "키를 생성 및 내보내기를 하고 {0} 에 지문을 추가하세요."
+
+msgid "PHP GPG Module is installed and loaded."
+msgstr "PHP GPG 모듈이 설치되고 로드됩니다."
+
+msgid "PHP GPG Module is not installed or loaded."
+msgstr "PHP GPG 모듈이 설치되지 않았거나 로드되지 않았습니다."
+
+msgid "Install php-gnupg, see. http://php.net/manual/en/gnupg.installation.php"
+msgstr "php-gnupg를 설치하세요. http://php.net/manual/en/gnupg.installation.php 를 참고하세요."
+
+msgid "Make sure to add extension=gnupg.so in php ini files for both php-cli and php."
+msgstr "php-cli와 php 모두에 대해 php ini 파일에 Extension=gnupg.so를 추가해야 합니다."
+
+msgid "The private key file is defined in {0} and readable."
+msgstr "개인 키 파일은 {0} 에 정의되어 있으며 읽을 수 있습니다."
+
+msgid "The private key file is not defined in {0} or not readable."
+msgstr "개인 키 파일이 {0} 에 정의되지 않았거나 읽을 수 없습니다."
+
+msgid "Ensure the private key file is defined by the variable cipherguard.gpg.serverKey.private in {0}."
+msgstr "개인 키 파일이 {0} 의 cipherguard.gpg.serverKey.private 변수로 정의되었는지 확인하세요."
+
+msgid "Ensure there is a private key armored block in the key file."
+msgstr "키 파일에 개인 키 강화 블록이 있는지 확인하세요."
+
+msgid "Ensure the private key defined in {0} exists and is accessible by the webserver user."
+msgstr "{0} 에 정의된 개인 키가 있고 웹 서버 사용자가 접근할 수 있는지 확인합니다."
+
+msgid "There is a valid email id defined for the server key."
+msgstr "서버 키에 대해 정의된 유효한 이메일 id가 있습니다."
+
+msgid "The server key does not have a valid email id."
+msgstr "서버 키에 유효한 이메일 id가 없습니다."
+
+msgid "The server public key defined in the {0} (or environment variables) is in the keyring."
+msgstr "{0} (또는 환경 변수)에 정의된 서버 공개 키가 키링에 있습니다."
+
+msgid "The server public key defined in the {0} (or environment variables) is not in the keyring"
+msgstr "{0} (또는 환경 변수)에 정의된 서버 공개 키가 키링에 없습니다."
+
+msgid "Import the private server key in the keyring of the webserver user."
+msgstr "웹 서버 사용자의 키링에 있는 개인 서버 키를 가져옵니다."
+
+msgid "The public key file is defined in {0} and readable."
+msgstr "공개 키 파일은 {0} 에 정의되어 있으며 읽을 수 있습니다."
+
+msgid "The public key file is not defined in {0} or not readable."
+msgstr "공개 키 파일이 {0} 에 정의되지 않았거나 읽을 수 없습니다."
+
+msgid "Ensure the public key file is defined by the variable cipherguard.gpg.serverKey.public in {0}."
+msgstr "공개 키 파일이 {0} 의 cipherguard.gpg.serverKey.public 변수로 정의되었는지 확인하세요."
+
+msgid "Ensure there is a public key armored block in the key file."
+msgstr "키 파일에 공개 키 강화 블록이 있는지 확인하세요."
+
+msgid "Ensure the public key defined in {0} exists and is accessible by the webserver user."
+msgstr "{0} 에 정의된 공개 키가 있고 웹 서버 사용자가 접근할 수 있는지 확인합니다."
+
+msgid "Environment"
+msgstr "환경"
+
+msgid "Config files"
+msgstr "구성 파일"
+
+msgid "Core config"
+msgstr "코어 구성"
+
+msgid "SMTP settings"
+msgstr "SMTP 설정"
+
+msgid "Application configuration"
+msgstr "어플리케이션 구성"
+
+msgid "Database"
+msgstr "데이타베이스"
+
+msgid "GPG Configuration"
+msgstr "GPG 구성"
+
+msgid "JWT Authentication"
+msgstr "JWT 인증"
+
+msgid "SSL Certificate"
+msgstr "SSL 인증서"
+
+msgid "The {0} plugin is enabled."
+msgstr "{0} 플러그인이 활성화되었습니다."
+
+msgid "The {0} plugin is disabled."
+msgstr "{0} 플러그인이 비활성화되었습니다."
+
+msgid "Set the environment variable {0} to true"
+msgstr "환경 변수 {0} 을(를) true로 설정하세요."
+
+msgid "Enable the plugin in order to define SMTP settings in the database."
+msgstr "데이터베이스에서 SMTP 설정을 정의하려면 플러그인을 활성화하세요."
+
+msgid "Hostname is matching in SSL certificate."
+msgstr "호스트이름이 SSL 인증서와 일치합니다."
+
+msgid "Hostname does not match when validating certificates."
+msgstr "인증서 유효성을 검사할 때 호스트이름이 일치하지 않습니다."
+
+msgid "SSL access is enabled."
+msgstr "SSL 접근이 활성화되었습니다."
+
+msgid "SSL access is not enabled. You can still proceed, but it is highly recommended that you configure your web server to use HTTPS before you continue."
+msgstr "SSL 접근을 사용할 수 없습니다. 계속 진행할 수 있지만 계속하기 전에 HTTPS를 사용하도록 웹 서버를 구성하는 것이 좋습니다."
+
+msgid "Not using a self-signed certificate."
+msgstr "자체 서명 인증서를 사용하지 않습니다."
+
+msgid "Using a self-signed certificate."
+msgstr "자체 서명된 인증서를 사용합니다."
+
+msgid "SSL peer certificate validates."
+msgstr "SSL 피어 인증서가 유효합니다."
+
+msgid "SSL peer certificate does not validate."
+msgstr "SSL 피어 인증서가 검증되지 않습니다."
 
 msgid "Could not validate sub key data."
 msgstr "하위 키 데이터를 검사할 수 없습니다."
@@ -1360,6 +1894,12 @@ msgstr "{0} 역할에 대한 유효성 검증 성공"
 msgid "Could not validate secret data."
 msgstr "비밀번호 데이터를 검사할 수 없습니다."
 
+msgid "The group id should be a valid UUID."
+msgstr "그룹 id는 올바른 UUID여야 합니다."
+
+msgid "The users ids array should contain only valid UUIDs."
+msgstr "사용자 ID 배열은 올바른 UUID만 포함해야 합니다."
+
 msgid "Validation failed for secret {0}. {1}"
 msgstr "{0} 비밀번호에 대한 검증이 실패되었습니다. {1}"
 
@@ -1440,15 +1980,6 @@ msgstr "{0} 사용자에 대한 유효성 검증 성공"
 
 msgid "The directory {0} cannot be deleted"
 msgstr "{0} 디렉토리를 삭제할 수 없습니다"
-
-msgid "Database connection failed"
-msgstr "데이터베이스 연결이 실패됨"
-
-msgid "Could not connect to github repository"
-msgstr "github 리포지토리에 연결할 수 없습니다."
-
-msgid "Could not read tag information on github repository"
-msgstr "github 리포지토리에 태그 정보를 읽을 수 없습니다."
 
 msgid "The key {0} cannot be used to encrypt."
 msgstr "키 {0} 가 암호화에 사용할 수 없습니다."
@@ -1828,6 +2359,12 @@ msgstr "확인 토큰이 잘못되었습니다"
 msgid "The route {0} is not permitted with JWT authentication."
 msgstr "경로 {0} 이(가) JWT 인증에 허용되지 않습니다."
 
+msgid "The JWT public key could not be extracted."
+msgstr "JWT 공개 키를 추출할 수 없습니다."
+
+msgid "The JWT public key details could not be read."
+msgstr "JWT 공개 키 세부정보를 읽을 수 없습니다."
+
 msgid "The key pair for JWT Authentication is not complete."
 msgstr "JWT 인증 키 쌍이 완전하지 않습니다."
 
@@ -1839,6 +2376,21 @@ msgstr "JWT 개인키는 {0} 바이트 이상이어야 합니다."
 
 msgid "The configuration {0} is not correctly set."
 msgstr "구성 {0} 이(가) 올바르게 설정되지 않았습니다."
+
+msgid "The {0} directory is not writable."
+msgstr "{0} 디렉토리는 쓸 수 없습니다."
+
+msgid "The {0} directory should not be writable."
+msgstr "{0} 디렉토리는 쓰기 가능하지 않아야 합니다."
+
+msgid "A valid JWT key pair was found."
+msgstr "유효한 JWT 키 쌍을 찾았습니다."
+
+msgid "A valid JWT key pair is missing."
+msgstr "유효한 JWT 키 쌍이 없습니다."
+
+msgid "Run the create JWT keys script to create a valid JWT secret and public key pair:"
+msgstr "JWT 키 만들기 스크립트를 실행하여 유효한 JWT 비밀 키와 공개 키 쌍을 만듭니다."
 
 msgid "The refresh token should be a valid UUID."
 msgstr "리프레쉬 토큰은 유효한 UUID여야 합니다."
@@ -1890,6 +2442,9 @@ msgstr "올바르지 않은 로케일입니다."
 
 msgid "This is not a valid {0}."
 msgstr "올바른 {0} 이(가) 아닙니다."
+
+msgid "The locale should be a string."
+msgstr "로케일은 문자열이어야 합니다."
 
 msgid "The strategy should extend the class: {0}"
 msgstr "방법은 다음 클래스를 확장해야 합니다. {0}"
@@ -2293,9 +2848,6 @@ msgstr "Duo 구성을 검사할 수 없습니다."
 msgid "The property {0} is visible by administrators only."
 msgstr "{0} 속성은 관리자만 볼 수 있습니다."
 
-msgid "The property {0} should be contained in order to filter by {1}."
-msgstr "{1} 을(를) 기준으로 필터링하려면 {0} 속성이 포함되어야 합니다."
-
 msgid "The MFA token provided does not exist or is inactive."
 msgstr "제공된 다단계인증 토큰이 없거나 비활성 상태입니다."
 
@@ -2465,7 +3017,7 @@ msgid "When logging in from a new device you will need to enter a unique verific
 msgstr "새 기기에서 로그인할 때 모바일의 앱에서 생성된 고유한 인증 코드를 입력해야 합니다."
 
 msgid "Remember this device for a month."
-msgstr "이 기기를 한달 동안 기억."
+msgstr "이 기기를 한달 동안 기억하기"
 
 msgid "Yubikey One Time Password"
 msgstr "Yubikey 일회성 암호"
@@ -2501,10 +3053,76 @@ msgid "Multi-factor authentication settings were reset for your account by an ad
 msgstr "관리자가 다단계 인증 설정을 재설정했습니다."
 
 msgid "Please contact your administrator if you didn't request this action."
-msgstr "이 작업을 요청하지 않은 경우 관리자에게 문의하십시오."
+msgstr "이 작업을 요청하지 않은 경우 관리자에게 문의하세요."
 
 msgid "Log in cipherguard"
 msgstr "패스볼트 로그인"
+
+msgid "The automatic_expiry field must be true."
+msgstr "Automatic_expiry 필드가 true 여야 합니다."
+
+msgid "The automatic_update field must be true."
+msgstr "automatic_update 필드가 true 여야 합니다."
+
+msgid "The value should be an array."
+msgstr "값은 배열이어야 합니다."
+
+msgid "{0} marked several passwords as expired"
+msgstr "{0} 이(가) 여러 암호를 만료된 것으로 표시했습니다"
+
+msgid "Some of your passwords expired"
+msgstr "암호 중 일부가 만료되었습니다"
+
+msgid "{0} marked the password {1} as expired"
+msgstr "{0} 이(가) {1} 암호를 만료된 것으로 표시했습니다"
+
+msgid "You edited the password expiry settings"
+msgstr "암호 만료 설정을 수정했습니다"
+
+msgid "{0} edited the password expiry settings"
+msgstr "{0} 이(가) 암호 만료 설정을 수정했습니다"
+
+msgid "The send password expire setting should be a boolean."
+msgstr "암호 만료 보내기 설정은 참 또는 거짓이어야 합니다."
+
+msgid "The password expiry setting does not exist."
+msgstr "암호 만료 설정이 없습니다."
+
+msgid "Could not validate the password expiry settings."
+msgstr "암호 만료 설정의 유효성을 검사할 수 없습니다."
+
+msgid "The password expiry settings have been updated."
+msgstr "암호 만료 설정이 업데이트되었습니다."
+
+msgid "View them in cipherguard"
+msgstr "패스볼트에서 보기"
+
+msgid "{0} resources were affected."
+msgstr "{0} 개의 리소스가 영향을 받았습니다."
+
+msgid "It would be too much to list them here, but you can go check them on cipherguard."
+msgstr "여기에 나열하는 건 무리겠지만, 패스볼트에서 확인하면 됩니다."
+
+msgid "Change them in cipherguard"
+msgstr "패스볼트에서 변경"
+
+msgid "You have been requested to change them"
+msgstr "변경 요청을 받았습니다"
+
+msgid "Access for users to your shared passwords have been revoked."
+msgstr "공유 암호에 대한 사용자의 접근이 취소되었습니다."
+
+msgid "These passwords are now marked as expired."
+msgstr "이 암호들은 이제 만료로 표시되었습니다."
+
+msgid "Please rotate them to ensure continued security."
+msgstr "지속적인 보안을 위해 순환해 주세요."
+
+msgid "Please rotate it to ensure continued security."
+msgstr "지속적인 보안을 위해 순환해 주세요."
+
+msgid "Change it in cipherguard "
+msgstr "패스볼트에서 변경 "
 
 msgid "Could not retrieve the password policies."
 msgstr "암호 정책을 검색할 수 없습니다."
@@ -2693,7 +3311,7 @@ msgid "The control function should not be empty."
 msgstr "제어 기능은 비워둘 수 없습니다."
 
 msgid "The identifier of the user who created the Rbac should be a valid UUID."
-msgstr "역할 기반 액세스 제어를 생성한 사용자의 식별자는 유효한 UUID여야 합니다."
+msgstr "역할 기반 접근 제어를 생성한 사용자의 식별자는 유효한 UUID여야 합니다."
 
 msgid "The identifier of the user who modified the Rbac should be a valid UUID."
 msgstr "역할 기반 접근 제어를 수정한 사용자의 식별자는 유효한 UUID여야 합니다."
@@ -2706,6 +3324,9 @@ msgstr "지정된 ID에 대한 역할 기반 접근 제어 항목이 이미 있�
 
 msgid "An entry already exists for the given role and action ids."
 msgstr "지정된 역할 및 작업 ID에 대한 항목이 이미 있습니다."
+
+msgid "The control function is not allowed for this UI Action."
+msgstr "이 UI 작업에는 제어 기능이 허용되지 않습니다."
 
 msgid "An action already exists for the given name."
 msgstr "지정된 이름에 대한 작업이 이미 있습니다."
@@ -2777,7 +3398,10 @@ msgid "Role"
 msgstr "역할"
 
 msgid "No"
-msgstr "아니오"
+msgstr "아니요"
+
+msgid "The name should be a valid BMP-UTF8 string."
+msgstr "이름은 유효한 BMP-UTF8 문자열이어야합니다."
 
 msgid "The slug should be a valid BMP-UTF8 string."
 msgstr "슬러그는 유효한 BMP-UTF8 문자열이어야합니다."
@@ -2878,6 +3502,18 @@ msgstr "{0} 이(가) 자체 등록 설정을 업데이트했습니다"
 msgid "Status: {0}"
 msgstr "상태: {0}"
 
+msgid "The sslVerifyPeer configuration should be a boolean."
+msgstr "sslVerifyPeer 구성은 부울이어야 합니다."
+
+msgid "The sslVerifyPeerName configuration should be a boolean."
+msgstr "sslVerifyPeerName 구성은 부울이어야 합니다."
+
+msgid "The sslAllowSelfSigned configuration should be a boolean."
+msgstr "sslAllowSelfSigned 구성은 부울이어야 합니다."
+
+msgid "The sslCafile configuration should be NULL or string."
+msgstr "sslCafile 구성은 NULL 또는 문자열이어야 합니다."
+
 msgid "A sender name is required."
 msgstr "보내는 사람 이름이 필요합니다."
 
@@ -2950,6 +3586,54 @@ msgstr "SMTP 설정 엔드포인트를 사용할 수 없습니다."
 msgid "The client should be a valid IP or a valid domain."
 msgstr "클라이언트는 올바른 IP 또는 도메인이어야 합니다."
 
+msgid "No custom SSL configuration for SMTP server."
+msgstr "SMTP 서버에 대한 사용자 정의 SSL 구성이 없습니다."
+
+msgid "Custom SSL certificate options for SMTP server is in use."
+msgstr "SMTP 서버에 대한 사용자 정의 SSL 인증서 옵션이 사용 중입니다."
+
+msgid "Custom SSL configuration options set are invalid."
+msgstr "사용자 정의 SSL 구성 옵션 설정이 잘못되었습니다."
+
+msgid "SSL certification validation for SMTP server is disabled."
+msgstr "SMTP 서버에 대한 SSL 인증 확인이 비활성화되었습니다."
+
+msgid "SMTP Settings coherent. You may send a test email to validate them."
+msgstr "SMTP 설정이 일관됩니다. 이를 확인하기 위해 테스트 이메일을 보낼 수 있습니다."
+
+msgid "SMTP Setting errors: {0}"
+msgstr "SMTP 설정 오류: {0}"
+
+msgid "The {0} plugin endpoints are disabled."
+msgstr "{0} 플러그인 엔드포인트가 비활성화되었습니다."
+
+msgid "The {0} plugin endpoints are enabled."
+msgstr "{0} 플러그인 엔드포인트가 활성화되었습니다."
+
+msgid "It is recommended to disable the plugin endpoints."
+msgstr "플러그인 엔드포인트를 비활성화하는 것이 좋습니다."
+
+msgid "Set the CIPHERGUARD_SECURITY_SMTP_SETTINGS_ENDPOINTS_DISABLED environment variable to true."
+msgstr "CIPHERGUARD_SECURITY_SMTP_SETTINGS_ENDPOINTS_DISABLED 환경 변수를 true로 설정합니다."
+
+msgid "Or set cipherguard.security.smtpSettings.endpointsDisabled to true in {0}."
+msgstr "또는 {0} 에서 cipherguard.security.smtpSettings.endpointsDisabled를 true로 설정하세요."
+
+msgid "not found"
+msgstr "찾을 수 없음"
+
+msgid "The SMTP Settings source is: {0}."
+msgstr "SMTP 설정 소스는 {0} 입니다."
+
+msgid "It is recommended to set the SMTP Settings in the database through the administration section."
+msgstr "관리 섹션을 통해 데이터베이스에서 SMTP 설정을 지정하는 것이 좋습니다."
+
+msgid "database"
+msgstr "데이타베이스"
+
+msgid "env variables"
+msgstr "환경 변수"
+
 msgid "Could not validate the smtp settings."
 msgstr "Smtp 설정의 유효성을 검사할 수 없습니다."
 
@@ -2962,18 +3646,6 @@ msgstr "OpenPGP 서버 키를 사용하여 데이터베이스에 저장된 SMTP 
 msgid "To fix this problem, you need to configure the SMTP server again."
 msgstr "이 문제를 해결하려면 SMTP 서버를 다시 구성해야 합니다."
 
-msgid "not found"
-msgstr "찾을 수 없음"
-
-msgid "database"
-msgstr "데이타베이스"
-
-msgid "env variables"
-msgstr "환경 변수"
-
-msgid "undefined"
-msgstr "미정"
-
 msgid "Cipherguard test email"
 msgstr "패스볼트 테스트 이메일"
 
@@ -2982,6 +3654,12 @@ msgstr "축하합니다!"
 
 msgid "If you receive this email, it means that your cipherguard smtp configuration is working fine."
 msgstr "이 이메일을 수신하면 패스볼트 smtp 구성이 올바르게 작동 중임을 의미합니다."
+
+msgid "Invalid `cipherguard.plugins.smtpSettings.security` configuration values."
+msgstr "'cipherguard.plugins.smtpSettings.security' 구성 값이 잘못되었습니다."
+
+msgid "Errors: "
+msgstr "오류: "
 
 msgid "The data entered are not correct"
 msgstr "입력한 데이터가 올바르지 않습니다"
@@ -3003,9 +3681,6 @@ msgstr "시스템 체크"
 
 msgid "Subscription key"
 msgstr "구독 키"
-
-msgid "Database"
-msgstr "데이타베이스"
 
 msgid "Server keys"
 msgstr "서버 키"
@@ -3121,6 +3796,30 @@ msgstr "강제 ssl 상태가 필요합니다."
 msgid "The force ssl setting should be a valid boolean."
 msgstr "강제 ssl 설정은 유효한 부울이어야 합니다."
 
+msgid "The cipherguard config is writable."
+msgstr "패스볼트 구성에 쓸 수 있습니다."
+
+msgid "The cipherguard config is not writable."
+msgstr "패스볼트 구성에 쓸 수 없습니다."
+
+msgid "Ensure the file "
+msgstr "파일 확인 "
+
+msgid "The server OpenPGP private key file is writable."
+msgstr "서버 OpenPGP 개인키 파일에 쓸 수 있습니다."
+
+msgid "The server OpenPGP private key file is not writable."
+msgstr "서버 OpenPGP 개인키 파일에 쓸 수 없습니다."
+
+msgid "Ensure the file {0} is writable by the webserver user."
+msgstr "웹 서버 사용자가 {0} 파일을 쓸 수 있는지 확인하세요."
+
+msgid "The server OpenPGP public key file is writable."
+msgstr "서버 OpenPGP 공개키 파일에 쓸 수 있습니다."
+
+msgid "The server OpenPGP public key file is not writable."
+msgstr "서버 OpenPGP 공개키 파일에 쓸 수 없습니다."
+
 msgid "The database schema does not match the one expected"
 msgstr "데이터베이스 스키마가 예상된 것과 일치하지 않습니다."
 
@@ -3132,33 +3831,6 @@ msgstr "첫 번째 사용자를 만드는 동안 문제가 발생했습니다."
 
 msgid "There was a problem creating the registration token"
 msgstr "등록 토큰을 만드는 동안 문제가 발생했습니다."
-
-msgid "The cipherguard config is writable."
-msgstr "패스볼트 구성에 쓸 수 있습니다."
-
-msgid "The cipherguard config is not writable."
-msgstr "패스볼트 구성에 쓸 수 없습니다."
-
-msgid "Ensure the file "
-msgstr "파일 확인 "
-
-msgid "you can try:"
-msgstr "시도해볼 것:"
-
-msgid "The server OpenPGP public key file is writable."
-msgstr "서버 OpenPGP 공개키 파일에 쓸 수 있습니다."
-
-msgid "The server OpenPGP public key file is not writable."
-msgstr "서버 OpenPGP 공개키 파일에 쓸 수 없습니다."
-
-msgid "Ensure the file {0} is writable by the webserver user."
-msgstr "웹 서버 사용자가 {0} 파일을 쓸 수 있는지 확인하세요."
-
-msgid "The server OpenPGP private key file is writable."
-msgstr "서버 OpenPGP 개인키 파일에 쓸 수 있습니다."
-
-msgid "The server OpenPGP private key file is not writable."
-msgstr "서버 OpenPGP 개인키 파일에 쓸 수 없습니다."
 
 msgid "Create your user account!"
 msgstr "사용자 계정을 생성!"
@@ -3358,17 +4030,8 @@ msgstr "서버에 URL 다시 쓰기가 제대로 구성되지 않았습니다."
 msgid "GPG is configured correctly."
 msgstr "GPG가 올바르게 구성되었습니다."
 
-msgid "GPG Configuration"
-msgstr "GPG 구성"
-
 msgid "SSL"
 msgstr "SSL"
-
-msgid "SSL access is enabled."
-msgstr "SSL 접근이 활성화되었습니다."
-
-msgid "SSL access is not enabled. You can still proceed, but it is highly recommended that you configure your web server to use HTTPS before you continue."
-msgstr "SSL 접근을 사용할 수 없습니다. 계속 진행할 수 있지만 계속하기 전에 HTTPS를 사용하도록 웹 서버를 구성하는 것이 좋습니다."
 
 msgid "Start configuration"
 msgstr "구성 시작"
@@ -3410,7 +4073,7 @@ msgid "As a precaution, do not forget to backup your database before you continu
 msgstr "예방 차원에서 계속하기 전 데이터베이스를 백업하는 것을 잊지 마세요."
 
 msgid "Help"
-msgstr "도움"
+msgstr "도움말"
 
 msgid "Need help? You can find more information on how to install cipherguard in the official online help."
 msgstr "도움이 필요하세요? 패스볼트 설치 방법에 대한 자세한 내용은 공식 온라인 도움말을 참조하세요."
@@ -3442,6 +4105,9 @@ msgstr "SMTP 서버가 필요한 이유는 무엇입니까?"
 msgid "Cipherguard needs an smtp server in order to send invitation emails after an account creation and to send email notifications."
 msgstr "패스볼트는 계정 생성 후 초대 메일을 발송하고 메일 알림을 보내기 위해 smtp 서버가 필요합니다."
 
+msgid "Error"
+msgstr "오류"
+
 msgid "The requested address was not found on this server."
 msgstr "요청한 주소를 이 서버에서 찾을 수 없습니다."
 
@@ -3456,9 +4122,6 @@ msgstr "상태 확인"
 
 msgid "Cipherguard API Status"
 msgstr "패스볼트 API 상태"
-
-msgid "SSL access is not enabled."
-msgstr "SSL 접근을 사용할 수 없습니다."
 
 msgid "Group manager"
 msgstr "그룹 관리자"
@@ -3517,11 +4180,11 @@ msgstr "다른 사용자는 여전히 사용자와 리소스를 공유하고 사
 msgid "Contact your admin"
 msgstr "관리자에게 연락"
 
-msgid "{0} changed role of {1} to admin."
-msgstr "{0} 이(가) {1} 의 역할을 관리자로 변경했습니다."
+msgid "{0} changed your role to user."
+msgstr "{0} 이(가) 사용자로 역할을 변경했습니다."
 
-msgid "{0} changed your role to admin."
-msgstr "{0} 이(가) 관리자로 역할을 변경했습니다."
+msgid "{0} changed the role of {1} to user."
+msgstr "{0} 이(가) {1} 의 역할을 사용자로 변경했습니다."
 
 msgid "{0} can no longer perform administration tasks."
 msgstr "{0} 이(가) 더 이상 관리 작업을 수행할 수 없습니다."
@@ -3539,7 +4202,7 @@ msgid "{0} cannot complete the account recovery process!"
 msgstr "{0} 이(가) 계정 복구 작업이 완료할 수 없습니다!"
 
 msgid "This user lost their private key and/or passphrase and cannot complete the account recovery process."
-msgstr "이 사용자는 개인키 및(또는) 암호를 분실하여 계정 복구 프로세스를 완료할 수 없습니다."
+msgstr "이 사용자는 개인키 및(또는) 패스프레이즈를 분실하여 계정 복구 프로세스를 완료할 수 없습니다."
 
 msgid "Unfortunately, they will need your help to delete their account and restart from scratch."
 msgstr "안타깝게도 계정을 삭제하고 처음부터 다시 시작하려면 귀하의 도움이 필요합니다."
@@ -3616,6 +4279,12 @@ msgstr "방금 패스볼트에 계정을 생성했습니다!"
 msgid "You just opened an account on cipherguard at {0}."
 msgstr "{0} 에서 패스볼트에 대한 계정을 방금 개설했습니다."
 
+msgid "There was a change in the user directory."
+msgstr "사용자 디렉토리에 변경 사항이 있습니다."
+
+msgid "You have been requested to add members to a group."
+msgstr "그룹에 구성원을 추가하도록 요청되었습니다."
+
 msgid "{0} requested you to add members to a group"
 msgstr "{0} 이(가) {1} 에 구성원 추가를 요청함"
 
@@ -3676,9 +4345,6 @@ msgstr "더 이상 이 그룹의 그룹 관리자가 아닙니다"
 msgid "You are no longer authorized to edit the members of this group."
 msgstr "더 이상 이 그룹의 구성원을 편집할 수 있는 권한이 없습니다."
 
-msgid "Edited your membership in several groups"
-msgstr "여러 그룹의 멤버십을 수정했습니다."
-
 msgid "{0} group memberships were affected."
 msgstr "{0} 그룹 멤버십이 영향을 받았습니다."
 
@@ -3687,9 +4353,6 @@ msgstr "여기에 나열하기에는 무리가 있지만, 패스볼트에 대한
 
 msgid "go to cipherguard"
 msgstr "패스볼트로 이동"
-
-msgid "{0} deleted several group"
-msgstr "{0} 이(가) 여러 그룹을 삭제함"
 
 msgid "{0} deleted {1} groups you were a member of."
 msgstr "{0} 이(가) 사용자가 속한 {1} 개 그룹을 삭제했습니다."
@@ -3708,21 +4371,6 @@ msgstr "설명: {0}"
 
 msgid "{0} shared a password with you"
 msgstr "{0} 이(가) 당신과 암호를 공유함"
-
-msgid "{0} updated the password {1}"
-msgstr "{0} 이(가) {1} 암호를 업데이트함"
-
-msgid "Edited multiple resources"
-msgstr "여러 리소스 수정됨"
-
-msgid "{0} resources were affected."
-msgstr "{0} 개의 리소스가 영향을 받았습니다."
-
-msgid "It would be too much to list them here, but you can go check them on cipherguard."
-msgstr "여기에 나열하는 건 무리겠지만, 패스볼트로 확인하시면 됩니다."
-
-msgid "view them in cipherguard"
-msgstr "패스볼트에서 보기"
 
 msgid "{0} shared passwords with you"
 msgstr "{0} 이(가) 당신과 암호를 공유함"
@@ -3752,7 +4400,7 @@ msgid "This email is an automatic notification sent by"
 msgstr "이 이메일은 다음에서 자동으로 발송되는 알림입니다."
 
 msgid "You can disable these notifications by requesting an administrator to delete your account."
-msgstr "관리자에게 계정 삭제를 요청하여 이러한 알림을 비활성화할 수 있습니다."
+msgstr "이 알림을 비활성화하려면 관리자에게 계정 삭제 요청을 하세요."
 
 msgid "The locale {0} is not valid or not supported."
 msgstr "{0} 로케일이 잘못되었거나 지원되지 않습니다."

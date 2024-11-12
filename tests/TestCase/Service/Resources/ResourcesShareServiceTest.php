@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.13.0
  */
 
@@ -20,6 +20,7 @@ namespace App\Test\TestCase\Service\Resources;
 use App\Error\Exception\ValidationException;
 use App\Model\Entity\Permission;
 use App\Model\Entity\Role;
+use App\Service\Resources\ResourcesExpireResourcesFallbackServiceService;
 use App\Service\Resources\ResourcesShareService;
 use App\Test\Lib\AppTestCase;
 use App\Utility\UserAccessControl;
@@ -73,7 +74,9 @@ class ResourcesShareServiceTest extends AppTestCase
         $this->Resources = TableRegistry::getTableLocator()->get('Resources');
         $this->Permissions = TableRegistry::getTableLocator()->get('Permissions');
         $this->Users = TableRegistry::getTableLocator()->get('Users');
-        $this->service = new ResourcesShareService();
+        $this->service = new ResourcesShareService(
+            new ResourcesExpireResourcesFallbackServiceService()
+        );
     }
 
     public function tearDown(): void

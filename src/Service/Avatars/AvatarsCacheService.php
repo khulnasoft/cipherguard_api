@@ -3,46 +3,45 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.2.0
  */
 namespace App\Service\Avatars;
 
 use App\Model\Entity\Avatar;
-use App\Model\Table\AvatarsTable;
 use App\Utility\AvatarProcessing;
 use App\View\Helper\AvatarHelper;
 use Cake\Core\Configure;
 use Cake\Log\Log;
 use Cake\ORM\Locator\LocatorAwareTrait;
+use Cake\ORM\TableRegistry;
 use Cake\Validation\Validation;
 use Laminas\Diactoros\Stream;
+use League\Flysystem\Filesystem;
+use League\Flysystem\FilesystemAdapter;
 
 class AvatarsCacheService
 {
     use LocatorAwareTrait;
 
-    /**
-     * @var \App\Model\Table\AvatarsTable
-     */
-    public $Avatars;
+    private Filesystem $filesystem;
 
     /**
      * AvatarsReadCacheService constructor.
      *
-     * @param \App\Model\Table\AvatarsTable $AvatarsTable Injected Avatars table.
+     * @param \League\Flysystem\FilesystemAdapter $filesystemAdapter file system adapter used to cache the avatars
      */
-    public function __construct(AvatarsTable $AvatarsTable)
+    public function __construct(FilesystemAdapter $filesystemAdapter)
     {
-        $this->Avatars = $AvatarsTable;
+        $this->filesystem = new Filesystem($filesystemAdapter);
     }
 
     /**
@@ -52,8 +51,10 @@ class AvatarsCacheService
      */
     public function readSteamFromId(?string $id, string $format): Stream
     {
+        /** @var \App\Model\Table\AvatarsTable $AvatarsTable */
+        $AvatarsTable = TableRegistry::getTableLocator()->get('Avatars');
         /** @var \App\Model\Entity\Avatar|null $avatar */
-        $avatar = $id ? $this->Avatars->findById($id)->first() : null;
+        $avatar = $id ? $AvatarsTable->findById($id)->first() : null;
 
         if (is_null($avatar)) {
             return new Stream($this->getFallBackFileName($format));
@@ -122,7 +123,7 @@ class AvatarsCacheService
     protected function writeAvatarDataInFilesystem(string $filename, string $data, Avatar $avatar): void
     {
         try {
-            $this->Avatars->getFilesystem()->write($filename, $data);
+            $this->filesystem->write($filename, $data);
         } catch (\Throwable $e) {
             Log::error('Error while saving cache avatar with ID ' . $avatar->id . '.');
             Log::error($e->getMessage());
@@ -145,7 +146,7 @@ class AvatarsCacheService
     ): Stream {
         $fileName = $this->getAvatarFileName($avatar, $format);
         try {
-            $stream = $this->Avatars->getFilesystem()->readStream($fileName);
+            $stream = $this->filesystem->readStream($fileName);
         } catch (\Throwable $e) {
             $stream = null;
         }
@@ -153,7 +154,7 @@ class AvatarsCacheService
         if (empty($stream)) {
             try {
                 $this->storeInCache($avatar);
-                $stream = $this->Avatars->getFilesystem()->readStream($fileName);
+                $stream = $this->filesystem->readStream($fileName);
             } catch (\Throwable $exception) {
                 Log::warning(__('Could not save the avatar in the {0} file.', $fileName));
                 $stream = $this->getFallBackFileName($format);
@@ -221,7 +222,7 @@ class AvatarsCacheService
             throw new \Exception(__('The avatar id is not valid.'));
         }
         $avatarCacheSubDirectory = $avatarId . DS;
-        $this->Avatars->getFilesystem()->createDirectory($avatarCacheSubDirectory);
+        $this->filesystem->createDirectory($avatarCacheSubDirectory);
 
         return $avatarCacheSubDirectory;
     }

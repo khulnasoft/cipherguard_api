@@ -3,23 +3,23 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         4.0.0
  */
 namespace App\Test\TestCase\Command;
 
-use App\Command\RegisterUserCommand;
 use App\Model\Entity\AuthenticationToken;
 use App\Test\Factory\AuthenticationTokenFactory;
 use App\Test\Factory\UserFactory;
+use App\Test\Lib\Utility\CipherguardCommandTestTrait;
 use Cake\Console\TestSuite\ConsoleIntegrationTestTrait;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
@@ -31,6 +31,7 @@ class RecoverUserCommandTest extends TestCase
 {
     use ConsoleIntegrationTestTrait;
     use TruncateDirtyTables;
+    use CipherguardCommandTestTrait;
 
     /**
      * setUp method
@@ -41,7 +42,7 @@ class RecoverUserCommandTest extends TestCase
     {
         parent::setUp();
         $this->useCommandRunner();
-        RegisterUserCommand::$isUserRoot = false;
+        $this->mockProcessUserService('www-data');
     }
 
     public function testRecoverUserCommandHelp()
@@ -57,7 +58,7 @@ class RecoverUserCommandTest extends TestCase
 
     public function testRecoverUserCommand_Fetch_On_Active_User()
     {
-        $user = UserFactory::make()->user()->active()->persist();
+        [$user] = UserFactory::make(2)->user()->active()->persist();
         $expirationDate = Configure::read('cipherguard.auth.token.' . AuthenticationToken::TYPE_RECOVER . '.expiry');
         $activeNonExpiredToken = AuthenticationTokenFactory::make()
             ->type(AuthenticationToken::TYPE_RECOVER)
@@ -75,7 +76,7 @@ class RecoverUserCommandTest extends TestCase
 
     public function testRecoverUserCommand_Create_On_Active_User_Without_Token()
     {
-        $user = UserFactory::make()->user()->active()->persist();
+        [$user] = UserFactory::make(2)->user()->active()->persist();
         $this->exec('cipherguard recover_user -u ' . $user->username);
         $this->assertExitError();
         $this->assertOutputContains("An active recovery token could not be found for the user {$user->username}.");
@@ -84,7 +85,7 @@ class RecoverUserCommandTest extends TestCase
 
     public function testRecoverUserCommand_Create_On_Active_User()
     {
-        $user = UserFactory::make()->user()->active()->persist();
+        [$user] = UserFactory::make(2)->user()->active()->persist();
         $this->exec('cipherguard recover_user -c -u ' . $user->username);
         $this->assertExitSuccess();
         $token = AuthenticationTokenFactory::find()->firstOrFail();
@@ -92,6 +93,14 @@ class RecoverUserCommandTest extends TestCase
             Router::url('/setup/recover/start/' . $user->id . '/' . $token['token'], true)
         );
         $this->assertSame(1, AuthenticationTokenFactory::count());
+    }
+
+    public function testRecoverUserCommand_Create_On_Deleted_User()
+    {
+        $user = UserFactory::make()->user()->active()->deleted()->persist();
+        $this->exec('cipherguard recover_user -c -u ' . $user->username);
+        $this->assertExitError();
+        $this->assertErrorContains('The user does not exist or is not active or is disabled.');
     }
 
     public function testRecoverUserCommand_Create_On_Disabled_User()
@@ -127,7 +136,7 @@ class RecoverUserCommandTest extends TestCase
 
     public function testRecoverUserCommand_WithSameUsernamePresent(): void
     {
-        $username = 'ada@cipherguard.khulnasoft.com';
+        $username = 'ada@cipherguard.github.io';
         // Create two users with same username.
         // 1. First would be active & deleted
         // 2. Second with active & not delete(`deleted=0`)

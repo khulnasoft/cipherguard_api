@@ -3,21 +3,25 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 namespace App\Model\Traits\Permissions;
 
 use App\Model\Entity\Permission;
 use App\Model\Table\AvatarsTable;
+use App\Model\Table\PermissionsTable;
+use Cake\Database\Expression\IdentifierExpression;
+use Cake\Database\Expression\QueryExpression;
+use Cake\Http\Exception\BadRequestException;
 use Cake\ORM\Query;
 use Cake\Utility\Hash;
 use Cake\Validation\Validation;
@@ -29,15 +33,15 @@ trait PermissionsFindersTrait
      * Find the highest permission an aro or the groups the aro is member of could have for a given aco.
      *
      * @param string $acoType The aco type. By instance Resource or Folder.
-     * @param string $acoForeignKey The target aco. By instance resource or folder id.
+     * @param string|\Cake\Database\Expression\IdentifierExpression $acoForeignKey The target aco. By instance resource or folder id.
      * @param string $aroForeignKey The target aro id. By instance a user or a group id.
      * @return \Cake\ORM\Query
      */
-    public function findHighestByAcoAndAro(string $acoType, string $acoForeignKey, string $aroForeignKey): Query
+    public function findHighestByAcoAndAro(string $acoType, $acoForeignKey, string $aroForeignKey): Query
     {
         return $this->findAllByAro($acoType, $aroForeignKey, ['checkGroupsUsers' => true])
             ->where(['Permissions.aco_foreign_key' => $acoForeignKey])
-            ->order(['Permissions.type' => 'DESC'])
+            ->orderDesc('Permissions.type')
             ->limit(1);
     }
 
@@ -94,25 +98,29 @@ trait PermissionsFindersTrait
      *   bool $checkGroupsUsers Check also for the groups the aro is member of
      * ]
      * @return \Cake\ORM\Query
+     * @throws \Cake\Http\Exception\BadRequestException if the aro foreign key is not a valid UUID
      */
     public function findAllByAro(string $acoType, string $aroForeignKey, ?array $options = []): Query
     {
+        if (!Validation::uuid($aroForeignKey)) {
+            throw new BadRequestException(__('The identifier should be a valid UUID.'));
+        }
         $checkGroupsUsers = Hash::get($options, 'checkGroupsUsers', false);
-        $aroForeignKeys = [$aroForeignKey];
 
         // Retrieve also the permissions for the groups a user is member of.
         if ($checkGroupsUsers) {
-            // For performance reasons, the groups a user is member of are retrieved in a seprate query.
-            $groupsIds = $this->Groups->GroupsUsers->findByUserId($aroForeignKey)
-                ->disableHydration()
-                ->all()
-                ->extract('group_id')->toArray();
-            $aroForeignKeys = array_merge($aroForeignKeys, $groupsIds);
+            $aroForeignKeys = $this->Groups->GroupsUsers->find()
+                ->select('group_id')
+                ->where(['user_id' => $aroForeignKey])
+                ->epilog('UNION SELECT :aroForeignKey')
+                ->bind(':aroForeignKey', $aroForeignKey);
+        } else {
+            $aroForeignKeys = [$aroForeignKey];
         }
 
         return $this->find()
             ->where([
-                'aco' => $acoType,
+                'Permissions.aco' => $acoType,
                 'Permissions.aro_foreign_key IN' => $aroForeignKeys,
             ]);
     }
@@ -332,7 +340,7 @@ trait PermissionsFindersTrait
     }
 
     /**
-     * Find access differences between a group and user.
+     * Find access differences between a group and a user.
      * Return only the accesses that are found in the group accesses but not in the user accesses, such as array_diff
      * will do.
      *
@@ -360,6 +368,71 @@ trait PermissionsFindersTrait
             ->where([
                 'aco_foreign_key NOT IN' => $remainAccessAcoForeignKeysQuery,
             ]);
+    }
+
+    /**
+     * Find access differences between a group and multiple users.
+     * Return only the accesses that are found in the group accesses but not in the user accesses, such as array_diff
+     * would do.
+     *
+     * @param string $acoType The aco type. By instance Resource or Folder.
+     * @param string $groupId The group identifier.
+     * @param string[] $usersIds The user identifier.
+     * @return \Cake\ORM\Query
+     */
+    public function findAcosAccessesDiffBetweenGroupAndUsers(string $acoType, string $groupId, array $usersIds): Query
+    {
+        // @todo to document
+
+        $directUsersAccessesQuery = $this->find()
+            ->select([
+                'user_id' => 'aro_foreign_key',
+                'resource_id' => 'aco_foreign_key',
+            ])
+            ->where([
+                'aco' => PermissionsTable::RESOURCE_ACO,
+                'aro' => PermissionsTable::USER_ARO,
+                'aro_foreign_key IN' => $usersIds,
+            ]);
+
+        $inheritedUsersAccessesExcludingGroupQuery = $this->find()
+            ->select([
+                'user_id' => 'groups_users.user_id',
+                'resource_id' => 'aco_foreign_key',
+            ])
+            ->leftJoin('groups_users', 'aro_foreign_key = group_id')
+            ->where([
+                'aco' => PermissionsTable::RESOURCE_ACO,
+                'aro' => PermissionsTable::GROUP_ARO,
+                'groups_users.user_id IN' => $usersIds,
+                'groups_users.group_id <>' => $groupId,
+            ]);
+
+        $groupUsersAccessesQuery = $this->find()
+            ->select([
+                'user_id' => 'groups_users.user_id',
+                'resource_id' => 'aco_foreign_key',
+            ])
+            ->leftJoin('groups_users', 'aro_foreign_key = group_id')
+            ->where([
+                'aco' => PermissionsTable::RESOURCE_ACO,
+                'aro' => PermissionsTable::GROUP_ARO,
+                'aro_foreign_key' => $groupId,
+            ]);
+
+        return $groupUsersAccessesQuery
+            ->leftJoin(['DirectUsersAccesses' => $directUsersAccessesQuery], [
+                'DirectUsersAccesses.resource_id' => new IdentifierExpression('Permissions.aco_foreign_key'),
+                'DirectUsersAccesses.user_id' => new IdentifierExpression('groups_users.user_id'),
+            ])
+            ->leftJoin(['InheritedUsersAccesses' => $inheritedUsersAccessesExcludingGroupQuery], [
+                'InheritedUsersAccesses.resource_id' => new IdentifierExpression('Permissions.aco_foreign_key'),
+                'InheritedUsersAccesses.user_id' => new IdentifierExpression('groups_users.user_id'),
+            ])
+            ->where(function (QueryExpression $exp) {
+                return $exp->isNull('DirectUsersAccesses.resource_id')
+                    ->isNull('InheritedUsersAccesses.resource_id');
+            });
     }
 
     /**

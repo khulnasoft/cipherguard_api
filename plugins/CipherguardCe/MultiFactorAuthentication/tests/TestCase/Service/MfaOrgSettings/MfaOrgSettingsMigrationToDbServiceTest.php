@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.7.3
  */
 
@@ -62,7 +62,7 @@ class MfaOrgSettingsMigrationToDbServiceTest extends TestCase
     }
 
     /**
-     * If no settings are in the DB and Totp was NOT DISABLED in env(CIPHERGURD_PLUGINS_MFA_PROVIDERS_TOTP)
+     * If no settings are in the DB and Totp was NOT DISABLED in env(CIPHERGUARD_PLUGINS_MFA_PROVIDERS_TOTP)
      * Then store TOTP as enabled in the DB (legacy behavior with TOTP activated by default)
      */
     public function testMfaOrgSettingsMigrationToDbService_NoEnvVariable_NoDBSettings_Should_EnableTotp_In_Db()
@@ -80,21 +80,21 @@ class MfaOrgSettingsMigrationToDbServiceTest extends TestCase
     }
 
     /**
-     * If no settings are in the DB and Totp was DISABLED in env(CIPHERGURD_PLUGINS_MFA_PROVIDERS_TOTP)
+     * If no settings are in the DB and Totp was DISABLED in env(CIPHERGUARD_PLUGINS_MFA_PROVIDERS_TOTP)
      * Then store TOTP as enabled in the DB (legacy behavior with TOTP activated by default)
      */
     public function testMfaOrgSettingsMigrationToDbService_WithEnvVariableSetToFalse_NoDBSettings_Should_DisableTotp_In_Db()
     {
         UserFactory::make()->admin()->persist();
 
-        putenv('CIPHERGURD_PLUGINS_MFA_PROVIDERS_TOTP=false');
+        putenv('CIPHERGUARD_PLUGINS_MFA_PROVIDERS_TOTP=false');
 
         $this->service->migrate();
 
         $expectedConfig = ['providers' => []];
         $this->assertSame($expectedConfig, $this->getMfaOrganizationSettingValue());
 
-        putenv('CIPHERGURD_PLUGINS_MFA_PROVIDERS_TOTP');
+        putenv('CIPHERGUARD_PLUGINS_MFA_PROVIDERS_TOTP');
     }
 
     public function testMfaOrgSettingsMigrationToDbService_WithDBSettings_Should_Not_Overwrite_DB_Settings()
@@ -139,7 +139,7 @@ class MfaOrgSettingsMigrationToDbServiceTest extends TestCase
 
     public function testMfaOrgSettingsMigrationToDbService_WithOtherProvidersAndNoTotpInDB_And_WithTotpEnv_Must_Enable_Totp()
     {
-        putenv('CIPHERGURD_PLUGINS_MFA_PROVIDERS_TOTP=true');
+        putenv('CIPHERGUARD_PLUGINS_MFA_PROVIDERS_TOTP=true');
 
         UserFactory::make()->admin()->persist();
         $settings = $this->getDefaultMfaOrgSettings();
@@ -152,7 +152,7 @@ class MfaOrgSettingsMigrationToDbServiceTest extends TestCase
         $settings['providers'] = ['duo', 'yubikey', 'totp'];
         $this->assertEquals($settings, $settingsInDB);
 
-        putenv('CIPHERGURD_PLUGINS_MFA_PROVIDERS_TOTP');
+        putenv('CIPHERGUARD_PLUGINS_MFA_PROVIDERS_TOTP');
     }
 
     public function testMfaOrgSettingsMigrationToDbService_With_Invalid_Settings()

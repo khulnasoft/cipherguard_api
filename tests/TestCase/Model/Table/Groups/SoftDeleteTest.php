@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 
@@ -52,7 +52,7 @@ class SoftDeleteTest extends AppTestCase
     {
         $groupId = UuidFactory::uuid('group.id.procurement');
         $group = $this->Groups->get($groupId);
-        $this->assertTrue($this->Groups->softDelete($group));
+        $this->assertNotFalse($this->Groups->softDelete($group));
         $this->assertGroupIsSoftDeleted($groupId);
     }
 
@@ -63,7 +63,7 @@ class SoftDeleteTest extends AppTestCase
         $userHId = UuidFactory::uuid('user.id.hedy');
         $userMId = UuidFactory::uuid('user.id.marlyn');
         $group = $this->Groups->get($groupId);
-        $this->assertTrue($this->Groups->softDelete($group));
+        $this->assertNotFalse($this->Groups->softDelete($group));
         $this->assertGroupIsSoftDeleted($groupId);
         $this->assertResourceIsNotSoftDeleted($resourceId);
         $this->assertPermissionNotExist($resourceId, $groupId);
@@ -77,7 +77,7 @@ class SoftDeleteTest extends AppTestCase
         $resourceId = UuidFactory::uuid('resource.id.stealjs');
         $userId = UuidFactory::uuid('user.id.adele');
         $group = $this->Groups->get($groupId);
-        $this->assertTrue($this->Groups->softDelete($group));
+        $this->assertNotFalse($this->Groups->softDelete($group));
         $this->assertGroupIsSoftDeleted($groupId);
         $this->assertResourceIsSoftDeleted($resourceId);
         $this->assertPermissionNotExist($resourceId, $groupId);
@@ -144,7 +144,7 @@ class SoftDeleteTest extends AppTestCase
         $this->Permissions->save($permission);
 
         $group = $this->Groups->get($groupId);
-        $this->assertTrue($this->Groups->softDelete($group));
+        $this->assertNotFalse($this->Groups->softDelete($group));
         $this->assertGroupIsSoftDeleted($groupId);
         $this->assertResourceIsNotSoftDeleted($resourceId);
         $this->assertPermissionNotExist($resourceId, $groupId);
@@ -160,7 +160,7 @@ class SoftDeleteTest extends AppTestCase
         $userId = UuidFactory::uuid('user.id.orna');
         $this->assertPermission($resourceId, $groupId, Permission::OWNER);
         $group = $this->Groups->get($groupId);
-        $this->assertTrue($this->Groups->softDelete($group));
+        $this->assertNotFalse($this->Groups->softDelete($group));
         $this->assertGroupIsSoftDeleted($groupId);
         $this->assertResourceIsNotSoftDeleted($resourceId);
         $this->assertPermission($resourceId, $userId, Permission::OWNER);

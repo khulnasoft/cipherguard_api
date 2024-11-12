@@ -3,21 +3,19 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         4.3.0
  */
 
 namespace App\Service\Setup;
-
-use Cake\View\ViewBuilder;
 
 abstract class AbstractRecoverStartService
 {
@@ -40,18 +38,6 @@ abstract class AbstractRecoverStartService
         }
 
         return $result;
-    }
-
-    /**
-     * @param \Cake\View\ViewBuilder $viewBuilder View builder
-     * @return void
-     */
-    public function setTemplate(ViewBuilder $viewBuilder): void
-    {
-        $viewBuilder
-            ->setTemplatePath('/Setup')
-            ->setLayout('default')
-            ->setTemplate('recoverStart');
     }
 
     /**

@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 
@@ -25,6 +25,12 @@ class SettingsIndexControllerTest extends AppIntegrationTestCase
 {
     public function testSettingsIndexController_SuccessAsLU(): void
     {
+        // Enable all plugins. This test is important as, it also tests the complete
+        // integration of the plugins
+        $plugins = array_keys(Configure::read('cipherguard.plugins'));
+        foreach ($plugins as $plugin) {
+            $this->enableFeaturePlugin(ucfirst($plugin));
+        }
         $this->logInAsUser();
         $this->getJson('/settings.json');
         $this->assertSuccess();
@@ -40,7 +46,15 @@ class SettingsIndexControllerTest extends AppIntegrationTestCase
         // Assert some default plugin visibility
         $this->assertTrue(isset($this->_responseJsonBody->cipherguard->plugins->export->enabled));
         $this->assertTrue(isset($this->_responseJsonBody->cipherguard->plugins->accountRecoveryRequestHelp->enabled));
+        $this->assertTrue(isset($this->_responseJsonBody->cipherguard->plugins->healthcheck->enabled));
         $this->assertTrue(isset($this->_responseJsonBody->cipherguard->plugins->disableUser->enabled));
+        $this->assertTrue(isset($this->_responseJsonBody->cipherguard->plugins->healthcheckUi->enabled));
+        $this->assertTrue(isset($this->_responseJsonBody->cipherguard->plugins->log->enabled));
+        $this->assertTrue(isset($this->_responseJsonBody->cipherguard->plugins->multiFactorAuthentication->enabled));
+        $this->assertTrue(isset($this->_responseJsonBody->cipherguard->plugins->folders->enabled));
+        foreach ($plugins as $plugin) {
+            $this->assertTrue($this->_responseJsonBody->cipherguard->plugins->{$plugin}->enabled);
+        }
     }
 
     public function testSettingsIndexController_SuccessAsAN(): void

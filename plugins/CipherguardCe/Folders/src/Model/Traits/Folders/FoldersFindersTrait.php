@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.13.0
  */
 
@@ -19,6 +19,7 @@ namespace Cipherguard\Folders\Model\Traits\Folders;
 
 use App\Model\Table\AvatarsTable;
 use App\Model\Table\PermissionsTable;
+use App\Model\Traits\Query\CaseInsensitiveSearchQueryTrait;
 use Cake\Database\Expression\IdentifierExpression;
 use Cake\ORM\Query;
 use Cake\Validation\Validation;
@@ -34,6 +35,8 @@ use Cipherguard\Folders\Model\Entity\Folder;
  */
 trait FoldersFindersTrait
 {
+    use CaseInsensitiveSearchQueryTrait;
+
     /**
      * Build the query that fetches data for folders index
      *
@@ -64,28 +67,27 @@ trait FoldersFindersTrait
             $this->filterQueryByParentIds($query, $options['filter']['has-parent']);
         }
 
-        // Filter on folders the user has access
-        $query = $this->_filterQueryByPermissions($query, $userId);
-
-        // If contains the user permission.
+        // If contains the user permission, retrieve the highest permission the user has for each folder.
+        // In the meantime filter only the folder the user has access, the permissions table will be joined
+        // to the folders table with an INNER join, see the hasOne definition.
         if (isset($options['contain']['permission'])) {
             $query->contain('Permission', function (Query $q) use ($userId) {
-                $subQueryOptions = ['checkGroupsUsers' => true];
+                $acoForeignKey = new IdentifierExpression('Folders.id');
                 $permissionIdSubQuery = $this->Permissions
-                    ->findAllByAro(PermissionsTable::FOLDER_ACO, $userId, $subQueryOptions)
-                    ->where(['Permissions.aco_foreign_key' => new IdentifierExpression('Folders.id')])
-                    ->orderDesc('Permissions.type')
-                    ->limit(1)
+                    ->findHighestByAcoAndAro(PermissionsTable::FOLDER_ACO, $acoForeignKey, $userId)
                     ->select(['Permissions.id']);
 
                 return $q->where(['Permission.id' => $permissionIdSubQuery]);
             });
+        } else {
+            // Filter on folders the user has access
+            $query = $this->_filterQueryByPermissions($query, $userId);
         }
 
         // If contains children_folders.
         if (isset($options['contain']['children_folders'])) {
             $query->contain('ChildrenFolders', function (Query $q) use ($userId) {
-                return $q->where(['user_id' => $userId])
+                return $q->where(['FoldersRelations.user_id' => $userId])
                     ->find(FolderizableBehavior::FINDER_NAME, ['user_id' => $userId]);
             });
         }
@@ -93,7 +95,7 @@ trait FoldersFindersTrait
         // If contains children_resources.
         if (isset($options['contain']['children_resources'])) {
             $query->contain('ChildrenResources', function (Query $q) use ($userId) {
-                return $q->where(['user_id' => $userId])
+                return $q->where(['FoldersRelations.user_id' => $userId])
                     ->find(FolderizableBehavior::FINDER_NAME, ['user_id' => $userId]);
             });
         }
@@ -158,12 +160,10 @@ trait FoldersFindersTrait
      * @param array $options options
      * @return \Cake\ORM\Query
      */
-    public function findView(string $userId, string $folderId, ?array $options = [])
+    public function findView(string $userId, string $folderId, ?array $options = []): Query
     {
-        $query = $this->findIndex($userId, $options)
+        return $this->findIndex($userId, $options)
             ->where(['Folders.id' => $folderId]);
-
-        return $query;
     }
 
     /**
@@ -178,14 +178,15 @@ trait FoldersFindersTrait
         $subQueryOptions = [
             'checkGroupsUsers' => true,
         ];
-        $resourcesFilterByPermissionTypeSubQuery = $this->Permissions
+        $folderPermissions = $this->Permissions
             ->findAllByAro(PermissionsTable::FOLDER_ACO, $userId, $subQueryOptions)
-            ->select(['Permissions.aco_foreign_key'])
-            ->distinct();
+            ->select(['Permissions.id'])
+            ->where(['Permissions.aco_foreign_key' => new IdentifierExpression('Folders.id')])
+            ->limit(1);
 
-        $query->where(['Folders.id IN' => $resourcesFilterByPermissionTypeSubQuery]);
-
-        return $query;
+        return $query->innerJoin(['FolderPermissions' => 'permissions'], [
+            'FolderPermissions.id' => $folderPermissions,
+        ]);
     }
 
     /**
@@ -208,17 +209,16 @@ trait FoldersFindersTrait
      * $query = $Folders->find();
      * $Groups->_filterQueryBySearch($query, 'creative');
      *
-     * Should filter all the groups with a name containing creative.
+     * Should filter all the folders with a name containing creative.
+     * Search should be case-insensitive
      *
      * @param \Cake\ORM\Query $query Query to filter
      * @param string $name Name to filter
      * @return \Cake\ORM\Query
      */
-    public function filterQueryBySearch(Query $query, string $name)
+    public function filterQueryBySearch(Query $query, string $name): Query
     {
-        return $query->where([
-            ['Folders.name LIKE' => '%' . $name . '%'],
-        ]);
+        return $this->searchCaseInsensitiveOnField($query, 'Folders.name', $name);
     }
 
     /**
@@ -248,10 +248,10 @@ trait FoldersFindersTrait
         return $query->innerJoinWith('ChildrenFolders', function (Query $q) use ($parentIds, $includeRoot) {
             $conditions = [];
             if (!empty($parentIds)) {
-                $conditions[] = ['folder_parent_id IN' => $parentIds];
+                $conditions[] = $q->expr()->in('FoldersRelations.folder_parent_id', $parentIds);
             }
             if ($includeRoot === true) {
-                $conditions[] = ['folder_parent_id IS NULL'];
+                $conditions[] = $q->expr()->isNull('FoldersRelations.folder_parent_id');
             }
 
             return $q->where(['OR' => $conditions]);

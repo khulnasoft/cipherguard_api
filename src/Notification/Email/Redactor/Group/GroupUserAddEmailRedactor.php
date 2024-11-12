@@ -3,21 +3,22 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.13.0
  */
 
 namespace App\Notification\Email\Redactor\Group;
 
 use App\Model\Entity\Group;
+use App\Model\Entity\GroupsUser;
 use App\Model\Entity\User;
 use App\Model\Table\GroupsTable;
 use App\Model\Table\UsersTable;
@@ -65,6 +66,14 @@ class GroupUserAddEmailRedactor implements SubscribedEmailRedactorInterface
     }
 
     /**
+     * @inheritDoc
+     */
+    public function getNotificationSettingPath(): ?string
+    {
+        return 'send.group.user.add';
+    }
+
+    /**
      * @param \Cake\Event\Event $event User delete event
      * @return \App\Notification\Email\EmailCollection
      */
@@ -76,7 +85,9 @@ class GroupUserAddEmailRedactor implements SubscribedEmailRedactorInterface
             case GroupsUpdateService::UPDATE_SUCCESS_EVENT_NAME:
                 /** @var \App\Model\Entity\Group $group */
                 $group = $event->getData('group');
-                $addedGroupsUsers = $event->getData('addedGroupsUsers'); // the list of added groups users
+                /** @var \App\Model\Dto\EntitiesChangesDto $entitiesChanges */
+                $entitiesChanges = $event->getData('entitiesChanges');
+                $addedGroupsUsers = $entitiesChanges->getAddedEntities(GroupsUser::class);
                 $modifiedBy = $this->usersTable->findFirstForEmail($event->getData('userId'));
                 $emails = $this->createGroupUserAddedUpdateEmails($group, $addedGroupsUsers, $modifiedBy);
                 break;

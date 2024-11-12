@@ -3,20 +3,21 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.10.0
  */
 namespace Cipherguard\SelfRegistration\Test\TestCase\Controller\Users;
 
 use App\Test\Lib\AppIntegrationTestCase;
+use Cipherguard\SelfRegistration\SelfRegistrationPlugin;
 use Cipherguard\SelfRegistration\Test\Lib\SelfRegistrationTestTrait;
 
 /**
@@ -25,6 +26,12 @@ use Cipherguard\SelfRegistration\Test\Lib\SelfRegistrationTestTrait;
 class SelfRegistrationUsersRecoverControllerTest extends AppIntegrationTestCase
 {
     use SelfRegistrationTestTrait;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->enableFeaturePlugin(SelfRegistrationPlugin::class);
+    }
 
     public function testSelfRegistrationUsersRecoverController_SelfRegistrationOpen_UserNotFound_Domain_Not_Supported()
     {
@@ -36,14 +43,14 @@ class SelfRegistrationUsersRecoverControllerTest extends AppIntegrationTestCase
     public function testSelfRegistrationUsersRecoverController_SelfRegistrationOpen_UserNotFound_Domain_Supported()
     {
         $this->setSelfRegistrationSettingsData();
-        $this->postJson('/users/recover.json', ['username' => 'john@cipherguard.khulnasoft.com']);
+        $this->postJson('/users/recover.json', ['username' => 'john@cipherguard.github.io']);
         $this->assertNotFoundError('This user does not exist or has been deleted. Please register and complete the setup first.');
     }
 
     public function testSelfRegistrationUsersRecoverController_SelfRegistrationOpen_Settings_In_DB_Invalid()
     {
         $this->setSelfRegistrationSettingsData('provider', 'invalid');
-        $this->postJson('/users/recover.json', ['username' => 'john@cipherguard.khulnasoft.com']);
+        $this->postJson('/users/recover.json', ['username' => 'john@cipherguard.github.io']);
         $this->assertInternalError('Could not validate the self registration settings found in database.');
     }
 }

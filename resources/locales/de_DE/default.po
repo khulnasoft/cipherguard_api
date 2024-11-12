@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 41c2572bd9bd4cc908d3e09e0cbed6e5\n"
-"POT-Creation-Date: 2023-10-27 11:15+0000\n"
-"PO-Revision-Date: 2023-11-03 00:54\n"
+"POT-Creation-Date: 2024-07-17 04:36+0000\n"
+"PO-Revision-Date: 2024-07-23 13:58\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -39,6 +39,9 @@ msgstr "Der in der Konfiguration definierte OpenPGP-Server-Schlüssel kann nicht
 
 msgid "Could not import the user OpenPGP key."
 msgstr "Der Benutzer OpenPGP-Schlüssel konnte nicht importiert werden."
+
+msgid "Invalid verify token type."
+msgstr ""
 
 msgid "Invalid verify token format, "
 msgstr "Ungültiges Bestätigungs-Token-Format, "
@@ -243,6 +246,9 @@ msgstr "Die Gruppe existiert nicht."
 
 msgid "All checks ran successfully!"
 msgstr "Alle Prüfungen wurden erfolgreich ausgeführt!"
+
+msgid "Healthcheck security index endpoint disabled."
+msgstr "Endpunkt für Integritätsprüfungs-Sicherheitsindex deaktiviert."
 
 msgid "OK"
 msgstr "OK"
@@ -898,9 +904,6 @@ msgstr "Die Nachricht darf nicht leer sein."
 msgid "A secret already exists for the given user and resource."
 msgstr "Für den angegebenen Benutzer und die Ressource existiert bereits ein Geheimnis."
 
-msgid "The name should be a valid BMP-UTF8 string."
-msgstr "Der Name sollte eine gültige BMP-UTF8-Zeichenkette sein."
-
 msgid "The user identifier by should be a valid UUID."
 msgstr "Die Benutzerkennung muss eine gültige UUID sein."
 
@@ -955,6 +958,9 @@ msgstr "Das Erstellungsdatum muss in der Vergangenheit liegen."
 msgid "The key should not already be expired."
 msgstr "Der Schlüssel darf nicht abgelaufen sein."
 
+msgid "The date could not be parsed."
+msgstr "Das Datum konnte nicht geparst werden."
+
 msgid "The email should be a valid email address."
 msgstr "Die E-Mail muss eine gültige E-Mail-Adresse sein."
 
@@ -976,6 +982,21 @@ msgstr "Der \"Gelöscht\"-Status muss ein boolescher Wert sein."
 msgid "The key identifier should be a string of 8 hexadecimal characters."
 msgstr "Der Schlüssel Identifikator muss eine Zeichenkette aus 8 Hexadezimalzeichen sein."
 
+msgid "{0} updated your memberships in several groups"
+msgstr "{0} hat Ihre Mitgliedschaften in mehreren Gruppen aktualisiert"
+
+msgid "{0} deleted several group memberships"
+msgstr "{0} hat mehrere Gruppenmitgliedschaften gelöscht"
+
+msgid "You made changes on several resources"
+msgstr "Sie haben an mehreren Ressourcen Änderungen vorgenommen"
+
+msgid "{0} has made changes on several resources"
+msgstr "{0} hat an mehreren Ressourcen Änderungen vorgenommen"
+
+msgid "{0} shared several items with you"
+msgstr "{0} hat mehrere Elemente mit Ihnen geteilt"
+
 msgid "{0} just activated their account on cipherguard"
 msgstr "{0} hat gerade ihr*sein Konto bei Passwort aktiviert"
 
@@ -993,6 +1014,9 @@ msgstr "{0} hat Sie zur Gruppe {1} hinzugefügt"
 
 msgid "{0} requested you to add members to {1}"
 msgstr "{0} hat Sie gebeten, Mitglieder zu {1} hinzuzufügen"
+
+msgid "You have been requested to add members to {0}"
+msgstr "Sie wurden gebeten, Mitglieder zu {0} hinzuzufügen"
 
 msgid "{0} removed you from the group {1}"
 msgstr "{0} hat Sie aus der Gruppe {1} entfernt"
@@ -1015,6 +1039,9 @@ msgstr "Sie haben das Passwort {0} hinzugefügt"
 msgid "{0} deleted the password {1}"
 msgstr "{0} hat das Passwort {1} gelöscht"
 
+msgid "You edited the password {0}"
+msgstr "Sie haben das Passwort {0} bearbeitet"
+
 msgid "{0} edited the password {1}"
 msgstr "{0} hat das Passwort {1} bearbeitet"
 
@@ -1034,7 +1061,7 @@ msgid "{0} deleted administrator {1}"
 msgstr "{0} hat den Administrator {1} gelöscht"
 
 msgid "Your account has been suspended"
-msgstr ""
+msgstr "Ihr Konto wurde gesperrt"
 
 msgid "Your admin role has been revoked"
 msgstr "Ihre Admin-Rolle wurde widerrufen"
@@ -1046,34 +1073,10 @@ msgid "{0} deleted user {1}"
 msgstr "{0} hat Benutzer*in {1} gelöscht"
 
 msgid "{0} has been suspended"
-msgstr ""
+msgstr "{0} wurde gesperrt"
 
 msgid "Welcome to cipherguard, {0}!"
 msgstr "Willkommen bei cipherguard, {0}!"
-
-msgid "{0} updated your memberships in several groups"
-msgstr "{0} hat Ihre Mitgliedschaften in mehreren Gruppen aktualisiert"
-
-msgid "Your membership in several groups changed in cipherguard"
-msgstr "Ihre Mitgliedschaft in mehreren Gruppen hat sich in Cipherguard geändert"
-
-msgid "{0} deleted several groups"
-msgstr "{0} hat mehrere Gruppen gelöscht"
-
-msgid "Several groups were deleted in cipherguard"
-msgstr "Mehrere Gruppen wurden in Cipherguard gelöscht"
-
-msgid "{0} has made changes on several resources"
-msgstr "{0} hat an mehreren Ressourcen Änderungen vorgenommen"
-
-msgid "Multiple passwords have been changed in cipherguard"
-msgstr "Mehrere Passwörter wurden in Cipherguard geändert"
-
-msgid "{0} shared several items with you"
-msgstr "{0} hat mehrere Elemente mit Ihnen geteilt"
-
-msgid "Multiple passwords have been shared with you in cipherguard"
-msgstr "Mehrere Passwörter wurden mit Ihnen in Cipherguard geteilt"
 
 msgid "The purify subject setting should be a boolean."
 msgstr "Die Einstellung Purify-Subject sollte ein Boolean sein."
@@ -1122,6 +1125,9 @@ msgstr "Die Einstellung \"Senden bei Aktualisierung der Gruppen-Benutzer*innen\"
 
 msgid "The send on group manager updated setting should be a boolean."
 msgstr "Die Einstellung \"Senden bei Aktualisierung der Gruppenmanager*in\" sollte ein Boolean sein."
+
+msgid "The send on group manager request add user should be a boolean."
+msgstr "Die Einstellung \"Senden bei Gruppenmanageranforderung zum Hinzufügen eines Benutzers\" sollte ein Boolean sein."
 
 msgid "The send on password created setting should be a boolean."
 msgstr "Die Einstellung \"Senden beim Anlegen eines neuen Passworts\" sollte ein Boolean sein."
@@ -1235,7 +1241,535 @@ msgid "Validation success for group {0}"
 msgstr "Validierung erfolgreich für Gruppe {0}"
 
 msgid "Could not validate group user data."
-msgstr "Konnte die Gruppenbenutzer*innen-Daten nicht validieren."
+msgstr "Konnte die Gruppenbenutzer-Daten nicht validieren."
+
+msgid "All email notifications will be sent."
+msgstr "Alle E-Mail-Benachrichtigungen werden gesendet."
+
+msgid "Some email notifications are disabled by the administrator."
+msgstr "Einige E-Mail-Benachrichtigungen sind vom Administrator deaktiviert."
+
+msgid "Host availability will be checked."
+msgstr "Die Verfügbarkeit des Hosts wird überprüft."
+
+msgid "Host availability checking is disabled."
+msgstr "Prüfung der Hostverfügbarkeit ist deaktiviert."
+
+msgid "Make sure this instance is not publicly available on the internet."
+msgstr "Stellen Sie sicher, dass diese Instanz nicht öffentlich im Internet verfügbar ist."
+
+msgid "Or set the CIPHERGUARD_EMAIL_VALIDATE_MX environment variable to true."
+msgstr "Oder setzen Sie die CIPHERGUARD_EMAIL_VALIDATE_MX Umgebungsvariable auf true."
+
+msgid "Or set cipherguard.email.validate.mx to true in {0}."
+msgstr "Oder setzen Sie cipherguard.email.validate.mx auf true in {0}."
+
+msgid "Serving the compiled version of the javascript app."
+msgstr "Bereitstellen der kompilierten Version der Javascript-App."
+
+msgid "Using non-compiled Javascript. Cipherguard will be slower."
+msgstr "Verwenden von nicht kompiliertem Javascript. Cipherguard wird langsamer."
+
+msgid "Set cipherguard.js.build to production in {0}"
+msgstr "Setze cipherguard.js.build auf Produktion in {0}"
+
+msgid "undefined"
+msgstr "undefiniert"
+
+msgid "Could not read tag information on github repository"
+msgstr "Tag-Informationen im GitHub Repository konnten nicht gelesen werden"
+
+msgid "Using latest cipherguard version ({0})."
+msgstr "Benutze die neueste Cipherguard-Version ({0})."
+
+msgid "Could connect to cipherguard repository to check versions."
+msgstr "Konnte sich mit dem cipherguard Repository verbinden, um Versionen zu überprüfen."
+
+msgid "This installation is not up to date. Currently using {0} and it should be {1}."
+msgstr "Diese Installation ist nicht aktuell. Derzeit wird {0} verwendet, es sollte {1} sein."
+
+msgid "Could not connect to cipherguard repository to check versions."
+msgstr "Konnte sich nicht mit dem cipherguard Repository verbinden, um Versionen zu überprüfen."
+
+msgid "It is not possible to check if your version is up-to-date."
+msgstr ""
+
+msgid "See https://www.cipherguard.github.io/help/tech/update"
+msgstr "Siehe https://www.cipherguard.github.io/help/tech/update"
+
+msgid "Check the network configuration to allow this script to check for updates."
+msgstr "Überprüfen Sie die Netzwerkkonfiguration, damit dieses Skript nach Aktualisierungen suchen kann."
+
+msgid "Search engine robots are told not to index content."
+msgstr "Suchmaschinen-Roboter werden aufgefordert, Inhalte nicht zu indexieren."
+
+msgid "Search engine robots are not told not to index content."
+msgstr "Suchmaschinen-Roboter werden nicht aufgefordert, Inhalte nicht zu indizieren."
+
+msgid "Set cipherguard.meta.robots to false in {0}."
+msgstr "Setze cipherguard.meta.robots auf false in {0}."
+
+msgid "Selenium API endpoints are disabled."
+msgstr "Selenium API-Endpunkte sind deaktiviert."
+
+msgid "Selenium API endpoints are active. This setting should be used for testing only."
+msgstr "Selenium API Endpunkte sind aktiv. Diese Einstellung sollte nur zum Testen verwendet werden."
+
+msgid "Set cipherguard.selenium.active to false in {0}."
+msgstr "Setze cipherguard.selenium.active auf false in {0}."
+
+msgid "The Self Registration plugin is enabled."
+msgstr "Das Plugin zur Selbstregistrierung ist aktiviert."
+
+msgid "The Self Registration plugin is disabled."
+msgstr "Das Plugin zur Selbstregistrierung ist deaktiviert."
+
+msgid "Enable the plugin in order to define self registration settings."
+msgstr "Aktivieren Sie das Plugin um Einstellungen für die Selbstregistrierung festzulegen."
+
+msgid "Registration is closed, only administrators can add users."
+msgstr "Registrierung ist deaktiviert, nur Administratoren können Benutzer hinzufügen."
+
+msgid "The self registration provider is: {0}."
+msgstr "Der Selbstregistrierung Provider ist: {0}."
+
+msgid "The deprecated self registration public setting was not found in {0}."
+msgstr "Die veraltete Einstellung zur öffentlichen Selbstregistrierung wurde in {0} nicht gefunden."
+
+msgid "The deprecated self registration public setting was found in {0}."
+msgstr "Die veraltete Einstellung zur öffentlichen Selbstregistrierung wurde in {0} gefunden."
+
+msgid "You may remove the \"cipherguard.registration.public\" setting."
+msgstr "Sie können die Einstellung \"cipherguard.registration.public\" entfernen."
+
+msgid "Cipherguard is configured to force SSL use."
+msgstr "Cipherguard ist so konfiguriert, dass die SSL-Nutzung erzwungen wird."
+
+msgid "Cipherguard is not configured to force SSL use."
+msgstr "Cipherguard ist so konfiguriert, dass die SSL-Nutzung nicht erzwungen wird."
+
+msgid "Set cipherguard.ssl.force to true in {0}."
+msgstr "Setze cipherguard.ssl.force auf true in {0}."
+
+msgid "App.fullBaseUrl is set to HTTPS."
+msgstr "App.fullBaseUrl ist auf HTTPS gesetzt."
+
+msgid "App.fullBaseUrl is not set to HTTPS."
+msgstr "App.fullBaseUrl ist nicht auf HTTPS gesetzt."
+
+msgid "Check App.fullBaseUrl url scheme in {0}."
+msgstr "Überprüfen Sie das App.fullBaseUrl URL-Schema in {0}."
+
+msgid "The application config file is present"
+msgstr "Die Konfigurationsdatei der Anwendung ist vorhanden"
+
+msgid "The application config file is missing in {0}"
+msgstr "Die Konfigurationsdatei der Anwendung fehlt in {0}"
+
+msgid "Copy {0} to {1}"
+msgstr "Kopiere {0} nach {1}"
+
+msgid "The cipherguard config file is present"
+msgstr "Die Cipherguard Konfigurationsdatei ist vorhanden"
+
+msgid "The cipherguard config file is missing in {0}"
+msgstr "Die Cipherguard-Konfigurationsdatei fehlt in {0}"
+
+msgid "The cipherguard config file is not required if cipherguard is configured with environment variables"
+msgstr "Die Cipherguard Konfigurationsdatei ist nicht erforderlich, wenn cipherguard mit Umgebungsvariablen konfiguriert ist"
+
+msgid "Cache is working."
+msgstr "Der Cache funktioniert."
+
+msgid "Cache is NOT working."
+msgstr "Der Cache funktioniert NICHT."
+
+msgid "Check the settings in {0}"
+msgstr "Prüfen Sie die Einstellungen in {0}"
+
+msgid "Debug mode is off."
+msgstr "Debug-Modus ist ausgeschaltet."
+
+msgid "Debug mode is on."
+msgstr "Debug-Modus ist aktiviert."
+
+msgid "Set debug to false in {0}"
+msgstr "Setze Debug auf false in {0}"
+
+msgid "Full base url is set to {0}"
+msgstr "Vollständige Basis-URL ist auf {0} gesetzt"
+
+msgid "Full base url is not set. The application is using: {0}."
+msgstr "Die vollständige Basis-URL ist nicht gesetzt. Die Anwendung verwendet: {0}."
+
+msgid "Edit App.fullBaseUrl in {0}"
+msgstr "App.fullBaseUrl in {0} bearbeiten"
+
+msgid "/healthcheck/status is reachable."
+msgstr "/healthcheck/status ist erreichbar."
+
+msgid "Could not reach the /healthcheck/status with the url specified in App.fullBaseUrl"
+msgstr "Konnte den /healthcheck/status nicht mit der in App.fullBaseUrl angegebenen URL erreichen"
+
+msgid "Check that the domain name is correct in {0}"
+msgstr "Überprüfen Sie, ob der Domänenname in {0} korrekt ist"
+
+msgid "Check the network settings"
+msgstr "Netzwerkeinstellungen überprüfen"
+
+msgid "Unique value set for security.salt"
+msgstr "Eindeutiger Wert für security.salt gesetzt"
+
+msgid "Default value found for security.salt"
+msgstr "Standardwert für security.salt gefunden"
+
+msgid "Edit the security.salt in {0}"
+msgstr "Bearbeite security.salt in {0}"
+
+msgid "App.fullBaseUrl validation OK."
+msgstr "App.fullBaseUrl Validierung OK."
+
+msgid "App.fullBaseUrl does not validate. {0}."
+msgstr "App.fullBaseUrl ist nicht gültig. {0}."
+
+msgid "Select a valid domain name as defined by section 2.3.1 of http://www.ietf.org/rfc/rfc1035.txt"
+msgstr "Wählen Sie einen gültigen Domänennamen gemäß Abschnitt 2.3.1 von http://www.ietf.org/rfc/rfc1035.txt"
+
+msgid "The application is able to connect to the database"
+msgstr "Die Anwendung kann sich mit der Datenbank verbinden"
+
+msgid "The driver defined in the database configuration is not supported."
+msgstr "Der in der Datenbankkonfiguration definierte Treiber wird nicht unterstützt."
+
+msgid "The application is not able to connect to the database."
+msgstr "Die Anwendung kann sich nicht mit der Datenbank verbinden."
+
+msgid "Ensure that the driver defined in {0} is one of the following: {1}."
+msgstr "Stellen Sie sicher, dass der in {0} definierte Treiber einer der folgenden ist: {1}."
+
+msgid "Double check the host, database name, username and password in {0}."
+msgstr "Überprüfen Sie den Host, Datenbanknamen, Benutzernamen und das Passwort in {0}."
+
+msgid "Make sure the database exists and is accessible for the given database user."
+msgstr "Stellen Sie sicher, dass die Datenbank existiert und für den angegebenen Datenbankbenutzer zugänglich ist."
+
+msgid "Some default content is present."
+msgstr "Einige Standardinhalte sind vorhanden."
+
+msgid "No default content found."
+msgstr "Kein Standardinhalt gefunden."
+
+msgid "Run the install script to install the database tables"
+msgstr "Führen Sie das Installationsskript aus, um die Datenbanktabellen zu installieren"
+
+msgid "The database schema is up to date."
+msgstr ""
+
+msgid "The database schema is not up to date."
+msgstr "Das Datenbankschema ist nicht aktuell."
+
+msgid "Run the migration scripts:"
+msgstr "Führe die Migrationsskripte aus:"
+
+msgid "{0} tables found."
+msgstr "{0} Tabellen gefunden."
+
+msgid "No table found."
+msgstr "Keine Tabelle gefunden."
+
+msgid "GD or Imagick extension is installed."
+msgstr "Die Erweiterung GD oder Imagick ist installiert."
+
+msgid "You must enable the gd or imagick extensions to use Cipherguard."
+msgstr "Sie müssen die GD oder Imagick Erweiterungen aktivieren, um Cipherguard zu verwenden."
+
+msgid "See. https://secure.php.net/manual/en/book.image.php"
+msgstr "Siehe https://secure.php.net/manual/en/book.image.php"
+
+msgid "See. https://secure.php.net/manual/en/book.imagick.php"
+msgstr "Siehe https://secure.php.net/manual/en/book.imagick.php"
+
+msgid "Intl extension is installed."
+msgstr "Intl Erweiterung ist installiert."
+
+msgid "You must enable the intl extension to use Cipherguard."
+msgstr "Sie müssen die intl Erweiterung aktivieren, um Cipherguard zu verwenden."
+
+msgid "See. https://secure.php.net/manual/en/book.intl.php"
+msgstr "Siehe https://secure.php.net/manual/en/book.intl.php"
+
+msgid "The logs directory and its content are writable."
+msgstr "Das Log-Verzeichnis und dessen Inhalt sind beschreibbar."
+
+msgid "The logs directory and its content are not writable."
+msgstr "Das Log-Verzeichnis und dessen Inhalt sind nicht beschreibbar."
+
+msgid "Ensure the logs directory and its content are writable by the user the webserver user."
+msgstr "Stellen Sie sicher, dass das Log-Verzeichnis und dessen Inhalt vom Benutzer des Webservers beschreibbar sind."
+
+msgid "you can try:"
+msgstr "Sie können versuchen:"
+
+msgid "Mbstring extension is installed."
+msgstr "Mbstring Erweiterung ist installiert."
+
+msgid "You must enable the mbstring extension to use Cipherguard."
+msgstr "Sie müssen die mbstring Erweiterung aktivieren, um Cipherguard zu verwenden."
+
+msgid "See. https://secure.php.net/manual/en/book.mbstring.php"
+msgstr ""
+
+msgid "PHP version is {0} or above."
+msgstr "PHP-Version ist {0} oder höher."
+
+msgid "PHP version less than {0} will soon be not supported by cipherguard, so consider upgrading your operating system or PHP environment."
+msgstr "PHP-Version kleiner als {0} wird bald nicht von cipherguard unterstützt werden, also sollten Sie Ihr Betriebssystem oder Ihre PHP-Umgebung aktualisieren."
+
+msgid "PCRE compiled with unicode support."
+msgstr "PCRE kompiliert mit Unicode-Unterstützung."
+
+msgid "PCRE has not been compiled with Unicode support."
+msgstr "PCRE wurde nicht mit Unicode-Unterstützung kompiliert."
+
+msgid "Recompile PCRE with Unicode support by adding --enable-unicode-properties when configuring."
+msgstr "Rekompilieren Sie PCRE mit Unicode-Unterstützung, indem Sie --enable-unicode-properties der Konfiguration hinzufügen."
+
+msgid "PHP version {0}."
+msgstr "PHP Version {0}."
+
+msgid "PHP version is too low, cipherguard need PHP {0} or higher."
+msgstr "PHP-Version ist zu niedrig, cipherguard benötigt PHP {0} oder höher."
+
+msgid "The temporary directory and its content are writable and not executable."
+msgstr "Das temporäre Verzeichnis und dessen Inhalt sind beschreibbar und nicht ausführbar."
+
+msgid "The temporary directory and its content are not writable, or are executable."
+msgstr "Das temporäre Verzeichnis und dessen Inhalt sind nicht beschreibbar, oder sind ausführbar."
+
+msgid "Ensure the temporary directory and its content are writable by the webserver user."
+msgstr "Stellen Sie sicher, dass das temporäre Verzeichnis und dessen Inhalt vom Benutzer des Webservers beschreibbar sind."
+
+msgid "The private key can be used to decrypt a message."
+msgstr "Der private Schlüssel kann verwendet werden, um eine Nachricht zu entschlüsseln."
+
+msgid "The private key cannot be used to decrypt a message"
+msgstr "Der private Schlüssel kann nicht verwendet werden, um eine Nachricht zu entschlüsseln"
+
+msgid "The private key can be used to decrypt and verify a message."
+msgstr "Der private Schlüssel kann verwendet werden, um eine Nachricht zu entschlüsseln und zu verifizieren."
+
+msgid "The private key cannot be used to decrypt and verify a message"
+msgstr "Der private Schlüssel kann nicht verwendet werden, um eine Nachricht zu entschlüsseln und zu verifizieren"
+
+msgid "The public key can be used to encrypt a message."
+msgstr "Der öffentliche Schlüssel kann verwendet werden, um eine Nachricht zu verschlüsseln."
+
+msgid "The public key cannot be used to encrypt a message"
+msgstr "Der öffentliche Schlüssel kann nicht verwendet werden um eine Nachricht zu verschlüsseln"
+
+msgid "Make sure that the server private key is valid and that there is no passphrase."
+msgstr "Stellen Sie sicher, dass der private Server-Schlüssel gültig ist und dass es keine Passphrase gibt."
+
+msgid "Make sure you imported the private server key in the keyring of the webserver user."
+msgstr "Stellen Sie sicher, dass Sie den privaten Server-Schlüssel im Schlüsselring des Webserver-Benutzers importiert haben."
+
+msgid "The public and private keys can be used to encrypt and sign a message."
+msgstr "Die öffentlichen und privaten Schlüssel können verwendet werden, um eine Nachricht zu verschlüsseln und zu signieren."
+
+msgid "The public and private keys cannot be used to encrypt and sign a message"
+msgstr "Die öffentlichen und privaten Schlüssel können verwendet werden, um eine Nachricht zu verschlüsseln und zu signieren"
+
+msgid "The private key can be used to sign a message."
+msgstr "Der private Schlüssel kann verwendet werden, um eine Nachricht zu signieren."
+
+msgid "The private key cannot be used to sign a message"
+msgstr "Der private Schlüssel kann nicht verwendet werden, um eine Nachricht zu signieren"
+
+msgid "The public key can be used to verify a signature."
+msgstr "Der öffentliche Schlüssel kann verwendet werden, um eine Signatur zu überprüfen."
+
+msgid "The public key cannot be used to verify a signature."
+msgstr "Der öffentliche Schlüssel kann nicht verwendet werden, um eine Signatur zu überprüfen."
+
+msgid "The server key fingerprint matches the one defined in {0}."
+msgstr "Der Server-Schlüssel stimmt mit dem in {0} definierten Fingerabdruck überein."
+
+msgid "The server key fingerprint doesn't match the one defined in {0}."
+msgstr "Der Server-Schlüssel-Fingerabdruck entspricht nicht dem in {0} definierten Fingerabdruck."
+
+msgid "Double check the key fingerprint, example: "
+msgstr "Überprüfen Sie den Fingerabdruck, Beispiel: "
+
+msgid "SERVER_KEY_EMAIL: The email you used when you generated the server key."
+msgstr "SERVER_KEY_EMAIL: Die E-Mail, die Sie beim Generieren des Serverschlüssels verwendet haben."
+
+msgid "See. https://www.cipherguard.github.io/help/tech/install#toc_gpg"
+msgstr "Siehe https://www.cipherguard.github.io/help/tech/install#toc_gpg"
+
+msgid "The server private key format is Gopengpg compatible."
+msgstr ""
+
+msgid "The server private key format is not Gopengpg compatible."
+msgstr ""
+
+msgid "The server public key format is Gopengpg compatible."
+msgstr ""
+
+msgid "The server public key format is not Gopengpg compatible."
+msgstr ""
+
+msgid "The environment variable GNUPGHOME is set to {0}."
+msgstr ""
+
+msgid "The environment variable GNUPGHOME is set to {0}, but the directory does not exist."
+msgstr ""
+
+msgid "Ensure the keyring location exists and is accessible by the webserver user."
+msgstr ""
+
+msgid "You can change the location of the keyring by editing the GPG.env.setenv and GPG.env.home variables in {0}."
+msgstr ""
+
+msgid "The directory {0} containing the keyring is writable by the webserver user."
+msgstr ""
+
+msgid "The directory {0} containing the keyring is not writable by the webserver user."
+msgstr ""
+
+msgid "Ensure the keyring location is accessible by the webserver user."
+msgstr ""
+
+msgid "The server OpenPGP key is not the default one."
+msgstr ""
+
+msgid "Do not use the default OpenPGP key for the server."
+msgstr ""
+
+msgid "The server OpenPGP key is not set."
+msgstr ""
+
+msgid "Create a key, export it and add the fingerprint to {0}"
+msgstr ""
+
+msgid "PHP GPG Module is installed and loaded."
+msgstr ""
+
+msgid "PHP GPG Module is not installed or loaded."
+msgstr ""
+
+msgid "Install php-gnupg, see. http://php.net/manual/en/gnupg.installation.php"
+msgstr ""
+
+msgid "Make sure to add extension=gnupg.so in php ini files for both php-cli and php."
+msgstr ""
+
+msgid "The private key file is defined in {0} and readable."
+msgstr ""
+
+msgid "The private key file is not defined in {0} or not readable."
+msgstr ""
+
+msgid "Ensure the private key file is defined by the variable cipherguard.gpg.serverKey.private in {0}."
+msgstr ""
+
+msgid "Ensure there is a private key armored block in the key file."
+msgstr ""
+
+msgid "Ensure the private key defined in {0} exists and is accessible by the webserver user."
+msgstr ""
+
+msgid "There is a valid email id defined for the server key."
+msgstr ""
+
+msgid "The server key does not have a valid email id."
+msgstr ""
+
+msgid "The server public key defined in the {0} (or environment variables) is in the keyring."
+msgstr ""
+
+msgid "The server public key defined in the {0} (or environment variables) is not in the keyring"
+msgstr ""
+
+msgid "Import the private server key in the keyring of the webserver user."
+msgstr ""
+
+msgid "The public key file is defined in {0} and readable."
+msgstr ""
+
+msgid "The public key file is not defined in {0} or not readable."
+msgstr ""
+
+msgid "Ensure the public key file is defined by the variable cipherguard.gpg.serverKey.public in {0}."
+msgstr ""
+
+msgid "Ensure there is a public key armored block in the key file."
+msgstr ""
+
+msgid "Ensure the public key defined in {0} exists and is accessible by the webserver user."
+msgstr ""
+
+msgid "Environment"
+msgstr "Umgebung"
+
+msgid "Config files"
+msgstr "Konfigurationsdateien"
+
+msgid "Core config"
+msgstr "Core Konfiguration"
+
+msgid "SMTP settings"
+msgstr "SMTP Einstellungen"
+
+msgid "Application configuration"
+msgstr "Anwendungs-Konfiguration"
+
+msgid "Database"
+msgstr "Datenbank"
+
+msgid "GPG Configuration"
+msgstr "GPG-Konfiguration"
+
+msgid "JWT Authentication"
+msgstr "JWT Authentifizierung"
+
+msgid "SSL Certificate"
+msgstr "SSL-Zertifikat"
+
+msgid "The {0} plugin is enabled."
+msgstr "Das {0} Plugin ist aktiviert."
+
+msgid "The {0} plugin is disabled."
+msgstr "Das {0} Plugin ist deaktiviert."
+
+msgid "Set the environment variable {0} to true"
+msgstr "Setze die Umgebungsvariable {0} auf true"
+
+msgid "Enable the plugin in order to define SMTP settings in the database."
+msgstr "Aktivieren Sie das Plugin, um SMTP Einstellungen in der Datenbank zu definieren."
+
+msgid "Hostname is matching in SSL certificate."
+msgstr "Hostname stimmt im SSL-Zertifikat überein."
+
+msgid "Hostname does not match when validating certificates."
+msgstr ""
+
+msgid "SSL access is enabled."
+msgstr "SSL-Zugriff ist aktiviert."
+
+msgid "SSL access is not enabled. You can still proceed, but it is highly recommended that you configure your web server to use HTTPS before you continue."
+msgstr "SSL-Zugriff ist nicht aktiviert. Sie können trotzdem fortfahren, aber es wird dringend empfohlen, dass Sie Ihren Webserver so konfigurieren, dass er HTTPS verwendet, bevor Sie fortfahren."
+
+msgid "Not using a self-signed certificate."
+msgstr ""
+
+msgid "Using a self-signed certificate."
+msgstr ""
+
+msgid "SSL peer certificate validates."
+msgstr ""
+
+msgid "SSL peer certificate does not validate."
+msgstr ""
 
 msgid "Could not validate sub key data."
 msgstr "Sub-Key Data konnte nicht validiert werden."
@@ -1360,6 +1894,12 @@ msgstr "Validierung erfolgreich für Rolle {0}"
 msgid "Could not validate secret data."
 msgstr "Secret Daten konnten nicht validiert werden."
 
+msgid "The group id should be a valid UUID."
+msgstr "Die Gruppen-ID sollte eine gültige UUID sein."
+
+msgid "The users ids array should contain only valid UUIDs."
+msgstr "Das Benutzer-ID-Array sollte nur gültige UUIDs enthalten."
+
 msgid "Validation failed for secret {0}. {1}"
 msgstr "Validierung fehlgeschlagen für Secret {0}. {1}"
 
@@ -1441,15 +1981,6 @@ msgstr "Validierung erfolgreich für Benutzer*in {0}"
 msgid "The directory {0} cannot be deleted"
 msgstr "Das Verzeichnis {0} kann nicht gelöscht werden"
 
-msgid "Database connection failed"
-msgstr "Datenbankverbindung fehlgeschlagen"
-
-msgid "Could not connect to github repository"
-msgstr "Verbindung zum Github Repository fehlgeschlagen"
-
-msgid "Could not read tag information on github repository"
-msgstr "Tag-Informationen im GitHub Repository konnten nicht gelesen werden"
-
 msgid "The key {0} cannot be used to encrypt."
 msgstr "Der Schlüssel {0} kann nicht zum Verschlüsseln verwendet werden."
 
@@ -1505,7 +2036,7 @@ msgid "Invalid key. No OpenPGP public key package found."
 msgstr "Ungültiger Schlüssel. Kein OpenPGP öffentliches Schlüssel-Paket gefunden."
 
 msgid "Invalid key. No user ID found."
-msgstr "Ungültiger Schlüssel. Keine Benutzer*innen-ID gefunden."
+msgstr "Ungültiger Schlüssel. Keine Benutzer-ID gefunden."
 
 msgid "Unsupported algorithm."
 msgstr "Nicht unterstützter Algorithmus."
@@ -1828,6 +2359,12 @@ msgstr "Das Verify-Token ist ungültig."
 msgid "The route {0} is not permitted with JWT authentication."
 msgstr "Die Route {0} ist mit JWT-Authentifizierung nicht zulässig."
 
+msgid "The JWT public key could not be extracted."
+msgstr ""
+
+msgid "The JWT public key details could not be read."
+msgstr ""
+
 msgid "The key pair for JWT Authentication is not complete."
 msgstr "Das Schlüsselpaar für JWT Authentifizierung ist nicht vollständig."
 
@@ -1839,6 +2376,21 @@ msgstr "Der JWT private Schlüssel sollte mindestens {0} Bytes lang sein."
 
 msgid "The configuration {0} is not correctly set."
 msgstr "Die Konfiguration {0} ist nicht korrekt gesetzt."
+
+msgid "The {0} directory is not writable."
+msgstr "Das Verzeichnis {0} ist nicht beschreibbar."
+
+msgid "The {0} directory should not be writable."
+msgstr "Das {0} Verzeichnis sollte nicht beschreibbar sein."
+
+msgid "A valid JWT key pair was found."
+msgstr "Ein gültiges JWT-Schlüsselpaar wurde gefunden."
+
+msgid "A valid JWT key pair is missing."
+msgstr "Ein gültiges JWT-Schlüsselpaar fehlt."
+
+msgid "Run the create JWT keys script to create a valid JWT secret and public key pair:"
+msgstr ""
 
 msgid "The refresh token should be a valid UUID."
 msgstr "Das Aktualisierungstoken sollte eine gültige UUID sein."
@@ -1890,6 +2442,9 @@ msgstr "Dies ist kein gültiges Locale."
 
 msgid "This is not a valid {0}."
 msgstr "Dies ist kein gültiger {0}."
+
+msgid "The locale should be a string."
+msgstr "Das Gebietsschema sollte ein String sein."
 
 msgid "The strategy should extend the class: {0}"
 msgstr "Die Strategie sollte die folgende Klasse erweitern: {0}"
@@ -2293,9 +2848,6 @@ msgstr "Duo-Konfiguration konnte nicht validiert werden"
 msgid "The property {0} is visible by administrators only."
 msgstr "Die Eigenschaft {0} ist nur für Administratoren sichtbar."
 
-msgid "The property {0} should be contained in order to filter by {1}."
-msgstr "Die Eigenschaft {0} sollte enthalten sein, um nach {1} zu filtern."
-
 msgid "The MFA token provided does not exist or is inactive."
 msgstr "Das angegebene MFA-Token existiert nicht oder ist inaktiv."
 
@@ -2402,7 +2954,7 @@ msgid "Multi factor authentication verification"
 msgstr "Multi-Faktor-Authentifizierung Verifizierung"
 
 msgid "Multi Factor Authentication Required"
-msgstr "Mehrfachfaktor-Authentifizierung erforderlich"
+msgstr "Multi-Faktor-Authentifizierung erforderlich"
 
 msgid "An additional authentication is required using Duo. You will be redirected to Duo for verification."
 msgstr "Eine zusätzliche Authentifizierung wird mit Duo benötigt. Sie werden zur Verifizierung zu Duo weitergeleitet."
@@ -2506,6 +3058,72 @@ msgstr "Bitte kontaktieren Sie Ihren Administrator, wenn Sie diese Aktion nicht 
 msgid "Log in cipherguard"
 msgstr "Bei Cipherguard eInloggen"
 
+msgid "The automatic_expiry field must be true."
+msgstr "Das Feld „automatic_expiry“ muss wahr sein."
+
+msgid "The automatic_update field must be true."
+msgstr "Das Feld „automatic_update“ muss wahr sein."
+
+msgid "The value should be an array."
+msgstr "Der Wert sollte ein Array sein."
+
+msgid "{0} marked several passwords as expired"
+msgstr "{0} hat mehrere Passwörter als abgelaufen markiert"
+
+msgid "Some of your passwords expired"
+msgstr "Einige Ihrer Passwörter sind abgelaufen"
+
+msgid "{0} marked the password {1} as expired"
+msgstr "{0} hat das Passwort {1} als abgelaufen markiert"
+
+msgid "You edited the password expiry settings"
+msgstr "Sie haben die Einstellungen für den Passwortablauf bearbeitet"
+
+msgid "{0} edited the password expiry settings"
+msgstr "{0} hat die Einstellungen für den Passwortablauf geändert"
+
+msgid "The send password expire setting should be a boolean."
+msgstr "Die Einstellung \"Senden bei Passwortablauf\" sollte ein Boolean sein."
+
+msgid "The password expiry setting does not exist."
+msgstr "Die Passwortablauf-Einstellung existiert nicht."
+
+msgid "Could not validate the password expiry settings."
+msgstr "Konnte die Einstellungen zum Passwortablauf nicht validieren."
+
+msgid "The password expiry settings have been updated."
+msgstr "Die Einstellungen zum Passwortablauf wurden aktualisiert."
+
+msgid "View them in cipherguard"
+msgstr "In cipherguard anzeigen"
+
+msgid "{0} resources were affected."
+msgstr "{0} Ressourcen sind betroffen."
+
+msgid "It would be too much to list them here, but you can go check them on cipherguard."
+msgstr "Es wäre zu viel, sie hier aufzulisten, aber Sie können sie in Cipherguard überprüfen."
+
+msgid "Change them in cipherguard"
+msgstr "In cipherguard ändern"
+
+msgid "You have been requested to change them"
+msgstr ""
+
+msgid "Access for users to your shared passwords have been revoked."
+msgstr ""
+
+msgid "These passwords are now marked as expired."
+msgstr ""
+
+msgid "Please rotate them to ensure continued security."
+msgstr ""
+
+msgid "Please rotate it to ensure continued security."
+msgstr ""
+
+msgid "Change it in cipherguard "
+msgstr "In cipherguard ändern "
+
 msgid "Could not retrieve the password policies."
 msgstr "Konnte die Passwortrichtlinien nicht abrufen."
 
@@ -2543,10 +3161,10 @@ msgid "The passphrase generator words is required."
 msgstr "Die Passwortgenerator-Maske Wörter ist erforderlich."
 
 msgid "The passphrase generator words should be between {0} and {1}."
-msgstr ""
+msgstr "Der Anzahl von Wörter sollte zwischen {0} und {1} liegen."
 
 msgid "The passphrase generator word separator is required."
-msgstr ""
+msgstr "Der Wortzwischenraum ist erforderlich."
 
 msgid "The passphrase generator word separator should be a valid UTF8 string."
 msgstr ""
@@ -2707,6 +3325,9 @@ msgstr "Für die angegebene ID existiert bereits ein RBAC-Eintrag."
 msgid "An entry already exists for the given role and action ids."
 msgstr "Es existiert bereits ein Eintrag für die angegebene Rolle und Aktion IDs."
 
+msgid "The control function is not allowed for this UI Action."
+msgstr ""
+
 msgid "An action already exists for the given name."
 msgstr "Für den angegebenen Namen existiert bereits eine Aktion."
 
@@ -2778,6 +3399,9 @@ msgstr "Rolle"
 
 msgid "No"
 msgstr "Nein"
+
+msgid "The name should be a valid BMP-UTF8 string."
+msgstr "Der Name sollte eine gültige BMP-UTF8-Zeichenkette sein."
 
 msgid "The slug should be a valid BMP-UTF8 string."
 msgstr "Der Slug sollte eine gültige BMP-UTF8-Zeichenkette sein."
@@ -2878,6 +3502,18 @@ msgstr "{0} hat die Selbstregistrierungseinstellungen aktualisiert"
 msgid "Status: {0}"
 msgstr "Status: {0}"
 
+msgid "The sslVerifyPeer configuration should be a boolean."
+msgstr ""
+
+msgid "The sslVerifyPeerName configuration should be a boolean."
+msgstr ""
+
+msgid "The sslAllowSelfSigned configuration should be a boolean."
+msgstr ""
+
+msgid "The sslCafile configuration should be NULL or string."
+msgstr ""
+
 msgid "A sender name is required."
 msgstr "Ein Absendername ist erforderlich."
 
@@ -2950,6 +3586,54 @@ msgstr "Endpunkte der SMTP-Einstellungen deaktiviert."
 msgid "The client should be a valid IP or a valid domain."
 msgstr "Der Client sollte eine gültige IP oder Domain sein."
 
+msgid "No custom SSL configuration for SMTP server."
+msgstr ""
+
+msgid "Custom SSL certificate options for SMTP server is in use."
+msgstr ""
+
+msgid "Custom SSL configuration options set are invalid."
+msgstr ""
+
+msgid "SSL certification validation for SMTP server is disabled."
+msgstr ""
+
+msgid "SMTP Settings coherent. You may send a test email to validate them."
+msgstr ""
+
+msgid "SMTP Setting errors: {0}"
+msgstr ""
+
+msgid "The {0} plugin endpoints are disabled."
+msgstr ""
+
+msgid "The {0} plugin endpoints are enabled."
+msgstr ""
+
+msgid "It is recommended to disable the plugin endpoints."
+msgstr ""
+
+msgid "Set the CIPHERGUARD_SECURITY_SMTP_SETTINGS_ENDPOINTS_DISABLED environment variable to true."
+msgstr ""
+
+msgid "Or set cipherguard.security.smtpSettings.endpointsDisabled to true in {0}."
+msgstr ""
+
+msgid "not found"
+msgstr "nicht gefunden"
+
+msgid "The SMTP Settings source is: {0}."
+msgstr "Die Quelle der SMTP-Einstellungen ist: {0}."
+
+msgid "It is recommended to set the SMTP Settings in the database through the administration section."
+msgstr ""
+
+msgid "database"
+msgstr "datenbank"
+
+msgid "env variables"
+msgstr "Umgebungsvariablen"
+
 msgid "Could not validate the smtp settings."
 msgstr "Die SMTP-Einstellungen konnten nicht validiert werden."
 
@@ -2962,18 +3646,6 @@ msgstr "Der OpenPGP-Server-Schlüssel kann nicht verwendet werden, um die in der
 msgid "To fix this problem, you need to configure the SMTP server again."
 msgstr "Um dieses Problem zu beheben, müssen Sie den SMTP-Server erneut konfigurieren."
 
-msgid "not found"
-msgstr "nicht gefunden"
-
-msgid "database"
-msgstr "datenbank"
-
-msgid "env variables"
-msgstr "Umgebungsvariablen"
-
-msgid "undefined"
-msgstr "undefiniert"
-
 msgid "Cipherguard test email"
 msgstr "Test-E-Mail von Cipherguard"
 
@@ -2982,6 +3654,12 @@ msgstr "Glückwunsch!"
 
 msgid "If you receive this email, it means that your cipherguard smtp configuration is working fine."
 msgstr "Wenn Sie diese E-Mail erhalten, funktionieren Ihre Cipherguard SMTP-Konfigurationen fehlerfrei."
+
+msgid "Invalid `cipherguard.plugins.smtpSettings.security` configuration values."
+msgstr ""
+
+msgid "Errors: "
+msgstr "Fehler: "
 
 msgid "The data entered are not correct"
 msgstr "Die eingegebenen Daten sind nicht korrekt"
@@ -3003,9 +3681,6 @@ msgstr "Systemüberprüfung"
 
 msgid "Subscription key"
 msgstr "Abo-Schlüssel"
-
-msgid "Database"
-msgstr "Datenbank"
 
 msgid "Server keys"
 msgstr "Serverschlüssel"
@@ -3121,6 +3796,30 @@ msgstr "Ein Force SSL Status ist erforderlich."
 msgid "The force ssl setting should be a valid boolean."
 msgstr "Die SSL-Erzwingen Einstellung sollte ein gültiger Boolescher Wert sein."
 
+msgid "The cipherguard config is writable."
+msgstr "Die Cipherguard Konfiguration ist beschreibbar."
+
+msgid "The cipherguard config is not writable."
+msgstr "Die Cipherguard Konfiguration ist nicht beschreibbar."
+
+msgid "Ensure the file "
+msgstr "Datei sicherstellen "
+
+msgid "The server OpenPGP private key file is writable."
+msgstr "Die private OpenPGP Schlüsseldatei des Servers ist schreibbar."
+
+msgid "The server OpenPGP private key file is not writable."
+msgstr "Die private OpenPGP Schlüsseldatei des Servers ist nicht schreibbar."
+
+msgid "Ensure the file {0} is writable by the webserver user."
+msgstr "Stellen Sie sicher, dass die Datei {0} vom Benutzer des Webservers schreibbar ist."
+
+msgid "The server OpenPGP public key file is writable."
+msgstr "Die öffentliche OpenPGP Schlüsseldatei des Servers ist beschreibbar."
+
+msgid "The server OpenPGP public key file is not writable."
+msgstr "Die OpenPGP öffentliche Schlüsseldatei des Servers ist nicht schreibbar."
+
 msgid "The database schema does not match the one expected"
 msgstr "Das Datenbankschema entspricht nicht dem erwarteten"
 
@@ -3132,33 +3831,6 @@ msgstr "Beim Erstellen des ersten Benutzers ist ein Problem aufgetreten"
 
 msgid "There was a problem creating the registration token"
 msgstr "Beim Erstellen des Registrierungstokens ist ein Problem aufgetreten"
-
-msgid "The cipherguard config is writable."
-msgstr "Die Cipherguard Konfiguration ist beschreibbar."
-
-msgid "The cipherguard config is not writable."
-msgstr "Die Cipherguard Konfiguration ist nicht beschreibbar."
-
-msgid "Ensure the file "
-msgstr "Datei sicherstellen "
-
-msgid "you can try:"
-msgstr "Sie können versuchen:"
-
-msgid "The server OpenPGP public key file is writable."
-msgstr "Die öffentliche OpenPGP Schlüsseldatei des Servers ist beschreibbar."
-
-msgid "The server OpenPGP public key file is not writable."
-msgstr "Die OpenPGP öffentliche Schlüsseldatei des Servers ist nicht schreibbar."
-
-msgid "Ensure the file {0} is writable by the webserver user."
-msgstr "Stellen Sie sicher, dass die Datei {0} vom Benutzer des Webservers schreibbar ist."
-
-msgid "The server OpenPGP private key file is writable."
-msgstr "Die private OpenPGP Schlüsseldatei des Servers ist schreibbar."
-
-msgid "The server OpenPGP private key file is not writable."
-msgstr "Die private OpenPGP Schlüsseldatei des Servers ist nicht schreibbar."
 
 msgid "Create your user account!"
 msgstr "Erstellen Sie Ihr Benutzerkonto!"
@@ -3358,17 +4030,8 @@ msgstr "URL-Rewriting ist auf Ihrem Server nicht korrekt konfiguriert."
 msgid "GPG is configured correctly."
 msgstr "GPG ist korrekt konfiguriert."
 
-msgid "GPG Configuration"
-msgstr "GPG-Konfiguration"
-
 msgid "SSL"
 msgstr "SSL"
-
-msgid "SSL access is enabled."
-msgstr "SSL-Zugriff ist aktiviert."
-
-msgid "SSL access is not enabled. You can still proceed, but it is highly recommended that you configure your web server to use HTTPS before you continue."
-msgstr "SSL-Zugriff ist nicht aktiviert. Sie können trotzdem fortfahren, aber es wird dringend empfohlen, dass Sie Ihren Webserver so konfigurieren, dass er HTTPS verwendet, bevor Sie fortfahren."
 
 msgid "Start configuration"
 msgstr "Konfiguration starten"
@@ -3442,6 +4105,9 @@ msgstr "Warum brauche ich einen SMTP-Server?"
 msgid "Cipherguard needs an smtp server in order to send invitation emails after an account creation and to send email notifications."
 msgstr "Cipherguard benötigt einen SMTP-Server, um Einladungs-E-Mails nach der Erstellung eines Kontos zu versenden und E-Mail-Benachrichtigungen zu senden."
 
+msgid "Error"
+msgstr "Fehler"
+
 msgid "The requested address was not found on this server."
 msgstr "Die angeforderte Adresse wurde auf diesem Server nicht gefunden."
 
@@ -3456,9 +4122,6 @@ msgstr "Gesundheitschecks"
 
 msgid "Cipherguard API Status"
 msgstr "Cipherguard API Status"
-
-msgid "SSL access is not enabled."
-msgstr "SSL-Zugriff ist nicht aktiviert."
 
 msgid "Group manager"
 msgstr "Gruppenmanager"
@@ -3503,10 +4166,10 @@ msgid "Feel free to get in touch with the administrator at the origin of the ope
 msgstr ""
 
 msgid "Account suspended"
-msgstr ""
+msgstr "Konto gesperrt"
 
 msgid "Your account has been suspended."
-msgstr ""
+msgstr "Ihr Konto wurde gesperrt."
 
 msgid "You are not able to sign in to cipherguard and receive email notifications."
 msgstr ""
@@ -3517,14 +4180,14 @@ msgstr ""
 msgid "Contact your admin"
 msgstr ""
 
-msgid "{0} changed role of {1} to admin."
-msgstr ""
+msgid "{0} changed your role to user."
+msgstr "{0} hat Ihre Rolle zu Benutzer geändert."
 
-msgid "{0} changed your role to admin."
-msgstr ""
+msgid "{0} changed the role of {1} to user."
+msgstr "{0} hat die Rolle von {1} zu Benutzer geändert."
 
 msgid "{0} can no longer perform administration tasks."
-msgstr ""
+msgstr "{0} kann keine Administrationsaufgaben mehr durchführen."
 
 msgid "You"
 msgstr "Sie"
@@ -3548,10 +4211,10 @@ msgid "Please check with them first to confirm."
 msgstr "Bitte überprüfen Sie zuerst mit ihnen zur Bestätigung."
 
 msgid "User suspended"
-msgstr ""
+msgstr "Benutzer gesperrt"
 
 msgid "The user {0} has been suspended."
-msgstr ""
+msgstr "Der Benutzer {0} wurde gesperrt."
 
 msgid "This user will not be able to sign in to cipherguard and receive email notifications."
 msgstr ""
@@ -3616,6 +4279,12 @@ msgstr "Sie haben soeben Ihren Zugang in Cipherguard erstellt!"
 msgid "You just opened an account on cipherguard at {0}."
 msgstr "Sie haben soeben einen Zugang in Cipherguard unter {0} angelegt."
 
+msgid "There was a change in the user directory."
+msgstr "Das Benutzerverzeichnis wurde verändert."
+
+msgid "You have been requested to add members to a group."
+msgstr "Sie wurden gebeten, Mitglieder zu einer Gruppe hinzuzufügen."
+
 msgid "{0} requested you to add members to a group"
 msgstr "{0} bittet Sie, Mitglieder zu einer Gruppe hinzuzufügen"
 
@@ -3632,7 +4301,7 @@ msgid "{0} deleted the user {1}"
 msgstr "{0} hat Benutzer*in {1} gelöscht"
 
 msgid "The user {0} {1} ({2}) is now deleted from your organisation in cipherguard."
-msgstr "Benutzer*in {0} {1} ({2}) wurde in Cipherguard aus Ihrer Organisation gelöscht."
+msgstr "Der:die Benutzer:in {0} {1} ({2}) wurde in Cipherguard aus Ihrer Organisation gelöscht."
 
 msgid "This user was a member of the following group(s) you manage:"
 msgstr "Diese*r Benutzer* war Mitglied der folgenden Gruppe(n) die Sie verwalten:"
@@ -3650,7 +4319,7 @@ msgid "As member of the group you now have access to all the passwords that are 
 msgstr "Als Mitglied der Gruppe haben Sie nun Zugriff auf alle Passwörter, die mit dieser Gruppe geteilt sind."
 
 msgid "And as group manager you are also authorized to edit the members of the group."
-msgstr "Und als Gruppen-Manager*in sind Sie auch berechtigt, die Mitglieder der Gruppe zu bearbeiten."
+msgstr "Und als Gruppen-Manager:in sind Sie auch berechtigt, die Mitglieder der Gruppe zu bearbeiten."
 
 msgid "You are no longer a member of this group."
 msgstr "Sie sind nicht mehr Mitglied dieser Gruppe."
@@ -3659,10 +4328,10 @@ msgid "You are no longer authorized to access the passwords shared with this gro
 msgstr "Sie sind nicht mehr berechtigt, auf die mit dieser Gruppe geteilten Passwörter zuzugreifen."
 
 msgid "Please contact {0} or another group manager if this is a mistake."
-msgstr "Bitte kontaktieren Sie {0} oder eine*n andere*n Gruppen-Manager*in, falls dies ein Fehler ist."
+msgstr "Bitte kontaktieren Sie {0} oder eine:n andere:n Gruppen-Manager:in, falls dies ein Fehler ist."
 
 msgid "You are now a group manager of this group."
-msgstr "Sie sind jetzt ein*e Gruppen-Manager*in dieser Gruppe."
+msgstr "Sie sind jetzt Gruppen-Manager:in dieser Gruppe."
 
 msgid "As group manager you are now authorized to edit the members of this group."
 msgstr "Als Gruppen-Manager*in sind Sie nun berechtigt, die Mitglieder dieser Gruppe zu bearbeiten."
@@ -3676,9 +4345,6 @@ msgstr "Sie sind kein*e Manager*in dieser Gruppe mehr."
 msgid "You are no longer authorized to edit the members of this group."
 msgstr "Sie sind nicht mehr berechtigt, die Mitglieder dieser Gruppe zu bearbeiten."
 
-msgid "Edited your membership in several groups"
-msgstr "Bearbeitete Deine Mitgliedschaft in mehreren Gruppen"
-
 msgid "{0} group memberships were affected."
 msgstr "{0} Gruppenmitgliedschaften waren betroffen."
 
@@ -3688,9 +4354,6 @@ msgstr "Es wäre zu viel, sie hier aufzuzählen, aber Sie können mehr Informati
 msgid "go to cipherguard"
 msgstr "zu Cipherguard"
 
-msgid "{0} deleted several group"
-msgstr "{0} hat mehrere Gruppen gelöscht"
-
 msgid "{0} deleted {1} groups you were a member of."
 msgstr "{0} hat {1} Gruppen gelöscht, in denen Sie Mitglied waren."
 
@@ -3698,7 +4361,7 @@ msgid "You have saved a new password"
 msgstr "Sie haben ein neues Passwort gespeichert"
 
 msgid "Username: {0}"
-msgstr "Benutzer*innennamen: {0}"
+msgstr "Benutzername: {0}"
 
 msgid "URL: {0}"
 msgstr "URL: {0}"
@@ -3708,21 +4371,6 @@ msgstr "Beschreibung: {0}"
 
 msgid "{0} shared a password with you"
 msgstr "{0} hat ein Passwort mit Ihnen geteilt"
-
-msgid "{0} updated the password {1}"
-msgstr "{0} hat das Passwort {1} aktualisiert"
-
-msgid "Edited multiple resources"
-msgstr "Hat mehrere Ressourcen bearbeitet"
-
-msgid "{0} resources were affected."
-msgstr "{0} Ressourcen sind betroffen."
-
-msgid "It would be too much to list them here, but you can go check them on cipherguard."
-msgstr "Es wäre zu viel, sie hier aufzulisten, aber Sie können sie in Cipherguard überprüfen."
-
-msgid "view them in cipherguard"
-msgstr "in Cipherguard anzeigen"
 
 msgid "{0} shared passwords with you"
 msgstr "{0} hat Passwörter mit Ihnen geteilt"
@@ -3746,7 +4394,7 @@ msgid "This user was invited by {0} {1}."
 msgstr "Benutzer*in wurde durch {0} {1} eingeladen."
 
 msgid "view users"
-msgstr "Benutzer*innen anzeigen"
+msgstr "Benutzer anzeigen"
 
 msgid "This email is an automatic notification sent by"
 msgstr "Diese E-Mail ist eine automatische Benachrichtigung gesendet von"

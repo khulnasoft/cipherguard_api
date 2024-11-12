@@ -1,7 +1,6 @@
 name: Create Release Candidate
 
 on:
-    workflow_dispatch:
     push:
         tags:
             - "v[0-9]+.[0-9]+.[0-9]+-rc.[0-9]+"
@@ -10,9 +9,11 @@ jobs:
     build:
         name: Create release candidate
         runs-on: ubuntu-latest
+        permissions:
+            contents: write
         steps:
             - uses: actions/checkout@v4
-            - env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              name: Create Release candidate
+            - name: Create Release candidate
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: gh release create "${GITHUB_REF#refs/*/}" -t "$(grep name config/version.php | awk -F "'" '{print $4}')" -p --notes-file RELEASE_NOTES.md

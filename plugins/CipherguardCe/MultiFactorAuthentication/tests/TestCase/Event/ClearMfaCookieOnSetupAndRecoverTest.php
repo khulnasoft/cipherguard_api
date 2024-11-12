@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.6.0
  */
 namespace Cipherguard\MultiFactorAuthentication\Test\TestCase\Event;
@@ -28,6 +28,7 @@ use Cake\Http\ServerRequest;
 use Cipherguard\MultiFactorAuthentication\Event\ClearMfaCookieOnSetupAndRecover;
 use Cipherguard\MultiFactorAuthentication\Test\Lib\MfaIntegrationTestCase;
 use Cipherguard\MultiFactorAuthentication\Utility\MfaVerifiedCookie;
+use Cipherguard\SelfRegistration\SelfRegistrationPlugin;
 use Cipherguard\SelfRegistration\Test\Lib\SelfRegistrationTestTrait;
 
 class ClearMfaCookieOnSetupAndRecoverTest extends MfaIntegrationTestCase
@@ -108,6 +109,7 @@ class ClearMfaCookieOnSetupAndRecoverTest extends MfaIntegrationTestCase
      */
     public function testClearMfaCookieOnSetupAndRecover_UsersRegisterGetSuccess()
     {
+        $this->enableFeaturePlugin(SelfRegistrationPlugin::class);
         $this->setSelfRegistrationSettingsData();
         $this->get('/users/register');
         $this->assertResponseOk();
@@ -119,10 +121,11 @@ class ClearMfaCookieOnSetupAndRecoverTest extends MfaIntegrationTestCase
      */
     public function testClearMfaCookieOnSetupAndRecover_UsersRegisterPostSuccess()
     {
+        $this->enableFeaturePlugin(SelfRegistrationPlugin::class);
         $this->setSelfRegistrationSettingsData();
         RoleFactory::make()->user()->persist();
         $data = [
-            'username' => 'ping.fu@cipherguard.khulnasoft.com',
+            'username' => 'ping.fu@cipherguard.github.io',
             'profile' => [
                 'first_name' => '傅',
                 'last_name' => '苹',

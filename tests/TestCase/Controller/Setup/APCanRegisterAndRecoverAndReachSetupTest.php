@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.5.0
  */
 namespace App\Test\TestCase\Controller\Setup;
@@ -21,6 +21,7 @@ use App\Test\Lib\AppIntegrationTestCase;
 use App\Test\Lib\Model\EmailQueueTrait;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
+use Cipherguard\SelfRegistration\SelfRegistrationPlugin;
 use Cipherguard\SelfRegistration\Test\Lib\SelfRegistrationTestTrait;
 
 class APCanRegisterAndRecoverAndReachSetupTest extends AppIntegrationTestCase
@@ -35,9 +36,10 @@ class APCanRegisterAndRecoverAndReachSetupTest extends AppIntegrationTestCase
 
     public function setUp(): void
     {
+        parent::setUp();
         // The setup/recover requires a supported user agent.
         $_ENV['HTTP_USER_AGENT'] = 'Firefox';
-        parent::setUp();
+        $this->enableFeaturePlugin(SelfRegistrationPlugin::class);
     }
 
     public function tearDown(): void
@@ -58,7 +60,7 @@ class APCanRegisterAndRecoverAndReachSetupTest extends AppIntegrationTestCase
     {
         $this->setSelfRegistrationSettingsData();
         // Register using signup form
-        $email = 'integration@cipherguard.khulnasoft.com';
+        $email = 'integration@cipherguard.github.io';
         $data = ['username' => $email, 'profile' => ['first_name' => 'integration', 'last_name' => 'test']];
         $this->postJson('/users/register.json', $data);
         $this->assertResponseSuccess();
@@ -79,7 +81,7 @@ class APCanRegisterAndRecoverAndReachSetupTest extends AppIntegrationTestCase
 
         // Link to install should be present in email
         $url = Router::url('/setup/start/' . $user->id . '/' . $tokens[0]['token']);
-        $this->assertEmailInBatchContains($url, 'integration@cipherguard.khulnasoft.com');
+        $this->assertEmailInBatchContains($url, 'integration@cipherguard.github.io');
 
         // Recover to get another token
         $this->post('/users/recover.json', ['username' => $email]);

@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.13.0
  */
 namespace Cipherguard\Folders\Model\Entity;
@@ -29,8 +29,8 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime $modified
  * @property string $user_id
  * @property \App\Model\Entity\Resource $resource
- * @property \Cake\ORM\Entity $folder
- * @property \Cake\ORM\Entity|null $folders_parent
+ * @property \Cipherguard\Folders\Model\Entity\Folder $folder
+ * @property \Cipherguard\Folders\Model\Entity\Folder|null $folders_parent
  * @property \App\Model\Entity\User $user
  * @property \Cake\ORM\Entity $folders_relations_history
  */

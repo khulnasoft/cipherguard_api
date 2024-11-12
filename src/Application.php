@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 namespace App;
@@ -19,6 +19,8 @@ namespace App;
 use App\Authenticator\SessionAuthenticationService;
 use App\Authenticator\SessionIdentificationService;
 use App\Authenticator\SessionIdentificationServiceInterface;
+use App\Command\CipherguardBuildCommandsListener;
+use App\Command\SqlExportCommand;
 use App\Middleware\ApiVersionMiddleware;
 use App\Middleware\ContainerInjectorMiddleware;
 use App\Middleware\ContentSecurityPolicyMiddleware;
@@ -29,23 +31,30 @@ use App\Middleware\SessionAuthPreventDeletedOrDisabledUsersMiddleware;
 use App\Middleware\SessionPreventExtensionMiddleware;
 use App\Middleware\SslForceMiddleware;
 use App\Middleware\UuidParserMiddleware;
+use App\Middleware\ValidCookieNameMiddleware;
 use App\Notification\Email\EmailSubscriptionDispatcher;
 use App\Notification\Email\Redactor\CoreEmailRedactorPool;
 use App\Notification\NotificationSettings\CoreNotificationSettingsDefinition;
 use App\Service\Avatars\AvatarsConfigurationService;
 use App\Service\Cookie\AbstractSecureCookieService;
 use App\Service\Cookie\DefaultSecureCookieService;
+use App\ServiceProvider\CommandServiceProvider;
+use App\ServiceProvider\HealthcheckServiceProvider;
+use App\ServiceProvider\ResourceServiceProvider;
 use App\ServiceProvider\SetupServiceProvider;
 use App\ServiceProvider\TestEmailServiceProvider;
 use App\ServiceProvider\UserServiceProvider;
+use App\Utility\Application\FeaturePluginAwareTrait;
 use Authentication\AuthenticationServiceInterface;
 use Authentication\AuthenticationServiceProviderInterface;
 use Authentication\Middleware\AuthenticationMiddleware;
+use Cake\Console\CommandCollection;
 use Cake\Core\Configure;
 use Cake\Core\ContainerInterface;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
 use Cake\Http\BaseApplication;
+use Cake\Http\Client;
 use Cake\Http\Middleware\BodyParserMiddleware;
 use Cake\Http\Middleware\SecurityHeadersMiddleware;
 use Cake\Http\MiddlewareQueue;
@@ -53,13 +62,16 @@ use Cake\Http\ServerRequest;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
 use Cake\Routing\Router;
+use EmailQueue\Shell\SenderShell;
+use Cipherguard\EmailDigest\EmailDigestPlugin;
 use Cipherguard\SelfRegistration\Service\DryRun\SelfRegistrationDefaultDryRunService;
 use Cipherguard\SelfRegistration\Service\DryRun\SelfRegistrationDryRunServiceInterface;
-use Cipherguard\WebInstaller\Middleware\WebInstallerMiddleware;
 use Psr\Http\Message\ServerRequestInterface;
 
 class Application extends BaseApplication implements AuthenticationServiceProviderInterface
 {
+    use FeaturePluginAwareTrait;
+
     /**
      * @var \App\BaseSolutionBootstrapper|null
      */
@@ -90,6 +102,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
          * - Apply CSRF protection
          */
         $middlewareQueue
+            ->add(ValidCookieNameMiddleware::class)
             ->prepend(new ContainerInjectorMiddleware($this->getContainer()))
             ->add(new ContentSecurityPolicyMiddleware())
             ->add(new ErrorHandlerMiddleware(Configure::read('Error')))
@@ -151,7 +164,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         $this->getSolutionBootstrapper()->addFeaturePlugins($this);
 
         if (PHP_SAPI === 'cli') {
-            $this->addCliPlugins();
+            $this->addCliDevelopmentPlugins();
         }
 
         $this->initEmails();
@@ -189,14 +202,11 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
      *
      * @return void
      */
-    public function initEmails()
+    public function initEmails(): void
     {
-        // Gather
-        if (WebInstallerMiddleware::isConfigured()) {
-            $this->getEventManager()
-                ->on(new CoreEmailRedactorPool())
-                ->on(new CoreNotificationSettingsDefinition());
-        }
+        $this->getEventManager()
+            ->on(new CoreEmailRedactorPool())
+            ->on(new CoreNotificationSettingsDefinition());
     }
 
     /**
@@ -249,17 +259,20 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     }
 
     /**
-     * Add plugins relevant in CLI mode
+     * Add plugins relevant in CLI development mode
      * - Bake
      * - Migrations
      *
      * @return $this
      */
-    protected function addCliPlugins()
+    protected function addCliDevelopmentPlugins()
     {
+        if (!Configure::read('debug')) {
+            return $this;
+        }
         try {
-            Application::addPlugin('Bake');
             $this
+                ->addPlugin('Bake')
                 ->addPlugin('CakephpFixtureFactories')
                 ->addPlugin('IdeHelper');
         } catch (MissingPluginException $e) {
@@ -278,9 +291,15 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         $container->add(SessionIdentificationServiceInterface::class, SessionIdentificationService::class);
         $container->add(SelfRegistrationDryRunServiceInterface::class, SelfRegistrationDefaultDryRunService::class);
         $container->add(AbstractSecureCookieService::class, DefaultSecureCookieService::class);
+        $container->add(Client::class);
         $container->addServiceProvider(new TestEmailServiceProvider());
         $container->addServiceProvider(new SetupServiceProvider());
+        $container->addServiceProvider(new ResourceServiceProvider());
         $container->addServiceProvider(new UserServiceProvider());
+        if (PHP_SAPI === 'cli') {
+            $container->addServiceProvider(new CommandServiceProvider());
+        }
+        $container->addServiceProvider(new HealthcheckServiceProvider());
     }
 
     /**
@@ -312,5 +331,24 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         }
 
         return $auth;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function console(CommandCollection $commands): CommandCollection
+    {
+        parent::console($commands);
+        $this->getEventManager()->on(new CipherguardBuildCommandsListener());
+
+        // If the email digest plugin is disabled, fallback on the sender shell
+        if (!$this->isFeaturePluginEnabled(EmailDigestPlugin::class)) {
+            $commands->add('cipherguard email_digest send', SenderShell::class);
+        }
+
+        // Alias sql_export to mysql_export, this is to keep BC
+        $commands->add('cipherguard mysql_export', SqlExportCommand::class);
+
+        return $commands;
     }
 }

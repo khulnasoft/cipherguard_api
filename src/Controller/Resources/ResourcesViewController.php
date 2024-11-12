@@ -3,27 +3,27 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 
 namespace App\Controller\Resources;
 
 use App\Controller\AppController;
-use App\Model\Entity\Resource;
 use Cake\Http\Exception\BadRequestException;
 use Cake\Http\Exception\InternalErrorException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Validation\Validation;
 use Exception;
+use Cipherguard\Folders\Model\Behavior\FolderizableBehavior;
 
 /**
  * ResourcesViewController Class
@@ -74,6 +74,7 @@ class ResourcesViewController extends AppController
         if (empty($resource)) {
             throw new NotFoundException(__('The resource does not exist.'));
         }
+        $resource = FolderizableBehavior::unsetPersonalPropertyIfNull($resource->toArray());
 
         // Log secret access.
         $this->_logSecretAccesses($resource);
@@ -84,17 +85,17 @@ class ResourcesViewController extends AppController
     /**
      * Log secrets accesses in secretAccesses table.
      *
-     * @param \App\Model\Entity\Resource $resource resource
+     * @param array $resource resource
      * @return void
      */
-    protected function _logSecretAccesses(Resource $resource): void
+    protected function _logSecretAccesses(array $resource): void
     {
         $Secrets = $this->Resources->getAssociation('Secrets');
-        if (!isset($resource->secrets) || !$Secrets->hasAssociation('SecretAccesses')) {
+        if (!isset($resource['secrets']) || !$Secrets->hasAssociation('SecretAccesses')) {
             return;
         }
 
-        foreach ($resource->secrets as $secret) {
+        foreach ($resource['secrets'] as $secret) {
             try {
                 /** @var \Cipherguard\Log\Model\Table\SecretAccessesTable $SecretAccesses */
                 $SecretAccesses = $Secrets->getAssociation('SecretAccesses');

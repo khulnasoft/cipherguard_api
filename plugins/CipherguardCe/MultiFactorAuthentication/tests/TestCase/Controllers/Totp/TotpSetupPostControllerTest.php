@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.5.0
  */
 namespace Cipherguard\MultiFactorAuthentication\Test\TestCase\Controllers\Totp;
@@ -263,9 +263,9 @@ class TotpSetupPostControllerTest extends MfaIntegrationTestCase
      */
     public function testTotpSetupPostController_Success_With_Legacy_Secret_Length()
     {
-        $originalSecretLength = Configure::read(MfaOtpFactory::CIPHERGURD_PLUGINS_MFA_TOTP_SECRET_LENGTH);
+        $originalSecretLength = Configure::read(MfaOtpFactory::CIPHERGUARD_PLUGINS_MFA_TOTP_SECRET_LENGTH);
         $secretLength = 256;
-        Configure::write(MfaOtpFactory::CIPHERGURD_PLUGINS_MFA_TOTP_SECRET_LENGTH, $secretLength);
+        Configure::write(MfaOtpFactory::CIPHERGUARD_PLUGINS_MFA_TOTP_SECRET_LENGTH, $secretLength);
 
         $user = $this->logInAsUser();
         $this->loadFixtureScenario(MfaTotpOrganizationOnlyScenario::class);
@@ -279,6 +279,6 @@ class TotpSetupPostControllerTest extends MfaIntegrationTestCase
         $this->assertResponseOk();
         $this->assertResponseContains('success');
 
-        Configure::write(MfaOtpFactory::CIPHERGURD_PLUGINS_MFA_TOTP_SECRET_LENGTH, $originalSecretLength);
+        Configure::write(MfaOtpFactory::CIPHERGUARD_PLUGINS_MFA_TOTP_SECRET_LENGTH, $originalSecretLength);
     }
 }

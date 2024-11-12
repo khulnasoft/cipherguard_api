@@ -3,19 +3,20 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.5.0
  */
 namespace App\Command;
 
+use App\Service\Command\ProcessUserService;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
@@ -34,11 +35,34 @@ class MigratePostgresCommand extends CipherguardCommand
     ];
 
     /**
+     * @var \App\Service\Command\ProcessUserService
+     */
+    protected ProcessUserService $processUserService;
+
+    /**
+     * @param \App\Service\Command\ProcessUserService $processUserService Process user service.
+     */
+    public function __construct(ProcessUserService $processUserService)
+    {
+        parent::__construct();
+
+        $this->processUserService = $processUserService;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function getCommandDescription(): string
+    {
+        return __('Re-runs the migrations required by Postgres.');
+    }
+
+    /**
      * @inheritDoc
      */
     public function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
-        $parser->setDescription(__('Re-runs the migrations required by Postgres.'));
+        $parser = parent::buildOptionParser($parser);
 
         $this->addDatasourceOption($parser);
 
@@ -54,7 +78,7 @@ class MigratePostgresCommand extends CipherguardCommand
 
         // Root user is not allowed to execute this command.
         // This command needs to be executed with the same user as the webserver.
-        $this->assertCurrentProcessUser($io);
+        $this->assertCurrentProcessUser($io, $this->processUserService);
 
         /** @var \Cake\Database\Connection $connection */
         $connection = ConnectionManager::get($args->getOption('datasource'));
@@ -80,8 +104,7 @@ class MigratePostgresCommand extends CipherguardCommand
      */
     public function deletePostgresRelevantMigrations(Connection $connection): void
     {
-        $connection->newQuery()
-            ->delete('phinxlog')
+        $connection->deleteQuery('phinxlog')
             ->where(['phinxlog.migration_name IN' => self::POSTGRES_RELEVANT_MIGRATIONS,])
             ->execute();
     }

@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.11.0
  */
 
@@ -32,7 +32,7 @@ use Cipherguard\MultiFactorAuthentication\Utility\MfaOrgSettings;
  */
 class MfaDuoVerifyDuoCodeService
 {
-    public const CIPHERGURD_SECURITY_MFA_DUO_VERIFY_SUBSCRIBER = 'cipherguard.security.mfa.duoVerifySubscriber';
+    public const CIPHERGUARD_SECURITY_MFA_DUO_VERIFY_SUBSCRIBER = 'cipherguard.security.mfa.duoVerifySubscriber';
 
     /**
      * @var \Duo\DuoUniversal\Client
@@ -103,10 +103,6 @@ class MfaDuoVerifyDuoCodeService
             throw new UnauthorizedException(__('Unable to verify Duo code against Duo service.'), null, $e);
         }
 
-        if (!is_array($duoAuthenticationData)) {
-            throw new InternalErrorException('Duo authentication details should be an array.');
-        }
-
         return $duoAuthenticationData;
     }
 
@@ -140,7 +136,7 @@ class MfaDuoVerifyDuoCodeService
      */
     private function assertDuoAuthenticationSubscriber(string $duoSubscriber, string $operatorUsername): void
     {
-        $verifySubscriber = Configure::read(self::CIPHERGURD_SECURITY_MFA_DUO_VERIFY_SUBSCRIBER);
+        $verifySubscriber = Configure::read(self::CIPHERGUARD_SECURITY_MFA_DUO_VERIFY_SUBSCRIBER);
         if ($verifySubscriber === true && mb_strtolower($duoSubscriber) !== mb_strtolower($operatorUsername)) {
             $msg = __('The duo authentication subscriber does not match the operator username.');
             throw new UnauthorizedException($msg);

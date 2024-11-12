@@ -3,19 +3,20 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 namespace App\Test\TestCase\Controller\Notifications;
 
+use App\Test\Factory\AuthenticationTokenFactory;
 use App\Test\Factory\RoleFactory;
 use App\Test\Factory\UserFactory;
 use App\Test\Lib\AppIntegrationTestCase;
@@ -37,7 +38,7 @@ class UsersAddNotificationTest extends AppIntegrationTestCase
 
         $this->logInAs($admin);
         $this->postJson('/users.json', [
-            'username' => 'new.user@cipherguard.khulnasoft.com',
+            'username' => 'new.user@cipherguard.github.io',
             'role_id' => $role->id,
             'profile' => [
                 'first_name' => 'new',
@@ -56,20 +57,39 @@ class UsersAddNotificationTest extends AppIntegrationTestCase
 
         RoleFactory::make()->guest()->persist();
         $role = RoleFactory::make()->user()->persist();
-        $admin = UserFactory::make()->admin()->active()->persist();
+        $admin = UserFactory::make()
+            ->admin()
+            ->active()
+            ->with('Profiles', [
+                'first_name' => '<Steve>',
+                'last_name' => 'Doe',
+            ])
+            ->persist();
 
+        $firstName = 'John\'s';
+        $lastName = 'O\'Connor';
+        $username = 'new@cipherguard.github.io';
         $this->logInAs($admin);
         $this->postJson('/users.json', [
-            'username' => 'new.user@cipherguard.khulnasoft.com',
+            'username' => $username,
             'role_id' => $role->id,
             'profile' => [
-                'first_name' => 'new',
-                'last_name' => 'user',
+                'first_name' => $firstName,
+                'last_name' => $lastName,
             ],
         ]);
         $this->assertResponseSuccess();
+        $userId = $this->_responseJsonBody->id;
 
         // check email notification
-        $this->assertEmailInBatchContains('just created an account for you', 'new.user@cipherguard.khulnasoft.com');
+        $this->assertEmailInBatchContains(
+            [
+                $admin->profile->first_name . ' just created an account for you',
+                $admin->profile->first_name . ' just invited you to join cipherguard',
+                'Welcome ' . $firstName,
+                '/setup/start/' . $userId . '/' . AuthenticationTokenFactory::firstOrFail()->token,
+            ],
+            $username
+        );
     }
 }

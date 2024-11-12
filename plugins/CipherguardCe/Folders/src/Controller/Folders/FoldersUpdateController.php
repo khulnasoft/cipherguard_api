@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.13.0
  */
 
@@ -21,6 +21,7 @@ use App\Controller\AppController;
 use Cake\Http\Exception\BadRequestException;
 use Cake\Utility\Hash;
 use Cake\Validation\Validation;
+use Cipherguard\Folders\Model\Behavior\FolderizableBehavior;
 use Cipherguard\Folders\Service\Folders\FoldersUpdateService;
 
 class FoldersUpdateController extends AppController
@@ -61,6 +62,7 @@ class FoldersUpdateController extends AppController
         ];
         $options = $this->QueryString->get($whitelist);
         $folder = $foldersUpdateService->foldersTable->findView($this->User->id(), $folder->id, $options)->first();
+        $folder = FolderizableBehavior::unsetPersonalPropertyIfNull($folder->toArray());
 
         $this->success(__('The folder has been updated successfully.'), $folder);
     }

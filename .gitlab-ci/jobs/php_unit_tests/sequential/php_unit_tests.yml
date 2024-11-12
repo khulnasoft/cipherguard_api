@@ -49,8 +49,8 @@
     DATASOURCES_DEFAULT_DRIVER: Cake\Database\Driver\Postgres
     DATASOURCES_PORT: 5432
     DATASOURCES_DEFAULT_PORT: 5432
-    DATASOURCES_DEFAULT_ENCODING: 'utf8'
-    DATASOURCES_TEST_ENCODING: 'utf8'
+    DATASOURCES_DEFAULT_ENCODING: "utf8"
+    DATASOURCES_TEST_ENCODING: "utf8"
     DATASOURCES_TEST_PORT: 5432
 # TO BE REPLACED WITH
 #  before_script:
@@ -67,14 +67,15 @@
   variables:
     # Cipherguard unit test job common variables
     DEBUG: "true"
-    CIPHERGURD_GPG_SERVER_KEY_PUBLIC: config/gpg/unsecure.key
-    CIPHERGURD_GPG_SERVER_KEY_PRIVATE: config/gpg/unsecure_private.key
+    CIPHERGUARD_GPG_SERVER_KEY_PUBLIC: config/gpg/unsecure.key
+    CIPHERGUARD_GPG_SERVER_KEY_PRIVATE: config/gpg/unsecure_private.key
     APP_FULL_BASE_URL: http://127.0.0.1
-    CIPHERGURD_REGISTRATION_PUBLIC: 1
-    CIPHERGURD_SELENIUM_ACTIVE: 1
+    CIPHERGUARD_REGISTRATION_PUBLIC: 1
+    CIPHERGUARD_SELENIUM_ACTIVE: 1
     # This is the development dummy fingerprint
-    CIPHERGURD_GPG_SERVER_KEY_FINGERPRINT: 2FC8945833C51946E937F9FED47B0811573EE67E
+    CIPHERGUARD_GPG_SERVER_KEY_FINGERPRINT: 2FC8945833C51946E937F9FED47B0811573EE67E
     PHPUNIT_COMMAND: vendor/bin/phpunit --log-junit unitreport.xml
+    COMPOSER_ALLOW_SUPERUSER: 1
   image: $CI_REGISTRY_IMAGE_TEST:$PHP_VERSION
   script:
     - cp config/app.default.php config/app.php
@@ -87,7 +88,7 @@
     reports:
       junit: unitreport.xml
   rules:
-    - if: '$CI_COMMIT_MESSAGE !~ /skip-unit/'
+    - if: "$CI_COMMIT_MESSAGE !~ /skip-unit/"
 
 ##
 ## CUSTOM COMBINATIONS
@@ -95,17 +96,17 @@
 seq-php7.4-mysql5.7:
   variables:
     PHP_VERSION: "7.4"
-    DATABASE_ENGINE_VERSION: '$CI_REGISTRY/mysql-5.7'
+    DATABASE_ENGINE_VERSION: "${CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX}/mysql:5.7"
   extends:
     - .mysql-template
     - .test-template
   rules:
-    - if: '$TEST_DISABLED == null'
+    - if: "$TEST_DISABLED == null"
 
 seq-php8.0-postgres13:
   variables:
     PHP_VERSION: "8.0"
-    DATABASE_ENGINE_VERSION: '$CI_REGISTRY/postgres-13-alpine'
+    DATABASE_ENGINE_VERSION: "${CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX}/postgres:13-alpine"
   extends:
     - .postgres-template
     - .test-template
@@ -116,7 +117,7 @@ seq-php8.0-postgres13:
 seq-php8.1-postgres15:
   variables:
     PHP_VERSION: "8.1"
-    DATABASE_ENGINE_VERSION: '$CI_REGISTRY/postgres-15-alpine'
+    DATABASE_ENGINE_VERSION: "${CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX}/postgres:15-alpine"
   extends:
     - .postgres-template
     - .test-template
@@ -125,7 +126,7 @@ seq-php8.1-postgres15:
 #seq-php7.4-postgres12.11:
 #  variables:
 #    PHP_VERSION: "7.4"
-#    DATABASE_ENGINE_VERSION: '$CI_REGISTRY/postgres-12-alpine'
+#    DATABASE_ENGINE_VERSION: "${CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX}/postgres:12-alpine"
 #  extends:
 #    - .postgres-template
 #    - .test-template
@@ -139,7 +140,7 @@ seq-php8.1-postgres15:
 #seq-php7.4-postgres11.16:
 #  variables:
 #    PHP_VERSION: "7.4"
-#    DATABASE_ENGINE_VERSION: '$CI_REGISTRY/postgres-11-alpine'
+#    DATABASE_ENGINE_VERSION: "${CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX}/postgres:11-alpine"
 #  extends:
 #    - .postgres-template
 #    - .test-template
@@ -150,7 +151,7 @@ seq-php8.1-postgres15:
 seq-php7.4-mariadb10.5:
   variables:
     PHP_VERSION: "7.4"
-    DATABASE_ENGINE_VERSION: '$CI_REGISTRY/mariadb-10.5'
+    DATABASE_ENGINE_VERSION: "${CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX}/mariadb:10.5"
   extends:
     - .mysql-template
     - .test-template
@@ -161,7 +162,7 @@ seq-php7.4-mariadb10.5:
 #seq-php7.4-postgres13.7:
 #  variables:
 #    PHP_VERSION: "7.4"
-#    DATABASE_ENGINE_VERSION: '$CI_REGISTRY/postgres-13-alpine'
+#    DATABASE_ENGINE_VERSION: "${CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX}/postgres:13-alpine"
 #  extends:
 #    - .postgres-template
 #    - .test-template
@@ -173,7 +174,7 @@ seq-php7.4-mariadb10.5:
 seq-php7.4-mysql8:
   variables:
     PHP_VERSION: "7.4"
-    DATABASE_ENGINE_VERSION: '$CI_REGISTRY/mysql-8.0'
+    DATABASE_ENGINE_VERSION: "${CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX}/mysql:8.0"
   extends:
     - .mysql-template
     - .test-template
@@ -184,7 +185,7 @@ seq-php7.4-mysql8:
 #seq-php7.4-postgres12.11:
 #  variables:
 #    PHP_VERSION: "7.4"
-#    DATABASE_ENGINE_VERSION: '$CI_REGISTRY/postgres-12-alpine'
+#    DATABASE_ENGINE_VERSION: '${CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX}/postgres:12-alpine'
 #  extends:
 #    - .postgres-template
 #    - .test-template
@@ -195,7 +196,7 @@ seq-php7.4-mysql8:
 seq-php8.1-mysql8:
   variables:
     PHP_VERSION: "8.1"
-    DATABASE_ENGINE_VERSION: '$CI_REGISTRY/mysql-8.0'
+    DATABASE_ENGINE_VERSION: "${CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX}/mysql:8.0"
   extends:
     - .mysql-template
     - .test-template
@@ -206,7 +207,7 @@ seq-php8.1-mysql8:
 #seq-php8.1-postgres14.3:
 #  variables:
 #    PHP_VERSION: "8.1"
-#    DATABASE_ENGINE_VERSION: '$CI_REGISTRY/postgres-14-alpine'
+#    DATABASE_ENGINE_VERSION: '${CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX}/postgres:14-alpine'
 #  extends:
 #    - .postgres-template
 #    - .test-template
@@ -220,18 +221,18 @@ seq-php8.1-mysql8:
 seq-php8.2-mariadb10.3:
   variables:
     PHP_VERSION: "7.4"
-    DATABASE_ENGINE_VERSION: '$CI_REGISTRY/mariadb-10.3'
+    DATABASE_ENGINE_VERSION: "${CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX}/mariadb:10.3"
   extends:
     - .mysql-template
     - .test-template
   rules:
-    - if: '$TEST_DISABLED == null'
+    - if: "$TEST_DISABLED == null"
 
 ## ROCKY LINUX 8.6
 seq-php8.0-mariadb10.5:
   variables:
     PHP_VERSION: "8.0"
-    DATABASE_ENGINE_VERSION: '$CI_REGISTRY/mariadb-10.5'
+    DATABASE_ENGINE_VERSION: "${CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX}/mariadb:10.5"
   extends:
     - .mysql-template
     - .test-template
@@ -243,7 +244,7 @@ seq-php8.0-mariadb10.5:
 seq-php8.0-mariadb8.0:
   variables:
     PHP_VERSION: "8.0"
-    DATABASE_ENGINE_VERSION: '$CI_REGISTRY/mysql-8.0'
+    DATABASE_ENGINE_VERSION: "${CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX}/mysql:8.0"
   extends:
     - .mysql-template
     - .test-template
@@ -254,10 +255,20 @@ seq-php8.0-mariadb8.0:
 #seq-php8.0-postgres13.7:
 #  variables:
 #    PHP_VERSION: "8.0"
-#    DATABASE_ENGINE_VERSION: '$CI_REGISTRY/postgres-13-alpine'
+#    DATABASE_ENGINE_VERSION: '${CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX}/postgres:13-alpine'
 #  extends:
 #    - .postgres-template
 #    - .test-template
 #  rules:
 #    - if: '$TEST_DISABLED == null && $CI_COMMIT_BRANCH == "master"'
 #    - if: '$TEST_DISABLED == null && $CI_COMMIT_BRANCH == "develop"'
+
+seq-php8.3-mariadb10.5:
+  variables:
+    PHP_VERSION: "8.3"
+    DATABASE_ENGINE_VERSION: "${CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX}/mariadb:10.5"
+  extends:
+    - .mysql-template
+    - .test-template
+  rules:
+    - if: "$TEST_DISABLED == null"

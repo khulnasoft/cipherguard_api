@@ -3,22 +3,21 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.3.0
  */
 namespace Cipherguard\Mobile\Test\TestCase\Controller\Transfers;
 
 use App\Test\Factory\UserFactory;
 use App\Test\Lib\AppIntegrationTestCase;
-use App\Test\Lib\Model\AvatarsModelTrait;
 use App\Test\Lib\Model\ProfilesModelTrait;
 use App\Test\Lib\Model\UsersModelTrait;
 use App\Utility\UuidFactory;
@@ -26,7 +25,6 @@ use Cipherguard\Mobile\Test\Lib\Model\TransfersModelTrait;
 
 class TransfersViewControllerTest extends AppIntegrationTestCase
 {
-    use AvatarsModelTrait;
     use ProfilesModelTrait;
     use TransfersModelTrait;
     use UsersModelTrait;
@@ -35,12 +33,6 @@ class TransfersViewControllerTest extends AppIntegrationTestCase
     {
         parent::setUp();
         $this->enableFeaturePlugin('mobile');
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        $this->disableFeaturePlugin('mobile');
     }
 
     public function testMobileTransfersViewController_Success()
@@ -79,7 +71,7 @@ class TransfersViewControllerTest extends AppIntegrationTestCase
         $this->assertTransferAttributes($this->_responseJsonBody);
         $this->assertUserAttributes($this->_responseJsonBody->user);
         $this->assertProfileAttributes($this->_responseJsonBody->user->profile);
-        $this->assertAvatarAttributes($this->_responseJsonBody->user->profile->avatar);
+        $this->assertObjectHasAttributes(['small', 'medium'], $this->_responseJsonBody->user->profile->avatar->url);
     }
 
     public function testMobileTransfersViewController_ErrorNotFound()

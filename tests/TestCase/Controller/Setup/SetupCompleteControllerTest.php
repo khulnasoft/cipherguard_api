@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 namespace App\Test\TestCase\Controller\Setup;
@@ -27,6 +27,7 @@ use App\Utility\UuidFactory;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cipherguard\Locale\Service\LocaleService;
+use Cipherguard\Log\LogPlugin;
 
 class SetupCompleteControllerTest extends AppIntegrationTestCase
 {
@@ -39,13 +40,12 @@ class SetupCompleteControllerTest extends AppIntegrationTestCase
      */
     public function testSetupCompleteController_Success(): void
     {
-        $logEnabled = Configure::read('cipherguard.plugins.log.enabled');
-        Configure::write('cipherguard.plugins.log.enabled', true);
+        $this->enableFeaturePlugin(LogPlugin::class);
         [$admin1, $admin2] = UserFactory::make(2)->admin()->persist();
         $t = AuthenticationTokenFactory::make()
             ->active()
             ->type(AuthenticationToken::TYPE_REGISTER)
-            ->with('Users', UserFactory::make()->inactive())
+            ->with('Users', UserFactory::make()->admin()->inactive())
             ->persist();
         $user = $t->user;
         $url = '/setup/complete/' . $user->id . '.json';
@@ -91,7 +91,6 @@ class SetupCompleteControllerTest extends AppIntegrationTestCase
             'subject' => $user->profile->first_name . ' just activated their account on cipherguard',
         ]);
         $this->assertEmailQueueCount(2);
-        Configure::write('cipherguard.plugins.log.enabled', $logEnabled);
     }
 
     /**

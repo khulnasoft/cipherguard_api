@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 namespace App\Controller\Users;
@@ -20,13 +20,16 @@ use App\Controller\AppController;
 use App\Error\Exception\ValidationException;
 use App\Model\Entity\Role;
 use App\Model\Entity\User;
+use App\Model\Table\AvatarsTable;
 use App\Model\Table\UsersTable;
+use App\Service\Resources\ResourcesExpireResourcesServiceInterface;
 use Cake\Event\Event;
 use Cake\Http\Exception\BadRequestException;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\Http\Exception\InternalErrorException;
 use Cake\Validation\Validation;
 use Exception;
+use League\Flysystem\FilesystemAdapter;
 
 /**
  * UsersEditController Class
@@ -45,10 +48,15 @@ class UsersEditController extends AppController
      * Allow editing firstname / lastname and role only for admin
      *
      * @param string $id user uuid
+     * @param \League\Flysystem\FilesystemAdapter $filesystemAdapter file system adapter to write the avatar in cache if saved
+     * @param \App\Service\Resources\ResourcesExpireResourcesServiceInterface $resourcesExpireResourcesService Service to expire resources that were consumed by users who lost access to them.
      * @return void
      */
-    public function editPost(string $id)
-    {
+    public function editPost(
+        string $id,
+        FilesystemAdapter $filesystemAdapter,
+        ResourcesExpireResourcesServiceInterface $resourcesExpireResourcesService
+    ) {
         $this->assertJson();
 
         $data = $this->_validateRequestData($id);
@@ -84,8 +92,20 @@ class UsersEditController extends AppController
         $userEntityWithDirtyState = clone $user;
 
         // Save
-        if (!$this->Users->save($user, ['checkrules' => false])) {
+        $saveOptions = [
+            'checkrules' => false,
+            AvatarsTable::FILESYSTEM_ADAPTER_OPTION => $filesystemAdapter,
+        ];
+        if (!$this->Users->save($user, $saveOptions)) {
             throw new InternalErrorException('Could not save the user data. Please try again later.');
+        }
+
+        if ($isBeingDisabled) {
+            /** @var \App\Model\Table\SecretsTable $secretsTable */
+            $secretsTable = $this->fetchTable('Secrets');
+            $secretToExpire = $secretsTable->findByUserId($id)
+                ->select(['id', 'user_id', 'resource_id'])->all()->toArray();
+            $resourcesExpireResourcesService->expireResourcesForSecrets($secretToExpire);
         }
 
         // Get the updated version (ex. Role needs to be fetched again if role_id changed)
@@ -144,7 +164,37 @@ class UsersEditController extends AppController
             throw new ForbiddenException(__('You are not authorized to edit the role.'));
         }
 
-        return $data;
+        // Sanitize data as the marshaller will throw a type error if the payload has integers as fields
+        $sanitizedData = [];
+        $allowedKeys = [
+            'role_id',
+            'disabled',
+            'profile' => [
+                'first_name',
+                'last_name',
+                'avatar',
+            ],
+        ];
+
+        foreach ($allowedKeys as $allowedMainKey => $allowedKey) {
+            if (!is_array($allowedKey)) {
+                if (array_key_exists($allowedKey, $data)) {
+                    $sanitizedData[$allowedKey] = $data[$allowedKey];
+                }
+            } else {
+                foreach ($allowedKey as $allowedNestedKey) {
+                    if (!array_key_exists($allowedMainKey, $data)) {
+                        break;
+                    }
+
+                    if (array_key_exists($allowedNestedKey, $data[$allowedMainKey])) {
+                        $sanitizedData[$allowedMainKey][$allowedNestedKey] = $data[$allowedMainKey][$allowedNestedKey];
+                    }
+                }
+            }
+        }
+
+        return $sanitizedData;
     }
 
     /**

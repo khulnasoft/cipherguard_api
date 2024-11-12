@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.1.0
  */
 namespace App\Test\TestCase\Command;
@@ -34,15 +34,22 @@ class SendTestEmailCommandTest extends AppTestCase
     use SmtpSettingsIntegrationTestTrait;
 
     /**
-     * setUp method
-     *
-     * @return void
+     * @inheritDoc
      */
     public function setUp(): void
     {
         parent::setUp();
+
         $this->useCommandRunner();
-        $config = [
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function tearDown(): void
+    {
+        // Reset state
+        $defaultConfig = [
             'className' => DebugTransport::class,
             'host' => 'unreachable_host.dev',
             'port' => 123,
@@ -53,7 +60,9 @@ class SendTestEmailCommandTest extends AppTestCase
             'tls' => true,
         ];
         TransportFactory::drop('default');
-        TransportFactory::setConfig('default', $config);
+        TransportFactory::setConfig('default', $defaultConfig);
+
+        parent::tearDown();
     }
 
     /**
@@ -63,7 +72,7 @@ class SendTestEmailCommandTest extends AppTestCase
     {
         $this->exec('cipherguard send_test_email -h');
         $this->assertExitSuccess();
-        $this->assertOutputContains('Debug Email shell for the cipherguard application.');
+        $this->assertOutputContains('Try to send a test email and display debug information.');
         $this->assertOutputContains('cake cipherguard send_test_email');
     }
 

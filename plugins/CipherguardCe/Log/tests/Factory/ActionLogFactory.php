@@ -5,15 +5,15 @@ namespace Cipherguard\Log\Test\Factory;
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd'RL (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SARL (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.7.0
  */
 
@@ -62,6 +62,9 @@ class ActionLogFactory extends CakephpBaseFactory
         });
     }
 
+    /**
+     * @return $this
+     */
     public function setActionId(string $actionName)
     {
         return $this->setField('action_id', UuidFactory::uuid($actionName));

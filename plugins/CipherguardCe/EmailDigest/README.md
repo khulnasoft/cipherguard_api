@@ -46,7 +46,7 @@ You may follow the abstract methods of this abstract template to build a new dig
 
 ## `DigestsCollection`
 
-When sending or previewing a batch of emails (per default 100, see `CIPHERGURD_PLUGINS_EMAIL_DIGEST_BATCH_SIZE_LIMIT`),
+When sending or previewing a batch of emails (per default 100, see `CIPHERGUARD_PLUGINS_EMAIL_DIGEST_BATCH_SIZE_LIMIT`),
 the emails are attributed to a digest, if they are candidates to a digest, or will be
 rendered as single emails. The `DigestsCollection` iterates through all the emails
 to be sent and creates digests resp. assigns to these digests the emails candidate.

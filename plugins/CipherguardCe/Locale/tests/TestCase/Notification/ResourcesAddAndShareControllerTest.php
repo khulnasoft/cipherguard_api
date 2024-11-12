@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 
@@ -38,17 +38,11 @@ class ResourcesAddAndShareControllerTest extends AppIntegrationTestCase
         parent::setUp();
         ResourceTypeFactory::make()->default()->persist();
         GetOrgLocaleService::clearOrganisationLocale();
-        $this->setEmailNotificationsSetting('password.create', true);
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        $this->restoreEmailNotificationsSettings();
     }
 
     public function testResourcesAdd_Should_Send_Email_In_User_Locale()
     {
+        $this->setEmailNotificationsSetting('password.create', true);
         $frenchLocale = 'fr-FR';
         $frenchUser = UserFactory::make()->user()->withLocale($frenchLocale)->persist();
 
@@ -64,7 +58,7 @@ class ResourcesAddAndShareControllerTest extends AppIntegrationTestCase
         $this->postJson('/resources.json?api-version=2', $data);
         $this->assertSuccess();
         $this->assertEmailQueueCount(1);
-        $this->assetEmailLocale($frenchUser->username, $frenchLocale);
+        $this->assertEmailLocale($frenchUser->username, $frenchLocale);
     }
 
     public function testResourcesShare_Should_Send_Email_In_User_Locale()
@@ -78,6 +72,7 @@ class ResourcesAddAndShareControllerTest extends AppIntegrationTestCase
         $englishUser = UserFactory::make()->user()->withLocale($englishLocale)->persist();
         $frenchUser2 = UserFactory::make()->user()->withLocale($frenchLocale)->persist();
 
+        /** @var \App\Model\Entity\Resource $resource */
         $resource = ResourceFactory::make()->withCreatorAndPermission($frenchUser)->persist();
 
         $data = [];
@@ -93,8 +88,8 @@ class ResourcesAddAndShareControllerTest extends AppIntegrationTestCase
         $this->assertResponseOk();
 
         $this->assertEmailQueueCount(3);
-        $this->assetEmailLocale($defaultUser->username, $englishLocale);
-        $this->assetEmailLocale($englishUser->username, $englishLocale);
-        $this->assetEmailLocale($frenchUser2->username, $frenchLocale);
+        $this->assertEmailLocale($defaultUser->username, $englishLocale);
+        $this->assertEmailLocale($englishUser->username, $englishLocale);
+        $this->assertEmailLocale($frenchUser2->username, $frenchLocale);
     }
 }

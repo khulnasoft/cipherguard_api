@@ -2,7 +2,7 @@
 ## Prerequisite
 Make sure you have the developement dependencies install.
 ```
-composer install --dev
+composer install
 ```
 
 ## How do I run the unit tests
@@ -31,7 +31,7 @@ sudo su -s /bin/bash -c "./bin/cake CipherguardTestData.fixturize default" www-d
 
 Clone the appjs repository in a separate folder
 ```
-git clone https://github.com/khulnasoft/cipherguard-appjs.git
+git clone https://github.com/cipherguard/cipherguard-appjs.git
 ```
 
 In your cipherguard_api folder install the javascript dependencies

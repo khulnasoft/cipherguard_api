@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.2.0
  */
 
@@ -20,6 +20,7 @@ namespace Cipherguard\Locale\Test\TestCase\Service;
 use App\Test\Factory\OrganizationSettingFactory;
 use App\Test\Factory\UserFactory;
 use Authentication\Authenticator\Result;
+use Cake\Http\Exception\BadRequestException;
 use Cake\TestSuite\TestCase;
 use CakephpTestSuiteLight\Fixture\TruncateDirtyTables;
 use Cipherguard\Locale\Service\GetOrgLocaleService;
@@ -44,6 +45,7 @@ class RequestLocaleParserServiceTest extends TestCase
     {
         GetOrgLocaleService::clearOrganisationLocale();
         $this->removeFooSystemLocale();
+        parent::tearDown();
     }
 
     public function dataForTestRequestLocaleParserServiceGetLocale(): array
@@ -118,5 +120,15 @@ class RequestLocaleParserServiceTest extends TestCase
             $userLocale,
             $service->getLocale()
         );
+    }
+
+    public function testRequestLocaleParserServiceGetLocaleWithArrayLocaleFormatShouldThrow400(): void
+    {
+        $request = $this->createMock(ServerRequestInterface::class);
+        $request->method('getQueryParams')->willReturn([RequestLocaleParserService::QUERY_KEY => ['foo']]);
+
+        $this->expectException(BadRequestException::class);
+        $this->expectExceptionMessage('The locale should be a string.');
+        (new RequestLocaleParserService($request))->getLocale();
     }
 }

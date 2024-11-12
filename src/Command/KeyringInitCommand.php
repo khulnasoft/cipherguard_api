@@ -3,36 +3,49 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 namespace App\Command;
 
+use App\Service\Command\ProcessUserService;
 use App\Utility\OpenPGP\OpenPGPBackendFactory;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
-use Cake\Console\ConsoleOptionParser;
 use Cake\Core\Configure;
 use Cake\Core\Exception\CakeException;
 
 class KeyringInitCommand extends CipherguardCommand
 {
     /**
+     * @var \App\Service\Command\ProcessUserService
+     */
+    protected ProcessUserService $processUserService;
+
+    /**
+     * @param \App\Service\Command\ProcessUserService $processUserService Process user service.
+     */
+    public function __construct(ProcessUserService $processUserService)
+    {
+        parent::__construct();
+
+        $this->processUserService = $processUserService;
+    }
+
+    /**
      * @inheritDoc
      */
-    public function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
+    public static function getCommandDescription(): string
     {
-        $parser->setDescription(__('GnuPG Keyring init shell for the cipherguard application.'));
-
-        return $parser;
+        return __('GnuPG Keyring init shell for the cipherguard application.');
     }
 
     /**
@@ -43,7 +56,7 @@ class KeyringInitCommand extends CipherguardCommand
         parent::execute($args, $io);
 
         // Root user is not allowed to execute this command.
-        $this->assertCurrentProcessUser($io);
+        $this->assertCurrentProcessUser($io, $this->processUserService);
 
         try {
             $filePath = Configure::read('cipherguard.gpg.serverKey.private');

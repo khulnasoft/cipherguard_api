@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.6.0
  */
 namespace App\Test\TestCase\Service\OpenPGP;
@@ -162,7 +162,7 @@ mQINBFYuIFQBEACpYmcjzX1XC0LPJCMOY/LwxIB3lGfL5+X5kJSfLpWDYKa0XFXv
 
     public function testPublicKeyValidationService_Community4793_NoError_Historical()
     {
-        // Ref. https://community.cipherguard.khulnasoft.com/t/ios-mobile-app-sign-in-fails/4793/7
+        // Ref. https://community.cipherguard.github.io/t/ios-mobile-app-sign-in-fails/4793/7
         $armoredKey = file_get_contents(FIXTURES . DS . 'OpenPGP' . DS . 'PublicKeys' . DS . 'community4793_public.key');
         try {
             $rules = PublicKeyValidationService::getHistoricalRules();
@@ -175,7 +175,7 @@ mQINBFYuIFQBEACpYmcjzX1XC0LPJCMOY/LwxIB3lGfL5+X5kJSfLpWDYKa0XFXv
 
     public function testPublicKeyValidationService_Community4793_Error_Strict()
     {
-        // Ref. https://community.cipherguard.khulnasoft.com/t/ios-mobile-app-sign-in-fails/4793/7
+        // Ref. https://community.cipherguard.github.io/t/ios-mobile-app-sign-in-fails/4793/7
         $armoredKey = file_get_contents(FIXTURES . DS . 'OpenPGP' . DS . 'PublicKeys' . DS . 'community4793_public.key');
         try {
             PublicKeyValidationService::parseAndValidatePublicKey($armoredKey);
@@ -195,7 +195,7 @@ mQINBFYuIFQBEACpYmcjzX1XC0LPJCMOY/LwxIB3lGfL5+X5kJSfLpWDYKa0XFXv
         $this->assertEmpty($keyInfo['expires']);
         $this->assertEquals(4096, $keyInfo['bits']);
         $this->assertEquals('RSA', $keyInfo['type']);
-        $this->assertEquals('revoked_sig <revoked_sig@cipherguard.khulnasoft.com>', $keyInfo['uid']);
+        $this->assertEquals('revoked_sig <revoked_sig@cipherguard.github.io>', $keyInfo['uid']);
         $this->assertEquals(false, $keyInfo['revoked']);
     }
 

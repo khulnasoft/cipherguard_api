@@ -7,7 +7,7 @@
     /_/    \__,_/____/____/_.___/\____/_/\__/
 
     Open source password manager for teams
-    Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+    Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
 
 
     This program is free software: you can redistribute it and/or modify

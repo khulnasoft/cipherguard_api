@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 
@@ -28,7 +28,9 @@ use App\Utility\UuidFactory;
 use Cake\Event\EventList;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
+use Cipherguard\Folders\FoldersPlugin;
 use Cipherguard\JwtAuthentication\Test\Utility\JwtAuthTestTrait;
+use Cipherguard\ResourceTypes\ResourceTypesPlugin;
 use Cipherguard\ResourceTypes\Test\Factory\ResourceTypeFactory;
 
 class ResourcesAddControllerTest extends AppIntegrationTestCase
@@ -55,6 +57,7 @@ class ResourcesAddControllerTest extends AppIntegrationTestCase
     public function setUp(): void
     {
         parent::setUp();
+        $this->enableFeaturePlugin(FoldersPlugin::class);
         $this->Resources = TableRegistry::getTableLocator()->get('Resources');
         $this->Secrets = TableRegistry::getTableLocator()->get('Secrets');
         $this->Permissions = TableRegistry::getTableLocator()->get('Permissions');
@@ -66,12 +69,11 @@ class ResourcesAddControllerTest extends AppIntegrationTestCase
 
     public function tearDown(): void
     {
-        parent::tearDown();
-        $this->disableFeaturePlugin('JwtAuthentication');
         $this->restoreEmailNotificationsSettings();
         unset($this->Resources);
         unset($this->Permissions);
         unset($this->Resources);
+        parent::tearDown();
     }
 
     public function testResourcesAddController_Success(): void
@@ -223,6 +225,7 @@ class ResourcesAddControllerTest extends AppIntegrationTestCase
      */
     public function testResourcesAddController_Error_Validation(string $caseLabel, array $case)
     {
+        $this->enableFeaturePlugin(ResourceTypesPlugin::class);
         $this->logInAsUser();
         $this->postJson('/resources.json', $case['data']);
         $this->assertError(400, 'Could not validate resource data');

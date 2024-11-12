@@ -1,7 +1,7 @@
 <div class="sidebar-help">
     <h3><?php echo __('Help'); ?></h3>
     <p><?php echo __('Need help? You can find more information on how to install cipherguard in the official online help.'); ?></p>
-    <a class="button medium" href="https://help.cipherguard.khulnasoft.com" target="_blank" rel="noopener noreferrer">
+    <a class="button medium" href="https://help.cipherguard.github.io" target="_blank" rel="noopener noreferrer">
         <span class="svg-icon life-ring">
             <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M7.70966 13.43C11.0731 13.43 13.7996 10.7034 13.7996 7.34C13.7996 3.97659 11.0731 1.25 7.70966 1.25C4.34624 1.25 1.61969 3.97659 1.61969 7.34C1.61969 10.7034 4.34624 13.43 7.70966 13.43Z" fill="none" stroke="#000000" vector-effect="non-scaling-stroke" stroke-width="0.15rem"stroke-linecap="round" stroke-linejoin="round"/>

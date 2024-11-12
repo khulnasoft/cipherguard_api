@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.5.0
  */
 namespace Cipherguard\WebInstaller\Test\TestCase\Utility;
@@ -43,8 +43,8 @@ class WebInstallerTest extends WebInstallerIntegrationTestCase
 
     public function tearDown(): void
     {
-        parent::tearDown();
         $this->restoreConfiguration();
+        parent::tearDown();
     }
 
     public function testWebInstallerUtilityInitDatabaseConnectionSuccess()
@@ -104,14 +104,14 @@ class WebInstallerTest extends WebInstallerIntegrationTestCase
         // Add the email configuration.
         $emailSettings = [
             'sender_name' => 'Cipherguard Test',
-            'sender_email' => 'test@cipherguard.khulnasoft.com',
+            'sender_email' => 'test@cipherguard.github.io',
             'host' => 'unreachable_host',
             'tls' => true,
             'port' => 587,
-            'username' => 'test@cipherguard.khulnasoft.com',
+            'username' => 'test@cipherguard.github.io',
             'password' => 'password',
             'send_test_email' => true,
-            'email_test_to' => 'test@cipherguard.khulnasoft.com',
+            'email_test_to' => 'test@cipherguard.github.io',
         ];
         $webInstaller->setSettings('email', $emailSettings);
 
@@ -153,7 +153,7 @@ class WebInstallerTest extends WebInstallerIntegrationTestCase
         $Users = TableRegistry::getTableLocator()->get('Users');
         $roleAdminId = $Users->Roles->getIdByName(Role::ADMIN);
         $userSettings = [
-            'username' => 'aurore@cipherguard.khulnasoft.com',
+            'username' => 'aurore@cipherguard.github.io',
             'profile' => [
                 'first_name' => 'Aurore',
                 'last_name' => 'Avarguès-Weber',
@@ -166,7 +166,7 @@ class WebInstallerTest extends WebInstallerIntegrationTestCase
 
         /** @var \App\Model\Entity\User $user */
         $user = $Users->find()
-            ->where(['username' => 'aurore@cipherguard.khulnasoft.com'])
+            ->where(['username' => 'aurore@cipherguard.github.io'])
             ->contain(['Profiles', 'AuthenticationTokens'])
             ->first();
         $this->assertEquals($userSettings['username'], $user->username);

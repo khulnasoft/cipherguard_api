@@ -1,8 +1,8 @@
 <?php
 return [
     'cipherguard' => [
-        'version' => '4.4.2',
-        'name' => 'Is It Because I\'m Black?',
+        'version' => '4.9.1',
+        'name' => 'Rebelion',
     ],
     'php' => [
         'minVersion' => '7.4',

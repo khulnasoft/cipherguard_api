@@ -3,24 +3,22 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.3.0
  */
 
 namespace App\Test\TestCase\Model\Table\Avatars;
 
-use App\Model\Table\AvatarsTable;
 use App\Test\Factory\AvatarFactory;
 use App\Test\Factory\UserFactory;
-use App\Test\Lib\Model\AvatarsModelTrait;
 use App\Utility\UuidFactory;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
@@ -28,7 +26,6 @@ use CakephpTestSuiteLight\Fixture\TruncateDirtyTables;
 
 class AvatarsCleanupTest extends TestCase
 {
-    use AvatarsModelTrait;
     use TruncateDirtyTables;
 
     /**
@@ -46,8 +43,7 @@ class AvatarsCleanupTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Avatars') ? [] : ['className' => AvatarsTable::class];
-        $this->Avatars = TableRegistry::getTableLocator()->get('Avatars', $config);
+        $this->Avatars = TableRegistry::getTableLocator()->get('Avatars');
         $this->loadRoutes();
     }
 
@@ -88,7 +84,7 @@ class AvatarsCleanupTest extends TestCase
             $expectedOutput = 2;
         }
         $this->assertSame($expectedOutput, $output);
-        $this->assertSame(6 - $expectedOutput, $this->Avatars->find()->count());
+        $this->assertSame(6 - $expectedOutput, AvatarFactory::count());
     }
 
     public function testAvatarsCleanupDeletedFavorites()
@@ -100,6 +96,6 @@ class AvatarsCleanupTest extends TestCase
 
         $output = $this->Avatars->cleanupHardDeletedProfiles();
         $this->assertSame(2, $output);
-        $this->assertSame(1, $this->Avatars->find()->count());
+        $this->assertSame(1, AvatarFactory::count());
     }
 }

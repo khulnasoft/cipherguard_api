@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.8.0
  */
 
@@ -47,7 +47,7 @@ class SmtpTransportTest extends TestCase
 
     public function testSmtpTransport_With_Valid_DB_Settings()
     {
-        $senderEmail = 'phpunit@cipherguard.khulnasoft.com';
+        $senderEmail = 'phpunit@cipherguard.github.io';
         $senderName = 'phpunit';
         $configInDb = $this->getSmtpSettingsData();
         $configInDb['sender_email'] = $senderEmail;
@@ -57,7 +57,7 @@ class SmtpTransportTest extends TestCase
 
         $transport = new DebugTransport();
         $message = new Message();
-        $transport->send($message->setTo('john@cipherguard.khulnasoft.com'));
+        $transport->send($message->setTo('john@cipherguard.github.io'));
 
         $this->assertInstanceOf(SmtpTransport::class, $transport);
         $message = $transport->getLastMessage();
@@ -86,7 +86,7 @@ class SmtpTransportTest extends TestCase
         $this->expectExceptionMessage('The OpenPGP server key cannot be used to decrypt the SMTP settings stored in database. To fix this problem, you need to configure the SMTP server again. Decryption failed.');
         $transport = new DebugTransport();
         $message = new Message();
-        $transport->send($message->setTo('john@cipherguard.khulnasoft.com'));
+        $transport->send($message->setTo('john@cipherguard.github.io'));
     }
 
     public function testSmtpTransport_No_Valid_Data_Should_Throw_Error()
@@ -99,7 +99,7 @@ class SmtpTransportTest extends TestCase
 
         $transport = new DebugTransport();
         $message = new Message();
-        $transport->send($message->setTo('john@cipherguard.khulnasoft.com'));
+        $transport->send($message->setTo('john@cipherguard.github.io'));
     }
 
     private function assertSettingsHaveTheRightKeyValues(array $configExpected, array $configInTransport)

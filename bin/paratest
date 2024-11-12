@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-# PARACIPHERGURDTEST AKA PARAPA (I'm loving it, yes, sorry about the reference)
+# PARACIPHERGUARDTEST AKA PARAPA (I'm loving it, yes, sorry about the reference)
 #
 # THIS SCRIPT IS EXPERIMENTAL
 # Adjust test size to your CPU CORES.
@@ -137,12 +137,12 @@ start_test_mysql() {
       gpg --import config/gpg/unsecure_private.key > /dev/null 2>&1 && \
       gpg --import config/gpg/unsecure.key > /dev/null 2>&1 && \
       DEBUG=1 \
-      CIPHERGURD_REGISTRATION_PUBLIC=1 \
-      CIPHERGURD_SELENIUM_ACTIVE=1 \
+      CIPHERGUARD_REGISTRATION_PUBLIC=1 \
+      CIPHERGUARD_SELENIUM_ACTIVE=1 \
       APP_FULL_BASE_URL=http://127.0.0.1 \
-      CIPHERGURD_GPG_SERVER_KEY_PUBLIC=config/gpg/unsecure.key \
-      CIPHERGURD_GPG_SERVER_KEY_PRIVATE=config/gpg/unsecure_private.key \
-      CIPHERGURD_GPG_SERVER_KEY_FINGERPRINT=2FC8945833C51946E937F9FED47B0811573EE67E \
+      CIPHERGUARD_GPG_SERVER_KEY_PUBLIC=config/gpg/unsecure.key \
+      CIPHERGUARD_GPG_SERVER_KEY_PRIVATE=config/gpg/unsecure_private.key \
+      CIPHERGUARD_GPG_SERVER_KEY_FINGERPRINT=2FC8945833C51946E937F9FED47B0811573EE67E \
       DATASOURCES_TEST_DATABASE=test \
       DATASOURCES_TEST_USERNAME=root \
       DATASOURCES_TEST_PASSWORD=test \
@@ -186,12 +186,12 @@ start_test_postgres() {
       gpg --import config/gpg/unsecure_private.key > /dev/null 2>&1 && \
       gpg --import config/gpg/unsecure.key > /dev/null 2>&1 && \
       DEBUG=1 \
-      CIPHERGURD_REGISTRATION_PUBLIC=1 \
-      CIPHERGURD_SELENIUM_ACTIVE=1 \
+      CIPHERGUARD_REGISTRATION_PUBLIC=1 \
+      CIPHERGUARD_SELENIUM_ACTIVE=1 \
       APP_FULL_BASE_URL=http://127.0.0.1 \
-      CIPHERGURD_GPG_SERVER_KEY_PUBLIC=config/gpg/unsecure.key \
-      CIPHERGURD_GPG_SERVER_KEY_PRIVATE=config/gpg/unsecure_private.key \
-      CIPHERGURD_GPG_SERVER_KEY_FINGERPRINT=2FC8945833C51946E937F9FED47B0811573EE67E \
+      CIPHERGUARD_GPG_SERVER_KEY_PUBLIC=config/gpg/unsecure.key \
+      CIPHERGUARD_GPG_SERVER_KEY_PRIVATE=config/gpg/unsecure_private.key \
+      CIPHERGUARD_GPG_SERVER_KEY_FINGERPRINT=2FC8945833C51946E937F9FED47B0811573EE67E \
       DATASOURCES_TEST_DATABASE=test \
       DATASOURCES_TEST_USERNAME=test \
       DATASOURCES_TEST_PASSWORD=test \

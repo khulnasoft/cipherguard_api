@@ -1,14 +1,14 @@
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 var path = require('path');
@@ -26,7 +26,7 @@ module.exports = function(grunt) {
    */
   var paths = {
     node_modules: 'node_modules/',
-    node_modules_styleguide: 'node_modules/cipherguard-styleguide/',
+    node_modules_styleguide: 'node_modules/passbolt-styleguide/',
     webroot: 'webroot/',
     img: 'webroot/img/',
     css: 'webroot/css/',
@@ -144,6 +144,8 @@ module.exports = function(grunt) {
             'third_party/sendgrid.svg',
             'third_party/sendinblue.svg',
             'third_party/zoho.svg',
+            'third_party/outlook.svg',
+            'third_party/office365.svg',
 
             // Setup
             'illustrations/email.png',

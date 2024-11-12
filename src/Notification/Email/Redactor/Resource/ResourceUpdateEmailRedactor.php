@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.13.0
  */
 
@@ -26,6 +26,7 @@ use App\Notification\Email\EmailCollection;
 use App\Notification\Email\SubscribedEmailRedactorInterface;
 use App\Notification\Email\SubscribedEmailRedactorTrait;
 use App\Service\Resources\ResourcesUpdateService;
+use App\Utility\Purifier;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
@@ -62,6 +63,14 @@ class ResourceUpdateEmailRedactor implements SubscribedEmailRedactorInterface
         return [
             ResourcesUpdateService::UPDATE_SUCCESS_EVENT_NAME,
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getNotificationSettingPath(): ?string
+    {
+        return 'send.password.update';
     }
 
     /**
@@ -108,12 +117,21 @@ class ResourceUpdateEmailRedactor implements SubscribedEmailRedactorInterface
      * @param string|null $armoredSecret The secret data string if present
      * @return \App\Notification\Email\Email
      */
-    private function createUpdateEmail(User $recipient, User $owner, Resource $resource, $armoredSecret): Email
+    private function createUpdateEmail(User $recipient, User $owner, Resource $resource, ?string $armoredSecret): Email
     {
         $subject = (new LocaleService())->translateString(
             $recipient->locale,
-            function () use ($owner, $resource) {
-                return __('{0} edited the password {1}', $owner->profile->first_name, $resource->name);
+            function () use ($recipient, $owner, $resource) {
+                $resourceName = Purifier::clean($resource->name);
+                if ($recipient->id === $owner->id) {
+                    return __('You edited the password {0}', $resourceName);
+                }
+
+                return __(
+                    '{0} edited the password {1}',
+                    Purifier::clean($owner->profile->first_name),
+                    $resourceName
+                );
             }
         );
 

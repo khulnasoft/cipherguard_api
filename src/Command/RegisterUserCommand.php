@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 namespace App\Command;
@@ -19,6 +19,7 @@ namespace App\Command;
 use App\Error\Exception\ValidationException;
 use App\Model\Entity\Role;
 use App\Model\Entity\User;
+use App\Service\Command\ProcessUserService;
 use App\Utility\UserAccessControl;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
@@ -53,6 +54,21 @@ class RegisterUserCommand extends CipherguardCommand
     protected $AuthenticationTokens;
 
     /**
+     * @var \App\Service\Command\ProcessUserService
+     */
+    protected ProcessUserService $processUserService;
+
+    /**
+     * @param \App\Service\Command\ProcessUserService $processUserService Process user service.
+     */
+    public function __construct(ProcessUserService $processUserService)
+    {
+        parent::__construct();
+
+        $this->processUserService = $processUserService;
+    }
+
+    /**
      * Initializes the Shell
      * acts as constructor for subclasses
      * allows configuration of tasks prior to shell execution
@@ -71,10 +87,19 @@ class RegisterUserCommand extends CipherguardCommand
     /**
      * @inheritDoc
      */
+    public static function getCommandDescription(): string
+    {
+        return __('Register a new user.');
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
+        $parser = parent::buildOptionParser($parser);
+
         $parser
-            ->setDescription(__('Register a new user.'))
             ->addOption('interactive', [
                 'short' => 'i',
                 'boolean' => true,
@@ -112,7 +137,7 @@ class RegisterUserCommand extends CipherguardCommand
         parent::execute($args, $io);
 
         // Root user is not allowed to execute this command.
-        $this->assertCurrentProcessUser($io);
+        $this->assertCurrentProcessUser($io, $this->processUserService);
 
         // Who is creating the user?
         // use the oldest admin or temporary non existing one

@@ -1,7 +1,7 @@
 <div class="sidebar-help">
     <h3><?php echo __('What subscription key?'); ?></h3>
     <p><?php echo __('The subscription key is a file that was sent to you when you purchased Cipherguard Pro. We need the subscription key in order to activate the Pro features of cipherguard.'); ?></p>
-    <a class="button medium"" href="https://help.cipherguard.khulnasoft.com" target="_blank" rel="noopener noreferrer">
+    <a class="button medium"" href="https://help.cipherguard.github.io" target="_blank" rel="noopener noreferrer">
         <span class="svg-icon life-ring icon-only">
             <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M7.70966 13.43C11.0731 13.43 13.7996 10.7034 13.7996 7.34C13.7996 3.97659 11.0731 1.25 7.70966 1.25C4.34624 1.25 1.61969 3.97659 1.61969 7.34C1.61969 10.7034 4.34624 13.43 7.70966 13.43Z" fill="none" stroke="var(--icon-color)" vector-effect="non-scaling-stroke" stroke-width="var(--icon-stroke-width)" stroke-linecap="round" stroke-linejoin="round"/>

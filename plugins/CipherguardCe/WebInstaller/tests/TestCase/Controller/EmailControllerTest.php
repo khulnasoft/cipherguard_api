@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.5.0
  */
 namespace Cipherguard\WebInstaller\Test\TestCase\Controller;
@@ -47,12 +47,12 @@ class EmailControllerTest extends WebInstallerIntegrationTestCase
     {
         $postData = [
             'sender_name' => 'Cipherguard Test',
-            'sender_email' => 'test@cipherguard.khulnasoft.com',
+            'sender_email' => 'test@cipherguard.github.io',
             'host' => 'unreachable_host',
             'tls' => true,
             'port' => 123,
             'authentication_method' => 'username_and_password',
-            'username' => 'test@cipherguard.khulnasoft.com',
+            'username' => 'test@cipherguard.github.io',
             'password' => 'password',
         ];
 
@@ -63,10 +63,10 @@ class EmailControllerTest extends WebInstallerIntegrationTestCase
 
     public function testWebInstallerEmailPostTestEmailSuccess()
     {
-        $recipient = 'receiver@cipherguard.khulnasoft.com';
+        $recipient = 'receiver@cipherguard.github.io';
         $postData = [
             'sender_name' => 'Cipherguard Test',
-            'sender_email' => 'sender@cipherguard.khulnasoft.com',
+            'sender_email' => 'sender@cipherguard.github.io',
             'host' => 'unreachable_host',
             'tls' => true,
             'port' => 123,
@@ -81,7 +81,7 @@ class EmailControllerTest extends WebInstallerIntegrationTestCase
 
         $this->assertResponseOk();
         $this->assertResponseContains('The test email has been sent successfully!');
-        $this->assertMailSentFromAt(0, ['sender@cipherguard.khulnasoft.com' => 'Cipherguard Test']);
+        $this->assertMailSentFromAt(0, ['sender@cipherguard.github.io' => 'Cipherguard Test']);
         $this->assertMailSentToAt(0, [$recipient => $recipient]);
         $this->assertMailCount(1);
         $this->assertMailContainsAt(0, 'Congratulations!');
@@ -95,12 +95,12 @@ class EmailControllerTest extends WebInstallerIntegrationTestCase
     {
         $postData = [
             'sender_name' => 'Cipherguard Test',
-            'sender_email' => 'test@cipherguard.khulnasoft.com',
+            'sender_email' => 'test@cipherguard.github.io',
             'host' => 'unreachable_host',
             'tls' => true,
             'port' => 123,
             'authentication_method' => 'username_and_password',
-            'username' => 'test@cipherguard.khulnasoft.com',
+            'username' => 'test@cipherguard.github.io',
             'password' => 'password',
             'email_test_to' => '',
         ];
@@ -114,11 +114,11 @@ class EmailControllerTest extends WebInstallerIntegrationTestCase
     {
         $postData = [
             'sender_name' => 'Cipherguard Test',
-            'sender_email' => 'test@cipherguard.khulnasoft.com',
+            'sender_email' => 'test@cipherguard.github.io',
             'host' => 'unreachable_host',
             'tls' => true,
             'port' => 'invalid-port',
-            'username' => 'test@cipherguard.khulnasoft.com',
+            'username' => 'test@cipherguard.github.io',
             'password' => 'password',
         ];
         $this->post('/install/email', $postData);
@@ -132,15 +132,15 @@ class EmailControllerTest extends WebInstallerIntegrationTestCase
     {
         $postData = [
             'sender_name' => 'Cipherguard Test',
-            'sender_email' => 'test@cipherguard.khulnasoft.com',
+            'sender_email' => 'test@cipherguard.github.io',
             'host' => 'unreachable_host',
             'tls' => true,
             'port' => 587,
             'authentication_method' => 'username_and_password',
-            'username' => 'test@cipherguard.khulnasoft.com',
+            'username' => 'test@cipherguard.github.io',
             'password' => 'password',
             'send_test_email' => true,
-            'email_test_to' => 'test@cipherguard.khulnasoft.com',
+            'email_test_to' => 'test@cipherguard.github.io',
         ];
         $trace = [['cmd' => 'bar']];
         $errorMessage = 'Error message';

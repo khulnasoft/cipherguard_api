@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 namespace App\Test\TestCase\Controller\Users;
@@ -20,11 +20,14 @@ use App\Model\Entity\Role;
 use App\Test\Factory\RoleFactory;
 use App\Test\Factory\UserFactory;
 use App\Test\Lib\AppIntegrationTestCase;
+use App\Test\Lib\Model\AvatarsIntegrationTestTrait;
 use App\Utility\UuidFactory;
 use Cake\I18n\FrozenTime;
 
 class UsersEditControllerTest extends AppIntegrationTestCase
 {
+    use AvatarsIntegrationTestTrait;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -75,7 +78,7 @@ class UsersEditControllerTest extends AppIntegrationTestCase
         $user = $this->logInAsUser();
         $data = [
             'id' => $user->id,
-            'username' => 'adaedited@cipherguard.khulnasoft.com',
+            'username' => 'adaedited@cipherguard.github.io',
             'active' => false,
             'deleted' => true,
             'profile' => [
@@ -240,5 +243,38 @@ class UsersEditControllerTest extends AppIntegrationTestCase
         ];
         $this->post('/users/' . $user->id, $data);
         $this->assertResponseCode(404);
+    }
+
+    public function dataWithNumericKeys(): array
+    {
+        return [
+            [[1 => 'foo']],
+            [['profile' => [1 => 'foo']]],
+            [['bar' => [1 => 'foo']]],
+        ];
+    }
+
+    /**
+     * @dataProvider dataWithNumericKeys
+     */
+    public function testUsersEditController_Numeric_Keys_In_Payload_Should_Not_Throw_A_500($data)
+    {
+        RoleFactory::make()->user()->persist();
+
+        $user = UserFactory::make()->user()->with('Profiles')->persist();
+        $this->logInAsAdmin();
+
+        $data = array_merge_recursive([
+            'id' => $user->id,
+            'profile' => [
+                'first_name' => 'first name edited',
+                'avatar' => [
+                    'file' => $this->createUploadFile(),
+                ],
+            ],
+        ], $data);
+
+        $this->postJson('/users/' . $user->id . '.json', $data);
+        $this->assertResponseOk();
     }
 }

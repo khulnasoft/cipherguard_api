@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.5.0
  */
 
@@ -21,6 +21,7 @@ use App\Model\Table\PermissionsTable;
 use App\Test\Factory\GroupFactory;
 use App\Test\Factory\ResourceFactory;
 use App\Test\Factory\UserFactory;
+use Cake\Http\Exception\BadRequestException;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use CakephpTestSuiteLight\Fixture\TruncateDirtyTables;
@@ -31,6 +32,16 @@ use CakephpTestSuiteLight\Fixture\TruncateDirtyTables;
 class FindAllByAroTest extends TestCase
 {
     use TruncateDirtyTables;
+
+    public function testFindAllByAro_No_UUID_Should_Throw_An_Exception()
+    {
+        /** @var PermissionsTable $table */
+        $table = TableRegistry::getTableLocator()->get('Permissions');
+
+        $this->expectException(BadRequestException::class);
+        $this->expectExceptionMessage('The identifier should be a valid UUID.');
+        $table->findAllByAro(PermissionsTable::RESOURCE_ACO, 'foo');
+    }
 
     public function testFindAllByAro_NoDirectOrInherited()
     {

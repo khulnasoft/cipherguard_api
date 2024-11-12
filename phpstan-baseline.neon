@@ -11,11 +11,6 @@ parameters:
 			path: plugins/CipherguardCe/EmailNotificationSettings/src/Utility/EmailNotificationSettings.php
 
 		-
-			message: "#^Unsafe access to private property Cipherguard\\\\EmailNotificationSettings\\\\Utility\\\\EmailNotificationSettings\\:\\:\\$dbSettingsSource through static\\:\\:\\.$#"
-			count: 3
-			path: plugins/CipherguardCe/EmailNotificationSettings/src/Utility/EmailNotificationSettings.php
-
-		-
 			message: "#^Unsafe access to private property Cipherguard\\\\EmailNotificationSettings\\\\Utility\\\\EmailNotificationSettings\\:\\:\\$defaultSettingsSource through static\\:\\:\\.$#"
 			count: 4
 			path: plugins/CipherguardCe/EmailNotificationSettings/src/Utility/EmailNotificationSettings.php
@@ -194,8 +189,3 @@ parameters:
 			message: "#^Unreachable statement \\- code above always terminates\\.$#"
 			count: 1
 			path: src/Service/Resources/ResourcesAddService.php
-
-		-
-			message: "#^Caught class Cake\\\\Database\\\\Exception not found\\.$#"
-			count: 2
-			path: src/Utility/Healthchecks/DatabaseHealthchecks.php

@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 
@@ -22,9 +22,11 @@ use App\Model\Entity\Resource;
 use App\Model\Entity\Role;
 use App\Model\Rule\IsNotSoftDeletedRule;
 use App\Model\Traits\Resources\ResourcesFindersTrait;
+use App\Model\Validation\DateTime\IsParsableDateTimeValidationRule;
 use App\Utility\Application\FeaturePluginAwareTrait;
 use App\Utility\UuidFactory;
 use Cake\Event\Event;
+use Cake\I18n\FrozenTime;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
@@ -54,10 +56,10 @@ use Cipherguard\ResourceTypes\Model\Table\ResourceTypesTable;
  * @method \App\Model\Entity\Resource newEmptyEntity()
  * @method \App\Model\Entity\Resource newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Resource saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Resource[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\Resource[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\Resource[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\Resource[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method iterable<\App\Model\Entity\Resource>|iterable<\Cake\Datasource\EntityInterface>|false saveMany(iterable $entities, $options = [])
+ * @method iterable<\App\Model\Entity\Resource>|iterable<\Cake\Datasource\EntityInterface> saveManyOrFail(iterable $entities, $options = [])
+ * @method iterable<\App\Model\Entity\Resource>|iterable<\Cake\Datasource\EntityInterface>|false deleteMany(iterable $entities, $options = [])
+ * @method iterable<\App\Model\Entity\Resource>|iterable<\Cake\Datasource\EntityInterface> deleteManyOrFail(iterable $entities, $options = [])
  * @method \Cake\ORM\Query findByIdAndDeleted(string $id, bool $delete)
  */
 class ResourcesTable extends Table
@@ -172,6 +174,10 @@ class ResourcesTable extends Table
             ->allowEmptyString('deleted', __('The deleted status should not be empty'), false);
 
         $validator
+        ->allowEmptyDateTime('expired')
+        ->add('expired', 'expired', new IsParsableDateTimeValidationRule());
+
+        $validator
             ->uuid('created_by', __('The identifier of the user who created the resource should be a valid UUID.'))
             ->requirePresence(
                 'created_by',
@@ -278,6 +284,15 @@ class ResourcesTable extends Table
     {
         if (!$this->isDescriptionEmptyOnPasswordAndDescriptionResourceType($data)) {
             $data['description'] = null;
+        }
+        if (isset($data['expired']) && !empty($data['expired'])) {
+            // Parse the expired date into a time object
+            try {
+                $data['expired'] = FrozenTime::parse($data['expired']);
+            } catch (\Throwable $e) {
+                // If the expired date cannot be parsed, let the validation
+                // handle the fail
+            }
         }
     }
 

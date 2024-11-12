@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.11.0
  */
 namespace Cipherguard\SmtpSettings\Test\TestCase\Command;
@@ -62,7 +62,7 @@ class SmtpSettingsEmailDigestPreviewCommandTest extends TestCase
      */
     public function testSmtpSettingsEmailDigestPreviewCommand_Without_Body_On_DB_Settings(): void
     {
-        $senderEmail = 'phpunit@cipherguard.khulnasoft.com';
+        $senderEmail = 'phpunit@cipherguard.github.io';
         $senderName = 'phpunit';
         $data = $this->getSmtpSettingsData();
         $data['sender_email'] = $senderEmail;
@@ -91,7 +91,7 @@ class SmtpSettingsEmailDigestPreviewCommandTest extends TestCase
     {
         $this->disableFeaturePlugin('SmtpSettings');
         $dataInDB = $this->getSmtpSettingsData();
-        $dataInDB['sender_email'] = 'phpunit@cipherguard.khulnasoft.com';
+        $dataInDB['sender_email'] = 'phpunit@cipherguard.github.io';
         $dataInDB['sender_name'] = 'phpunit';
         $this->encryptAndPersistSmtpSettings($dataInDB);
 
@@ -125,7 +125,7 @@ class SmtpSettingsEmailDigestPreviewCommandTest extends TestCase
         // Ensure that avatar image configs are null and
         // will be correctly loaded by the command.
         Configure::delete('FileStorage');
-        $senderEmail = 'phpunit@cipherguard.khulnasoft.com';
+        $senderEmail = 'phpunit@cipherguard.github.io';
         $senderName = 'phpunit';
         $data = $this->getSmtpSettingsData();
         $data['sender_email'] = $senderEmail;

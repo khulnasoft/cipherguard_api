@@ -184,7 +184,7 @@
                     <a href="https://support.google.com/accounts/answer/1066447" target="_blank" rel="noopener">Google Authenticator</a> <?= __('or'); ?>
                     <a href="https://freeotp.github.io/" target="_blank" rel="noopener">FreeOTP</a>.
                 </p>
-                <a href="https://help.cipherguard.khulnasoft.com/start/" target="_blank" rel="noopener" class="button"><?= __('learn more'); ?></a>
+                <a href="https://help.cipherguard.github.io/start/" target="_blank" rel="noopener" class="button"><?= __('learn more'); ?></a>
             </div>
         </div>
     </div>

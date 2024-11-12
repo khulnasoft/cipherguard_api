@@ -3,20 +3,21 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 namespace App\Model\Table;
 
 use App\Error\Exception\ValidationException;
+use App\Model\Dto\EntitiesChangesDto;
 use App\Model\Entity\AuthenticationToken;
 use App\Model\Entity\Avatar;
 use App\Model\Entity\Role;
@@ -57,10 +58,10 @@ use Cake\Validation\Validator;
  * @property \Cipherguard\Log\Model\Table\ActionLogsTable&\Cake\ORM\Association\HasMany $ActionLogs
  * @method \App\Model\Entity\User newEmptyEntity()
  * @method \App\Model\Entity\User saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method iterable<\App\Model\Entity\User>|iterable<\Cake\Datasource\EntityInterface>|false saveMany(iterable $entities, $options = [])
+ * @method iterable<\App\Model\Entity\User>|iterable<\Cake\Datasource\EntityInterface> saveManyOrFail(iterable $entities, $options = [])
+ * @method iterable<\App\Model\Entity\User>|iterable<\Cake\Datasource\EntityInterface>|false deleteMany(iterable $entities, $options = [])
+ * @method iterable<\App\Model\Entity\User>|iterable<\Cake\Datasource\EntityInterface> deleteManyOrFail(iterable $entities, $options = [])
  * @method \Cake\ORM\Query findById(string $id)
  * @method \Cake\ORM\Query findByUsername(string $username)
  */
@@ -70,8 +71,8 @@ class UsersTable extends Table
 
     public const AFTER_REGISTER_SUCCESS_EVENT_NAME = 'Model.Users.afterRegister.success';
     public const AFTER_SELF_REGISTER_SUCCESS_EVENT_NAME = 'Model.Users.afterSelfRegister.success';
-    public const CIPHERGURD_SECURITY_USERNAME_CASE_SENSITIVE = 'cipherguard.security.username.caseSensitive';
-    public const CIPHERGURD_SECURITY_USERNAME_LOWER_CASE = 'cipherguard.security.username.lowerCase';
+    public const CIPHERGUARD_SECURITY_USERNAME_CASE_SENSITIVE = 'cipherguard.security.username.caseSensitive';
+    public const CIPHERGUARD_SECURITY_USERNAME_LOWER_CASE = 'cipherguard.security.username.lowerCase';
 
     /**
      * Initialize method
@@ -268,14 +269,14 @@ class UsersTable extends Table
     }
 
     /**
-     * If false (default), username are not case-sensitive: john@cipherguard.khulnasoft.com and John@cipherguard.khulnasoft.com cannot be both not-deleted
-     * If true, username is case-sensitive: john@cipherguard.khulnasoft.com and John@cipherguard.khulnasoft.com can both be not-deleted
+     * If false (default), username are not case-sensitive: john@cipherguard.github.io and John@cipherguard.github.io cannot be both not-deleted
+     * If true, username is case-sensitive: john@cipherguard.github.io and John@cipherguard.github.io can both be not-deleted
      *
      * @return bool
      */
     public function isUsernameCaseSensitive(): bool
     {
-        return Configure::read(self::CIPHERGURD_SECURITY_USERNAME_CASE_SENSITIVE);
+        return Configure::read(self::CIPHERGUARD_SECURITY_USERNAME_CASE_SENSITIVE);
     }
 
     /**
@@ -285,7 +286,7 @@ class UsersTable extends Table
      */
     public function isUsernameLowerCase(): bool
     {
-        return Configure::read(self::CIPHERGURD_SECURITY_USERNAME_LOWER_CASE, true);
+        return Configure::read(self::CIPHERGUARD_SECURITY_USERNAME_LOWER_CASE, true);
     }
 
     /**
@@ -421,7 +422,7 @@ class UsersTable extends Table
      *
      * @param \App\Model\Entity\User $user entity
      * @param array|null $options additional delete options such as ['checkRules' => true]
-     * @return bool status
+     * @return \App\Model\Dto\EntitiesChangesDto|bool The list of entities changes, false if a validation error occurred.
      */
     public function softDelete(User $user, ?array $options = null)
     {
@@ -434,6 +435,8 @@ class UsersTable extends Table
                 return false;
             }
         }
+
+        $entitiesChanges = new EntitiesChangesDto();
 
         // find all the resources that only belongs to the user and mark them as deleted
         // Note: all resources that cannot be deleted should have been
@@ -490,7 +493,12 @@ class UsersTable extends Table
 
         // Delete all secrets
         $Secrets = TableRegistry::getTableLocator()->get('Secrets');
-        $Secrets->deleteAll(['user_id' => $user->id]);
+        $secretsToDelete = $Secrets->find()
+            ->select(['id', 'user_id', 'resource_id'])
+            ->where(['user_id' => $user->id])
+            ->all()->toArray();
+        $Secrets->deleteMany($secretsToDelete);
+        $entitiesChanges->pushDeletedEntities($secretsToDelete);
 
         // Delete all favorites
         $Favorites = TableRegistry::getTableLocator()->get('Favorites');
@@ -506,7 +514,7 @@ class UsersTable extends Table
             throw new InternalErrorException($msg);
         }
 
-        return true;
+        return $entitiesChanges;
     }
 
     /**

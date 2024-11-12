@@ -83,7 +83,7 @@ $this->assign('pageClass', 'iframe mfa');
                 <p>
                     <?= __('Multi-factor authentication (MFA) is a method of confirming a user\'s identity that requires presenting two or more pieces of evidence (or factor).'); ?>
                 </p>
-                <a class="button" href="https://help.cipherguard.khulnasoft.com/start/" target="_blank" rel="nofollow noopener">
+                <a class="button" href="https://help.cipherguard.github.io/start/" target="_blank" rel="nofollow noopener">
                     <?= __('learn more'); ?>
                 </a>
             </div>

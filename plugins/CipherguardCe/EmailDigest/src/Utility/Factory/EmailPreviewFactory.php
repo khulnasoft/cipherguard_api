@@ -3,21 +3,20 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.13.0
  */
 
 namespace Cipherguard\EmailDigest\Utility\Factory;
 
-use Cake\Core\Configure;
 use Cake\Mailer\Mailer;
 use Cake\Mailer\Renderer;
 use Cake\ORM\Entity;
@@ -91,7 +90,8 @@ class EmailPreviewFactory
             ->addEmailData($emailQueueEntity)
             ->setSubject($emailQueueEntity->get('subject'))
             ->setEmailIds([$emailQueueEntity->id])
-            ->setEmailRecipient($emailQueueEntity->get('email'));
+            ->setEmailRecipient($emailQueueEntity->get('email'))
+            ->setFullBaseUrl($emailQueueEntity->get('template_vars')['body']['fullBaseUrl'] ?? '/');
     }
 
     /**
@@ -104,15 +104,14 @@ class EmailPreviewFactory
     {
         $subject = $digest->getTemplate()->getTranslatedSubject($digest);
 
-        $emailDigest = new EmailDigest();
+        $emailDigest = (new EmailDigest())
+            ->setSubject($subject)
+            ->setEmailRecipient($digest->getRecipient())
+            ->setEmailIds($digest->getEmailQueueIds())
+            ->setFullBaseUrl($digest->getFullBaseUrl());
         foreach ($digest->getEmailQueues() as $emailQueueEntity) {
-            $emailDigest
-                ->addEmailData($emailQueueEntity)
-                ->setSubject($subject)
-                ->setEmailRecipient($emailQueueEntity->get('email'));
+            $emailDigest->addEmailData($emailQueueEntity);
         }
-
-        $emailDigest->setEmailIds($digest->getEmailQueueIds());
 
         return $emailDigest;
     }
@@ -132,11 +131,12 @@ class EmailPreviewFactory
             ->addEmailData($digest->getFirstEmailQueue())
             ->setEmailIds($digest->getEmailQueueIds())
             ->setSubject($subject)
+            ->setFullBaseUrl($digest->getFullBaseUrl())
             ->addLayoutVar(LocaleEmailQueueListener::VIEW_VAR_KEY, $digest->getLocale())
             ->setTemplate($template->getDigestTemplate())
             ->setEmailRecipient($digest->getRecipient())
             ->addTemplateVar($template->getOperatorVariableKey(), $digest->getOperator())
-            ->addTemplateVar('fullBaseUrl', Configure::read('App.fullBaseUrl'))
+            ->addTemplateVar('fullBaseUrl', $digest->getFullBaseUrl())
             ->addTemplateVar('subject', $subject)
             ->addTemplateVar('count', $digest->getEmailQueueCount());
     }
@@ -207,7 +207,7 @@ class EmailPreviewFactory
     }
 
     /**
-     * Map an instance of EmailDigest to an instance of Email, so it can be send.
+     * Map an instance of EmailDigest to an instance of Email, so it can be sent.
      *
      * @param \Cake\Mailer\Mailer $email An instance of Email
      * @param \Cipherguard\EmailDigest\Utility\Mailer\EmailDigestInterface $emailDigest An instance of EmailDigest

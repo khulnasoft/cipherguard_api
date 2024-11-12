@@ -30,8 +30,8 @@
         <circle id="Oval" stroke="#E9AE42" fill="#F6BE4F" fill-rule="nonzero" cx="47.5" cy="102.5" r="5.5"></circle>
         <circle id="Oval" stroke="#50A942" fill="#63C756" fill-rule="nonzero" cx="66.5" cy="102.5" r="5.5"></circle>
         <rect id="Rectangle-3" stroke="#DDDDDD" fill="#F3F3F3" fill-rule="nonzero" x="83.5" y="184.5" width="177" height="27"></rect>
-        <text id="email@cipherguard.khulnasoft.com" font-family="Helvetica" font-size="14" font-weight="normal" fill="#333333">
-            <tspan x="95" y="202">email@cipherguard.khulnasoft.com</tspan>
+        <text id="email@cipherguard.github.io" font-family="Helvetica" font-size="14" font-weight="normal" fill="#333333">
+            <tspan x="95" y="202">email@cipherguard.github.io</tspan>
         </text>
         <rect id="Rectangle-3" stroke="#E0E0E0" fill="#FFFFFF" fill-rule="nonzero" x="83.5" y="225.5" width="177" height="27"></rect>
         <text id="•••••••••••••" font-family="Helvetica" font-size="16" font-weight="normal" fill="#000000">
@@ -202,8 +202,8 @@
             </g>
         </g>
         <rect id="Rectangle-6" stroke="#979797" fill="#FFFFFF" fill-rule="nonzero" x="496.5" y="198.5" width="262" height="96"></rect>
-        <text id="email@cipherguard.khulnasoft.com" font-family="Helvetica" font-size="14" font-weight="normal" fill="#333333">
-            <tspan x="516" y="280">email@cipherguard.khulnasoft.com</tspan>
+        <text id="email@cipherguard.github.io" font-family="Helvetica" font-size="14" font-weight="normal" fill="#333333">
+            <tspan x="516" y="280">email@cipherguard.github.io</tspan>
         </text>
         <text id="Cipherguard" font-family="Helvetica-Bold, Helvetica" font-size="14" font-weight="bold" fill="#333333">
             <tspan x="516" y="223">Cipherguard</tspan>

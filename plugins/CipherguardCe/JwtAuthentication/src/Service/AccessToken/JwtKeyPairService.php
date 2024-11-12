@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.3.0
  */
 namespace Cipherguard\JwtAuthentication\Service\AccessToken;
@@ -24,20 +24,11 @@ use Cipherguard\JwtAuthentication\Error\Exception\AccessToken\InvalidJwtKeyPairE
 
 class JwtKeyPairService
 {
-    /**
-     * @var \Cipherguard\JwtAuthentication\Service\AccessToken\JwtTokenCreateService
-     */
-    protected $secretService;
+    protected JwtTokenCreateService $secretService;
 
-    /**
-     * @var \Cipherguard\JwtAuthentication\Service\AccessToken\JwksGetService
-     */
-    protected $publicService;
+    protected JwksGetService $publicService;
 
-    /**
-     * @var int Key length
-     */
-    protected $keyLength = JwtTokenCreateService::JWT_KEY_LENGTH;
+    protected int $keyLength = JwtTokenCreateService::JWT_KEY_LENGTH;
 
     /**
      * CreateJwtKeysService constructor.
@@ -124,11 +115,7 @@ class JwtKeyPairService
                 throw new \Exception(__('The JWT public key could not be read or is not valid.'));
             }
             $publicKey = file_get_contents($this->publicService->getKeyPath());
-            $details = openssl_pkey_get_details(
-                openssl_pkey_get_public($publicKey)
-            );
-
-            $secretKeySize = $details['bits'] ?? 0;
+            $secretKeySize = $this->publicService->getSecretKeySize();
 
             if ($secretKeySize === 0) {
                 throw new \Exception(__('The JWT public key could not be read or is not valid.'));

@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.11.0
  */
 
@@ -113,10 +113,10 @@ class UsersTableRegisterTest extends TestCase
      */
     public function testUsersTableRegister_Register_Active_Username_Case_Sensitive_Success()
     {
-        Configure::write(UsersTable::CIPHERGURD_SECURITY_USERNAME_CASE_SENSITIVE, true);
+        Configure::write(UsersTable::CIPHERGUARD_SECURITY_USERNAME_CASE_SENSITIVE, true);
 
         RoleFactory::make()->user()->persist();
-        $username = 'john@cipherguard.khulnasoft.com';
+        $username = 'john@cipherguard.github.io';
         /** @var \App\Model\Entity\User $existingUser */
         UserFactory::make(['username' => strtoupper($username)])->user()->active()->persist();
         $profile = [

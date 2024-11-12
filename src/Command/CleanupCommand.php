@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 
@@ -20,6 +20,8 @@ namespace App\Command;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
+use Cake\Datasource\ConnectionManager;
+use Cake\Http\Exception\InternalErrorException;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -36,6 +38,9 @@ class CleanupCommand extends CipherguardCommand
      * @var array The list of default cleanup jobs to perform.
      */
     private static $defaultCleanups = [
+        'Groups' => [
+            'With No Members',
+        ],
         'GroupsUsers' => [
             'Soft Deleted Users',
             'Hard Deleted Users',
@@ -174,14 +179,23 @@ class CleanupCommand extends CipherguardCommand
     /**
      * @inheritDoc
      */
+    public static function getCommandDescription(): string
+    {
+        return __('Identify and fix database relational integrity issues.');
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
-        $parser->setDescription(__('Cleanup and fix issues in database.'))
-            ->addOption('dry-run', [
-                'help' => 'Don\'t fix only display report',
-                'default' => 'true',
-                'boolean' => true,
-            ]);
+        $parser = parent::buildOptionParser($parser);
+
+        $parser->addOption('dry-run', [
+            'help' => 'Don\'t fix only display report',
+            'default' => 'true',
+            'boolean' => true,
+        ]);
 
         return $parser;
     }
@@ -202,6 +216,14 @@ class CleanupCommand extends CipherguardCommand
             $io->out(' (fix mode)');
         }
         $io->hr();
+
+        try {
+            $this->assertDatabaseState();
+        } catch (InternalErrorException $e) {
+            $io->warning($e->getMessage());
+
+            return $this->successCode();
+        }
 
         $totalErrorCount = 0;
         foreach (self::$cleanups as $tableName => $tableCleanup) {
@@ -240,5 +262,30 @@ class CleanupCommand extends CipherguardCommand
         }
 
         return $this->successCode();
+    }
+
+    /**
+     * Runs series of checks to make sure database is in valid state to run the cleanup command.
+     *
+     * @return void
+     * @throws \Cake\Http\Exception\InternalErrorException If database is not in valid state.
+     */
+    private function assertDatabaseState()
+    {
+        // Check 1. Users table exist in db
+        $listTables = ConnectionManager::get('default')->getSchemaCollection()->listTables();
+        if (!in_array('users', $listTables)) {
+            throw new InternalErrorException(
+                __('Cleanup command cannot be executed on an instance having no users table.')
+            );
+        }
+
+        // Check 2. Atleast one active administrator is present
+        $admin = $this->Users->findFirstAdmin();
+        if (is_null($admin)) {
+            throw new InternalErrorException(
+                __('Cleanup command cannot be executed on an instance having no active administrator.')
+            );
+        }
     }
 }

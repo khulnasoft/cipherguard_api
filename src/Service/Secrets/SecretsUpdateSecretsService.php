@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.13.0
  */
 
@@ -19,6 +19,7 @@ namespace App\Service\Secrets;
 
 use App\Error\Exception\CustomValidationException;
 use App\Error\Exception\ValidationException;
+use App\Model\Dto\EntitiesChangesDto;
 use App\Model\Entity\Secret;
 use App\Service\Permissions\PermissionsGetUsersIdsHavingAccessToService;
 use App\Utility\UserAccessControl;
@@ -65,14 +66,12 @@ class SecretsUpdateSecretsService
      *   ],
      *   ...
      * ]
-     * @return array
+     * @return \App\Model\Dto\EntitiesChangesDto
      * @throws \Exception If something unexpected occurred
      */
-    public function updateSecrets(UserAccessControl $uac, string $resourceId, array $data = [])
+    public function updateSecrets(UserAccessControl $uac, string $resourceId, array $data = []): EntitiesChangesDto
     {
-        // Return an array of updated secret
-        $result = [];
-
+        $entitiesChanges = new EntitiesChangesDto();
         $userIds = Hash::extract($data, '{n}.user_id');
 
         $secrets = [];
@@ -92,16 +91,19 @@ class SecretsUpdateSecretsService
         foreach ($data as $rowIndex => $row) {
             if (array_key_exists($row['user_id'], $secrets)) {
                 $secret = $secrets[$row['user_id']];
-                $result[] = $this->updateSecret($secret, $rowIndex, $row);
+                $updatedSecret = $this->updateSecret($secret, $rowIndex, $row);
+                $entitiesChanges->pushUpdatedEntity($updatedSecret);
             } else {
-                $result[] = $this->addSecret($uac, $rowIndex, $resourceId, $row);
+                $addedSecret = $this->addSecret($uac, $rowIndex, $resourceId, $row);
+                $entitiesChanges->pushAddedEntity($addedSecret);
             }
         }
 
-        $this->deleteOrphanSecrets($resourceId);
+        $deletedSecrets = $this->deleteLostAccessSecrets($resourceId);
+        $entitiesChanges->pushDeletedEntities($deletedSecrets);
         $this->assertAllSecretsAreProvided($resourceId);
 
-        return $result;
+        return $entitiesChanges;
     }
 
     /**
@@ -177,19 +179,29 @@ class SecretsUpdateSecretsService
     }
 
     /**
-     * Delete the secrets for which the users have no access.
+     * Delete the secrets for which the users have no access anymore.
      *
      * @param string $resourceId The target resource
-     * @return void
+     * @return array<\App\Model\Entity\Secret> The array of deleted secrets
      */
-    private function deleteOrphanSecrets(string $resourceId)
+    private function deleteLostAccessSecrets(string $resourceId): array
     {
         $usersIds = $this->accessService->getUsersIdsHavingAccessTo($resourceId);
+        if (empty($usersIds)) {
+            return [];
+        }
 
-        $this->secretsTable->deleteAll([
+        $lostAccessSecretsConditions = [
             'resource_id' => $resourceId,
             'user_id NOT IN' => $usersIds,
-        ]);
+        ];
+        $lostAccessSecrets = $this->secretsTable->find()
+            ->select(['id', 'resource_id', 'user_id'])
+            ->where($lostAccessSecretsConditions)
+            ->all()->toArray();
+        $this->secretsTable->deleteMany($lostAccessSecrets);
+
+        return $lostAccessSecrets;
     }
 
     /**

@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 
@@ -19,6 +19,7 @@ namespace Cipherguard\ResourceTypes\Test\TestCase\Controller;
 
 use App\Test\Lib\AppIntegrationTestCase;
 use App\Utility\UuidFactory;
+use Cipherguard\ResourceTypes\ResourceTypesPlugin;
 use Cipherguard\ResourceTypes\Test\Factory\ResourceTypeFactory;
 use Cipherguard\ResourceTypes\Test\Lib\Model\ResourceTypesModelTrait;
 
@@ -28,6 +29,12 @@ use Cipherguard\ResourceTypes\Test\Lib\Model\ResourceTypesModelTrait;
 class ResourceTypesViewControllerTest extends AppIntegrationTestCase
 {
     use ResourceTypesModelTrait;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->enableFeaturePlugin(ResourceTypesPlugin::class);
+    }
 
     public function testResourceTypesView_Success()
     {

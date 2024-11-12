@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.11.0
  */
 
@@ -36,7 +36,7 @@ class MfaDuoStartDuoAuthenticationServiceTest extends TestCase
     public function testMfaDuoStartDuoAuthenticationService_Success()
     {
         $user = UserFactory::make()->persist();
-        $uac = new UserAccessControl(Role::USER, $user->id);
+        $uac = new UserAccessControl(Role::USER, $user->id, 'duo@test.test');
 
         $mock = DuoSdkClientMock::createDefault($this, $user);
         $service = new MfaDuoStartDuoAuthenticationService(AuthenticationToken::TYPE_MFA_SETUP, $mock->getClient());
@@ -54,7 +54,7 @@ class MfaDuoStartDuoAuthenticationServiceTest extends TestCase
     public function testMfaDuoStartDuoAuthenticationService_Success_WithRedirect()
     {
         $user = UserFactory::make()->persist();
-        $uac = new UserAccessControl(Role::USER, $user->id);
+        $uac = new UserAccessControl(Role::USER, $user->id, 'duo@test.test');
         $redirectPath = '/redirect/path';
         $duoSdkClientMock = DuoSdkClientMock::createDefault($this, $user)->getClient();
         $service = new MfaDuoStartDuoAuthenticationService(AuthenticationToken::TYPE_MFA_SETUP, $duoSdkClientMock);

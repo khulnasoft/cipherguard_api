@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.12.0
  */
 
@@ -35,10 +35,9 @@ class MfaUserSettingsResetEmailRedactorTest extends TestCase
 
     public function setUp(): void
     {
+        parent::setUp();
         $this->sut = new MfaUserSettingsResetEmailRedactor();
         $this->loadPlugins(['Cipherguard/Locale' => []]);
-
-        parent::setUp();
     }
 
     public function testThatEmailIsSubscribedToEvent()
@@ -56,7 +55,7 @@ class MfaUserSettingsResetEmailRedactorTest extends TestCase
         $adminUser = UserFactory::make()->admin()->persist();
         $user = UserFactory::make()->user()->willDisable()->persist();
         $user->set('locale', 'Foo');
-        $uac = new UserAccessControl('admin', $adminUser->id, 'ada@cipherguard.khulnasoft.com');
+        $uac = new UserAccessControl('admin', $adminUser->id, 'ada@cipherguard.github.io');
         $event = new Event(MfaUserSettingsDeleteController::MFA_USER_ACCOUNT_SETTINGS_DELETE_EVENT);
         $event->setData([
             'target' => $user,
@@ -78,11 +77,11 @@ class MfaUserSettingsResetEmailRedactorTest extends TestCase
     {
         $userId = UuidFactory::uuid();
         $user = new User();
-        $user->username = 'ada@cipherguard.khulnasoft.com';
+        $user->username = 'ada@cipherguard.github.io';
         $user->id = $userId;
         $user->locale = 'Foo';
         $user->disabled = null;
-        $uac = new UserAccessControl('admin', $userId, 'ada@cipherguard.khulnasoft.com');
+        $uac = new UserAccessControl('admin', $userId, 'ada@cipherguard.github.io');
         $event = new Event(MfaUserSettingsDeleteController::MFA_USER_ACCOUNT_SETTINGS_DELETE_EVENT);
         $event->setData([
             'target' => $user,

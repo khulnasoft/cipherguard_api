@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         4.1.0
  */
 namespace App\Middleware;
@@ -25,7 +25,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class SslForceMiddleware implements MiddlewareInterface
 {
-    public const CIPHERGURD_SSL_FORCE_CONFIG_NAME = 'cipherguard.ssl.force';
+    public const CIPHERGUARD_SSL_FORCE_CONFIG_NAME = 'cipherguard.ssl.force';
 
     /**
      * @param \Psr\Http\Message\ServerRequestInterface $request The request.
@@ -38,7 +38,7 @@ class SslForceMiddleware implements MiddlewareInterface
     ): ResponseInterface {
         /** @var \Cake\Http\ServerRequest $request */
         $isNotHttps = $request->getUri()->getScheme() !== 'https';
-        $isSslEnforced = Configure::read(self::CIPHERGURD_SSL_FORCE_CONFIG_NAME);
+        $isSslEnforced = Configure::read(self::CIPHERGUARD_SSL_FORCE_CONFIG_NAME);
 
         if ($isSslEnforced && $isNotHttps) {
             $url = 'https://' . $request->getEnv('HTTP_HOST') . $request->getEnv('REQUEST_URI');

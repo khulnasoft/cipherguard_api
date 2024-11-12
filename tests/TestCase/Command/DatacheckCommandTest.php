@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.1.0
  */
 namespace App\Test\TestCase\Command;
@@ -93,7 +93,7 @@ class DatacheckCommandTest extends AppTestCase
     public function testDatacheckCommand_Users_Username_Validation()
     {
         // Create two users with the same username
-        $username = 'foo@cipherguard.khulnasoft.com';
+        $username = 'foo@cipherguard.github.io';
         $duplicateUsernames = UserFactory::make(compact('username'), 2)->persist();
 
         // Create user with username not a valid email
@@ -105,6 +105,7 @@ class DatacheckCommandTest extends AppTestCase
         $duplicateInvalidUsernames = UserFactory::make(compact('username'), 2)->persist();
 
         $this->exec('cipherguard datacheck');
+
         $this->assertOutputContains('[FAIL] Validation failed for user ' . $noValidEmail->id . '. {"username":{"email":"The username should be a valid email address."}}');
         $this->assertOutputContains('[FAIL] Validation failed for user ' . $duplicateUsernames[0]->id . '. {"username":{"uniqueUsername":"The username ' . $duplicateUsernames[0]->username . ' is a duplicate."}}');
         $this->assertOutputContains('[FAIL] Validation failed for user ' . $duplicateUsernames[1]->id . '. {"username":{"uniqueUsername":"The username ' . $duplicateUsernames[1]->username . ' is a duplicate."}}');

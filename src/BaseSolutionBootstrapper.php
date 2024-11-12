@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.11.0
  */
 namespace App;
@@ -59,11 +59,12 @@ class BaseSolutionBootstrapper
         $app->addPlugin('Cipherguard/InFormIntegration', ['bootstrap' => true, 'routes' => false]);
         $app->addPlugin('Cipherguard/Locale', ['bootstrap' => true, 'routes' => true]);
         $app->addPlugin('Cipherguard/Export', ['bootstrap' => true, 'routes' => false]);
+        $this->addFeaturePluginIfEnabled($app, 'PasswordExpiry');
         $this->addFeaturePluginIfEnabled($app, 'ResourceTypes');
         $this->addFeaturePluginIfEnabled($app, 'TotpResourceTypes', ['bootstrap' => true, 'routes' => false]);
         $app->addPlugin('Cipherguard/RememberMe', ['bootstrap' => true, 'routes' => false]);
         $app->addPlugin('Cipherguard/EmailNotificationSettings', ['bootstrap' => true, 'routes' => true]);
-        $app->addPlugin('Cipherguard/EmailDigest', ['bootstrap' => true, 'routes' => true]);
+        $this->addFeaturePluginIfEnabled($app, 'EmailDigest');
         $app->addPlugin('Cipherguard/Reports', ['bootstrap' => true, 'routes' => true]);
         $this->addFeaturePluginIfEnabled($app, 'Mobile');
         $this->addFeaturePluginIfEnabled($app, 'SelfRegistration');

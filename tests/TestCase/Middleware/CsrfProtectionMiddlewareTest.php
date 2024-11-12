@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         4.2.0
  */
 
@@ -20,7 +20,7 @@ namespace App\Test\TestCase\Middleware;
 use App\Middleware\CsrfProtectionMiddleware;
 use App\Service\Cookie\AbstractSecureCookieService;
 use App\Test\Lib\AppIntegrationTestCase;
-use App\Test\Lib\Utility\MiddlewareTestTrait;
+use App\Test\Lib\Http\TestRequestHandler;
 use Cake\Core\Configure;
 use Cake\Http\ServerRequest;
 
@@ -29,15 +29,13 @@ use Cake\Http\ServerRequest;
  */
 class CsrfProtectionMiddlewareTest extends AppIntegrationTestCase
 {
-    use MiddlewareTestTrait;
-
     public function testCsrfProtectionMiddleware_SSL_And_Cookie_Secure_Activated()
     {
         $request = (new ServerRequest())->withEnv('HTTPS', 'on');
         $middleware = new CsrfProtectionMiddleware();
 
         /** @var \Cake\Http\ServerRequest $response */
-        $response = $middleware->process($request, $this->mockHandler());
+        $response = $middleware->process($request, new TestRequestHandler());
 
         $csrfToken = $response->getCookieCollection()->get('csrfToken');
         $this->assertTrue($csrfToken->isSecure());
@@ -53,7 +51,7 @@ class CsrfProtectionMiddlewareTest extends AppIntegrationTestCase
         $middleware = new CsrfProtectionMiddleware();
 
         /** @var \Cake\Http\ServerRequest $response */
-        $response = $middleware->process($request, $this->mockHandler());
+        $response = $middleware->process($request, new TestRequestHandler());
 
         $csrfToken = $response->getCookieCollection()->get('csrfToken');
         $this->assertFalse($csrfToken->isSecure());
@@ -61,12 +59,12 @@ class CsrfProtectionMiddlewareTest extends AppIntegrationTestCase
 
     public function testCsrfProtectionMiddleware_SSL_And_Cookie_Secure_Deactivated()
     {
-        Configure::write(AbstractSecureCookieService::CIPHERGURD_SECURITY_COOKIES_SECURE_CONFIG, false);
+        Configure::write(AbstractSecureCookieService::CIPHERGUARD_SECURITY_COOKIES_SECURE_CONFIG, false);
         $request = (new ServerRequest())->withEnv('HTTPS', 'on');
         $middleware = new CsrfProtectionMiddleware();
 
         /** @var \Cake\Http\ServerRequest $response */
-        $response = $middleware->process($request, $this->mockHandler());
+        $response = $middleware->process($request, new TestRequestHandler());
 
         $csrfToken = $response->getCookieCollection()->get('csrfToken');
         $this->assertTrue($csrfToken->isSecure());
@@ -74,12 +72,12 @@ class CsrfProtectionMiddlewareTest extends AppIntegrationTestCase
 
     public function testCsrfProtectionMiddleware_Non_SSL_And_Cookie_Secure_Deactivated()
     {
-        Configure::write(AbstractSecureCookieService::CIPHERGURD_SECURITY_COOKIES_SECURE_CONFIG, false);
+        Configure::write(AbstractSecureCookieService::CIPHERGUARD_SECURITY_COOKIES_SECURE_CONFIG, false);
         $request = new ServerRequest();
         $middleware = new CsrfProtectionMiddleware();
 
         /** @var \Cake\Http\ServerRequest $response */
-        $response = $middleware->process($request, $this->mockHandler());
+        $response = $middleware->process($request, new TestRequestHandler());
 
         $csrfToken = $response->getCookieCollection()->get('csrfToken');
         $this->assertFalse($csrfToken->isSecure());

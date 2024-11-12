@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         4.3.0
  */
 namespace App\Test\TestCase\Controller\Users;
@@ -20,8 +20,12 @@ use App\Test\Factory\RoleFactory;
 use App\Test\Factory\UserFactory;
 use App\Test\Lib\AppIntegrationTestCase;
 use App\Test\Lib\Model\EmailQueueTrait;
+use App\Utility\Purifier;
 use Cake\I18n\FrozenTime;
 
+/**
+ * @covers \App\Controller\Users\UsersEditController
+ */
 class UsersEditDisableControllerTest extends AppIntegrationTestCase
 {
     use EmailQueueTrait;
@@ -74,14 +78,19 @@ class UsersEditDisableControllerTest extends AppIntegrationTestCase
     public function testUsersEditDisableController_Success_Admin_Disable_User(): void
     {
         [$admin1, $admin2] = UserFactory::make(2)->admin()->persist();
-        $user = UserFactory::make()->user()->persist();
-        $userFullName = $user->profile->first_name . ' ' . $user->profile->last_name;
+        $user = UserFactory::make()
+            ->withProfileName('Helene', 'D\'Amore')
+            ->user()
+            ->persist();
         $this->logInAs($admin1);
+        $userFullName = Purifier::clean($user->profile->full_name);
+
         $data = [
             'id' => $user->id,
             'disabled' => FrozenTime::now(),
         ];
         $this->postJson('/users/' . $user->id . '.json', $data);
+
         $this->assertSuccess();
         $this->assertNotNull($this->_responseJsonBody->disabled);
         $user = UserFactory::get($user->id);
@@ -93,14 +102,19 @@ class UsersEditDisableControllerTest extends AppIntegrationTestCase
 
     public function testUsersEditDisableController_Success_Admin_Disable_Admin(): void
     {
-        [$admin1, $admin2, $user] = UserFactory::make(3)->admin()->persist();
-        $userFullName = $user->profile->first_name . ' ' . $user->profile->last_name;
+        [$admin1, $admin2, $user] = UserFactory::make(3)
+            ->withProfileName('Helene', 'D\'Amore')
+            ->admin()
+            ->persist();
         $this->logInAs($admin1);
+        $userFullName = Purifier::clean($user->profile->full_name);
+
         $data = [
             'id' => $user->id,
             'disabled' => FrozenTime::now(),
         ];
         $this->postJson('/users/' . $user->id . '.json', $data);
+
         $this->assertSuccess();
         $this->assertNotNull($this->_responseJsonBody->disabled);
         $user = UserFactory::get($user->id);
@@ -125,6 +139,26 @@ class UsersEditDisableControllerTest extends AppIntegrationTestCase
         $this->assertNotNull($this->_responseJsonBody->disabled);
         $user = UserFactory::get($user->id);
         $this->assertTrue($user->isDisabled());
+        $this->assertEmailQueueCount(0);
+    }
+
+    public function testUsersEditDisableController_Success_EnableDisabledUser(): void
+    {
+        $user = UserFactory::make()->user()->disabled()->persist();
+        $this->logInAsAdmin();
+
+        $data = [
+            'id' => $user->id,
+            'disabled' => null,
+            'username' => $user->username,
+            'role_id' => $user->role_id,
+        ];
+        $this->postJson('/users/' . $user->id . '.json', $data);
+
+        $this->assertSuccess();
+        $this->assertNull($this->_responseJsonBody->disabled);
+        $user = UserFactory::get($user->id);
+        $this->assertFalse($user->isDisabled());
         $this->assertEmailQueueCount(0);
     }
 }

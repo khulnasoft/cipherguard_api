@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd'RL (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SARL (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd'RL (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SARL (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.8.0
  */
 namespace Cipherguard\Log\Test\TestCase\Controller\Share;
@@ -64,6 +64,7 @@ class ShareControllerLogTest extends LogIntegrationTestCase
     {
         $user = UserFactory::make()->user()->persist();
         $edith = UserFactory::make()->user()->persist();
+        /** @var \App\Model\Entity\Resource $resource */
         $resource = ResourceFactory::make()->withCreatorAndPermission($user)->persist();
         $resourceId = $resource->id;
         // Add an owner permission for the user Edith
@@ -124,6 +125,7 @@ class ShareControllerLogTest extends LogIntegrationTestCase
     {
         $user = UserFactory::make()->user()->persist();
         $betty = UserFactory::make()->user()->persist();
+        /** @var \App\Model\Entity\Resource $resource */
         $resource = ResourceFactory::make()
             ->withCreatorAndPermission($user)
             ->withPermissionsFor([$user], Permission::OWNER)
@@ -172,6 +174,7 @@ class ShareControllerLogTest extends LogIntegrationTestCase
     {
         $user = UserFactory::make()->user()->persist();
         $betty = UserFactory::make()->user()->persist();
+        /** @var \App\Model\Entity\Resource $resource */
         $resource = ResourceFactory::make()
             ->withCreatorAndPermission($user)
             ->withPermissionsFor([$user], Permission::OWNER)
@@ -220,6 +223,7 @@ class ShareControllerLogTest extends LogIntegrationTestCase
     {
         $user = UserFactory::make()->user()->persist();
         $edith = UserFactory::make()->user()->persist();
+        /** @var \App\Model\Entity\Resource $resource */
         $resource = ResourceFactory::make()
             ->withCreatorAndPermission($user)
             ->withPermissionsFor([$user], Permission::OWNER)
@@ -254,6 +258,7 @@ class ShareControllerLogTest extends LogIntegrationTestCase
     {
         $user = UserFactory::make()->user()->persist();
         $alienId = UuidFactory::uuid();
+        /** @var \App\Model\Entity\Resource $resource */
         $resource = ResourceFactory::make()
             ->withCreatorAndPermission($user)
             ->withPermissionsFor([$user], Permission::OWNER)

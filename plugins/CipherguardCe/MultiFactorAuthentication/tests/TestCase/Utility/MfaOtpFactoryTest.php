@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.5.0
  */
 namespace Cipherguard\MultiFactorAuthentication\Test\TestCase\Utility;
@@ -44,14 +44,14 @@ class MfaOtpFactoryTest extends MfaIntegrationTestCase
         $issuer = MfaOtpFactory::getIssuer('https://localhost:8080');
         $this->assertTextEquals('localhost', $issuer);
 
-        $issuer = MfaOtpFactory::getIssuer('http://cloud.cipherguard.khulnasoft.com/acme');
-        $this->assertTextEquals('cloud.cipherguard.khulnasoft.com/acme', $issuer);
+        $issuer = MfaOtpFactory::getIssuer('http://cloud.cipherguard.github.io/acme');
+        $this->assertTextEquals('cloud.cipherguard.github.io/acme', $issuer);
 
-        $issuer = MfaOtpFactory::getIssuer('http://cloud.cipherguard.khulnasoft.com/acme:test');
-        $this->assertTextEquals('cloud.cipherguard.khulnasoft.com/acmetest', $issuer);
+        $issuer = MfaOtpFactory::getIssuer('http://cloud.cipherguard.github.io/acme:test');
+        $this->assertTextEquals('cloud.cipherguard.github.io/acmetest', $issuer);
 
-        $issuer = MfaOtpFactory::getIssuer('www.cipherguard.khulnasoft.com');
-        $this->assertTextEquals('www.cipherguard.khulnasoft.com', $issuer);
+        $issuer = MfaOtpFactory::getIssuer('www.cipherguard.github.io');
+        $this->assertTextEquals('www.cipherguard.github.io', $issuer);
     }
 
     /**
@@ -78,7 +78,7 @@ class MfaOtpFactoryTest extends MfaIntegrationTestCase
         $issuer = MfaOtpFactory::getIssuer();
         $this->assertStringContainsString('issuer=' . $issuer, $otp);
         $this->assertStringContainsString('secret=', $otp);
-        $this->assertStringContainsString('ada%40cipherguard.khulnasoft.com', $otp);
+        $this->assertStringContainsString('ada%40cipherguard.github.io', $otp);
     }
 
     public function dataForTestGenerateTOTP()
@@ -103,15 +103,15 @@ class MfaOtpFactoryTest extends MfaIntegrationTestCase
      */
     public function testMfaOtpFactoryTest_generateTOTP_Multiple_Cases($secretLength)
     {
-        $originalSecretLength = Configure::read(MfaOtpFactory::CIPHERGURD_PLUGINS_MFA_TOTP_SECRET_LENGTH);
-        Configure::write(MfaOtpFactory::CIPHERGURD_PLUGINS_MFA_TOTP_SECRET_LENGTH, $secretLength);
+        $originalSecretLength = Configure::read(MfaOtpFactory::CIPHERGUARD_PLUGINS_MFA_TOTP_SECRET_LENGTH);
+        Configure::write(MfaOtpFactory::CIPHERGUARD_PLUGINS_MFA_TOTP_SECRET_LENGTH, $secretLength);
 
         $otp = MfaOtpFactory::generateTOTP($this->mockUserAccessControl('ada'));
         $qrcode = MfaOtpFactory::getQrCodeInlineSvg($otp);
         $this->assertStringNotContainsString('<?xml version="1.0" encoding="UTF-8"?>', $qrcode);
         $this->assertStringContainsString('<svg', $qrcode);
 
-        Configure::write(MfaOtpFactory::CIPHERGURD_PLUGINS_MFA_TOTP_SECRET_LENGTH, $originalSecretLength);
+        Configure::write(MfaOtpFactory::CIPHERGUARD_PLUGINS_MFA_TOTP_SECRET_LENGTH, $originalSecretLength);
     }
 
     public function dataForTestGetAndSanitizeSecretLengthFromConfig()
@@ -139,12 +139,12 @@ class MfaOtpFactoryTest extends MfaIntegrationTestCase
         $secretLength,
         $sanitizedLength
     ) {
-        $originalSecretLength = Configure::read(MfaOtpFactory::CIPHERGURD_PLUGINS_MFA_TOTP_SECRET_LENGTH);
-        Configure::write(MfaOtpFactory::CIPHERGURD_PLUGINS_MFA_TOTP_SECRET_LENGTH, $secretLength);
+        $originalSecretLength = Configure::read(MfaOtpFactory::CIPHERGUARD_PLUGINS_MFA_TOTP_SECRET_LENGTH);
+        Configure::write(MfaOtpFactory::CIPHERGUARD_PLUGINS_MFA_TOTP_SECRET_LENGTH, $secretLength);
 
         $len = MfaOtpFactory::getAndSanitizeSecretLengthFromConfig();
         $this->assertEquals($len, $sanitizedLength);
 
-        Configure::write(MfaOtpFactory::CIPHERGURD_PLUGINS_MFA_TOTP_SECRET_LENGTH, $originalSecretLength);
+        Configure::write(MfaOtpFactory::CIPHERGUARD_PLUGINS_MFA_TOTP_SECRET_LENGTH, $originalSecretLength);
     }
 }

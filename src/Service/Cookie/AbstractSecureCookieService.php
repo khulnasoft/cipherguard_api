@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         4.0.0
  */
 namespace App\Service\Cookie;
@@ -23,7 +23,7 @@ use DateTimeInterface;
 
 abstract class AbstractSecureCookieService
 {
-    public const CIPHERGURD_SECURITY_COOKIES_SECURE_CONFIG = 'cipherguard.security.cookies.secure';
+    public const CIPHERGUARD_SECURITY_COOKIES_SECURE_CONFIG = 'cipherguard.security.cookies.secure';
 
     /**
      * Read in the config and in the request is ssl is required.
@@ -35,7 +35,7 @@ abstract class AbstractSecureCookieService
      */
     public static function isSslOrCookiesSecure(ServerRequest $request): bool
     {
-        return Configure::read(self::CIPHERGURD_SECURITY_COOKIES_SECURE_CONFIG) || $request->is('ssl');
+        return Configure::read(self::CIPHERGUARD_SECURITY_COOKIES_SECURE_CONFIG) || $request->is('ssl');
     }
 
     /**

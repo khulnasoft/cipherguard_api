@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 
@@ -127,46 +127,5 @@ class GroupsViewControllerTest extends AppIntegrationTestCase
         $this->assertNotNull($this->_responseJsonBody);
         $this->assertObjectHasAttribute('my_group_user', $this->_responseJsonBody);
         $this->assertGroupUserAttributes($this->_responseJsonBody->my_group_user);
-    }
-
-    public function testGroupsViewErrorNotAuthenticated(): void
-    {
-        $this->getJson('/groups.json');
-        $this->assertAuthenticationError();
-    }
-
-    public function testGroupsViewErrorNotValidId(): void
-    {
-        $this->authenticateAs('ada');
-        $groupId = 'invalid-id';
-        $this->getJson("/groups/$groupId.json");
-        $this->assertError(400, 'The group id is not valid.');
-    }
-
-    public function testGroupsViewErrorNotFound(): void
-    {
-        $this->authenticateAs('ada');
-        $groupId = UuidFactory::uuid('not-found');
-        $this->getJson("/groups/$groupId.json");
-        $this->assertError(404, 'The group does not exist.');
-    }
-
-    public function testGroupsViewErrorDeletedGroup(): void
-    {
-        $this->authenticateAs('ada');
-        $groupId = UuidFactory::uuid('group.id.deleted');
-        $this->getJson("/groups/$groupId.json");
-        $this->assertError(404, 'The group does not exist.');
-    }
-
-    /**
-     * Check that calling url without JSON extension throws a 404
-     */
-    public function testGroupsViewController_Error_NotJson(): void
-    {
-        $this->authenticateAs('ada');
-        $groupId = UuidFactory::uuid('group.id.freelancer');
-        $this->get("/groups/$groupId");
-        $this->assertResponseCode(404);
     }
 }

@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.13.0
  */
 namespace Cipherguard\Reports\Controller\Reports;
@@ -23,7 +23,7 @@ use Cake\Http\Exception\BadRequestException;
 use Cake\Http\Exception\ForbiddenException;
 use InvalidArgumentException;
 use Cipherguard\Reports\Service\ReportViewService;
-use Cipherguard\Reports\Utility\ReportInterface;
+use Cipherguard\Reports\Utility\AbstractReport;
 
 /**
  * ReportsViewController Class
@@ -86,7 +86,7 @@ class ReportsViewController extends AppController
         if (!$this->request->is('json')) {
             $this->renderReportInHtml($report);
         } else {
-            $this->success(__('The operation was successful.'), $report);
+            $this->success(__('The operation was successful.'), $report->jsonSerialize());
         }
     }
 
@@ -109,10 +109,10 @@ class ReportsViewController extends AppController
     /**
      * Set view variables, theme and template for html render
      *
-     * @param \Cipherguard\Reports\Utility\ReportInterface $report Instance of Report to render
+     * @param \Cipherguard\Reports\Utility\AbstractReport $report Instance of Report to render
      * @return void
      */
-    private function renderReportInHtml(ReportInterface $report)
+    private function renderReportInHtml(AbstractReport $report)
     {
         $this->viewBuilder()
             ->setTemplatePath('Reports/html')

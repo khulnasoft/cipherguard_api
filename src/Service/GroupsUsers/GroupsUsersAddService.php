@@ -3,21 +3,22 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.13.0
  */
 
 namespace App\Service\GroupsUsers;
 
 use App\Error\Exception\ValidationException;
+use App\Model\Dto\EntitiesChangesDto;
 use App\Model\Entity\GroupsUser;
 use App\Model\Entity\Secret;
 use App\Model\Table\PermissionsTable;
@@ -76,7 +77,7 @@ class GroupsUsersAddService
      *   ],
      *   ...
      * ]
-     * @return \App\Model\Entity\GroupsUser
+     * @return \App\Model\Dto\EntitiesChangesDto
      * @throws \App\Error\Exception\ValidationException If it could not validate group user data.
      * @throws \App\Error\Exception\ValidationException If it could not validate secrets data.
      * @throws \App\Error\Exception\ValidationException If secrets for resources the user has gotten access by being added to the group are missing.
@@ -85,19 +86,22 @@ class GroupsUsersAddService
      * @throws \App\Error\Exception\ValidationException If secrets not for a resource the user has gotten access by being added to the group are provided.
      * @throws \Exception If an unexpected error occurred.
      */
-    public function add(UserAccessControl $uac, ?array $data = [], ?array $secretsData = []): GroupsUser
+    public function add(UserAccessControl $uac, ?array $data = [], ?array $secretsData = []): EntitiesChangesDto
     {
+        $entitiesChangesDto = new EntitiesChangesDto();
         $groupUser = $this->buildGroupUserEntity($uac, $data);
         $missingAccessResourcesIds = $this->getMissingSecretsResourcesIds($groupUser);
 
         return $this->groupsUsersTable->getConnection()->transactional(
-            function () use ($uac, $groupUser, $secretsData, $missingAccessResourcesIds) {
+            function () use ($uac, $groupUser, $secretsData, $missingAccessResourcesIds, $entitiesChangesDto) {
                 $this->saveGroupUser($groupUser);
+                $entitiesChangesDto->pushAddedEntity($groupUser);
                 $secrets = $this->buildSecretsEntities($groupUser, $missingAccessResourcesIds, $secretsData);
                 $this->saveSecrets($groupUser, $secrets);
+                $entitiesChangesDto->pushAddedEntities($secrets);
                 $this->dispatchGroupUserAddedEvent($uac, $groupUser);
 
-                return $groupUser;
+                return $entitiesChangesDto;
             }
         );
     }

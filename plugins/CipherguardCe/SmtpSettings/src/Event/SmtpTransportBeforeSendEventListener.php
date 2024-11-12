@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.11.0
  */
 namespace Cipherguard\SmtpSettings\Event;
@@ -20,6 +20,7 @@ use App\Mailer\Transport\SmtpTransport;
 use Cake\Event\EventInterface;
 use Cake\Event\EventListenerInterface;
 use Cipherguard\SmtpSettings\Service\SmtpSettingsGetSettingsInDbService;
+use Cipherguard\SmtpSettings\Service\SmtpSettingsSslOptionsGetService;
 
 class SmtpTransportBeforeSendEventListener implements EventListenerInterface
 {
@@ -61,24 +62,32 @@ class SmtpTransportBeforeSendEventListener implements EventListenerInterface
      */
     public function initializeTransport(EventInterface $event): void
     {
-        $this->configInDB = (new SmtpSettingsGetSettingsInDbService())->getSettings();
-        if (is_null($this->configInDB)) {
-            return;
-        }
         /** @var \App\Mailer\Transport\SmtpTransport $transport */
         $transport = $event->getSubject();
         $defaultConfig = $event->getData();
-        $configToMerge = [
-            'className' => self::class,
-            'sender_name' => $this->configInDB['sender_name'],
-            'sender_email' => $this->configInDB['sender_email'],
-            'host' => $this->configInDB['host'],
-            'port' => $this->configInDB['port'],
-            'tls' => $this->configInDB['tls'] ?? null,
-            'client' => $this->configInDB['client'],
-            'username' => $this->configInDB['username'],
-            'password' => $this->configInDB['password'],
-        ];
+        $configToMerge = [];
+
+        $this->configInDB = (new SmtpSettingsGetSettingsInDbService())->getSettings();
+        if (!is_null($this->configInDB)) {
+            $configToMerge = [
+                'className' => self::class,
+                'sender_name' => $this->configInDB['sender_name'],
+                'sender_email' => $this->configInDB['sender_email'],
+                'host' => $this->configInDB['host'],
+                'port' => $this->configInDB['port'],
+                'tls' => $this->configInDB['tls'] ?? null,
+                'client' => $this->configInDB['client'],
+                'username' => $this->configInDB['username'],
+                'password' => $this->configInDB['password'],
+            ];
+        }
+
+        // Merge SSL Options if present in config
+        $sslOptions = (new SmtpSettingsSslOptionsGetService())->get();
+        if (!empty($sslOptions)) {
+            $configToMerge['context'] = ['ssl' => $sslOptions];
+        }
+
         $transport->setConfig(array_merge($defaultConfig, $configToMerge));
     }
 

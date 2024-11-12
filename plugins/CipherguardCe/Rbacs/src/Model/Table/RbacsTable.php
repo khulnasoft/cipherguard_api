@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         4.1.0
  */
 
@@ -22,6 +22,7 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use Cipherguard\Rbacs\Model\Entity\Rbac;
+use Cipherguard\Rbacs\Model\Rule\IsControlFunctionAllowedRule;
 
 /**
  * Rbacs Model
@@ -41,10 +42,9 @@ use Cipherguard\Rbacs\Model\Entity\Rbac;
  * @property \Cipherguard\Log\Model\Table\ActionsTable&\Cake\ORM\Association\HasOne $Action
  * @property \Cipherguard\Rbacs\Model\Table\UiActionsTable&\Cake\ORM\Association\HasOne $UiAction
  * @method \Cipherguard\Rbacs\Model\Entity\Rbac newEmptyEntity()
- * @method \Cipherguard\Rbacs\Model\Entity\Rbac[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \Cipherguard\Rbacs\Model\Entity\Rbac[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \Cipherguard\Rbacs\Model\Entity\Rbac[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \Cipherguard\Rbacs\Model\Entity\Rbac[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method iterable<\Cipherguard\Rbacs\Model\Entity\Rbac>|iterable<\Cake\Datasource\EntityInterface>|false saveMany(iterable $entities, $options = [])
+ * @method iterable<\Cipherguard\Rbacs\Model\Entity\Rbac>|iterable<\Cake\Datasource\EntityInterface>|false deleteMany(iterable $entities, $options = [])
+ * @method iterable<\Cipherguard\Rbacs\Model\Entity\Rbac>|iterable<\Cake\Datasource\EntityInterface> deleteManyOrFail(iterable $entities, $options = [])
  * @method \Cake\ORM\Query findById(string $id)
  */
 class RbacsTable extends Table
@@ -129,7 +129,7 @@ class RbacsTable extends Table
                 implode(', ', Rbac::ALLOWED_FOREIGN_MODELS)
             ))
             ->maxLength(
-                'control_function',
+                'foreign_model',
                 Rbac::MAX_FOREIGN_MODEL_LENGTH,
                 __(
                     'The foreign model name used length should be maximum {0} characters.',
@@ -185,6 +185,7 @@ class RbacsTable extends Table
             ),
             ['errorField' => 'id']
         );
+
         $rules->add(
             $rules->isUnique(
                 ['role_id', 'foreign_id'],
@@ -192,6 +193,11 @@ class RbacsTable extends Table
             ),
             ['errorField' => 'role_id']
         );
+
+        $rules->add(new IsControlFunctionAllowedRule(), 'isControlFunctionAllowed', [
+            'errorField' => 'control_function',
+            'message' => __('The control function is not allowed for this UI Action.'),
+        ]);
 
         return $rules;
     }

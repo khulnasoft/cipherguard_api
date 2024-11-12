@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.9.0
  */
 namespace Cipherguard\MultiFactorAuthentication\Test\Factory;
@@ -124,6 +124,8 @@ class MfaOrganizationSettingFactory extends OrganizationSettingFactory
         ?string $clientId = null,
         ?string $clientSecret = null
     ) {
+        // SEC-5652 Note to security researchers: these are not leaked credentials
+        // They look valid as they should pass validation, but are fake
         return [
             MfaOrgSettings::DUO_CLIENT_ID => $clientId ?? 'DICPIC33F13IWF1FR52J',
             MfaOrgSettings::DUO_CLIENT_SECRET => $clientSecret ?? '7TkYNgK8AGAuv3KW12qhsJLeIc1mJjHDHC1siNYX',

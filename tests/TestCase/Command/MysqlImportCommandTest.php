@@ -3,20 +3,20 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.1.0
  */
 namespace App\Test\TestCase\Command;
 
-use App\Command\MysqlExportCommand;
+use App\Command\SqlExportCommand;
 use App\Test\Lib\AppTestCase;
 use App\Test\Lib\Utility\CipherguardCommandTestTrait;
 use Cake\Console\TestSuite\ConsoleIntegrationTestTrait;
@@ -47,7 +47,7 @@ class MysqlImportCommandTest extends AppTestCase
     {
         $this->exec('cipherguard mysql_import -h');
         $this->assertExitSuccess();
-        $this->assertOutputContains('Utility to import a mysql database backups.');
+        $this->assertOutputContains('Utility to import mysql database backups.');
         $this->assertOutputContains('cake cipherguard mysql_import');
     }
 
@@ -60,7 +60,7 @@ class MysqlImportCommandTest extends AppTestCase
     public function testMysqlImportCommandOnDump()
     {
         // Create a file with a simple sql command
-        $dir = MysqlExportCommand::CACHE_DATABASE_DIRECTORY;
+        $dir = SqlExportCommand::CACHE_DATABASE_DIRECTORY;
         $fileName = 'dummy_dump.sql';
         $cmd = "
             INSERT INTO avatars (id, profile_id, created, modified)
@@ -89,7 +89,7 @@ class MysqlImportCommandTest extends AppTestCase
     public function testMysqlImportCommandWrongDataSource()
     {
         // Create a file with a simple sql command
-        $dir = MysqlExportCommand::CACHE_DATABASE_DIRECTORY;
+        $dir = SqlExportCommand::CACHE_DATABASE_DIRECTORY;
         $fileName = 'dummy_dump.sql';
         $sql = 'THIS IS NOT SQL, AND WILL THROW AN ERROR!!!';
         file_put_contents($dir . DS . $fileName, $sql);

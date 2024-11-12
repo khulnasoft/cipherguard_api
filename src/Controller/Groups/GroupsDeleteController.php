@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 namespace App\Controller\Groups;
@@ -21,7 +21,9 @@ use App\Error\Exception\CustomValidationException;
 use App\Model\Entity\Group;
 use App\Model\Entity\Permission;
 use App\Model\Entity\Role;
+use App\Model\Entity\Secret;
 use App\Model\Table\PermissionsTable;
+use App\Service\Resources\ResourcesExpireResourcesServiceInterface;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Http\Exception\BadRequestException;
@@ -92,24 +94,31 @@ class GroupsDeleteController extends AppController
      * Group delete action
      *
      * @param string $id group uuid
-     * @throws \Cake\Http\Exception\InternalErrorException if group cannot be deleted
-     * @throws \Exception
+     * @param \App\Service\Resources\ResourcesExpireResourcesServiceInterface $resourcesExpireResourcesService Service to expire resources that were consumed by users who lost access to them.
      * @return void
+     * @throws \Exception
      */
-    public function delete(string $id)
-    {
+    public function delete(
+        string $id,
+        ResourcesExpireResourcesServiceInterface $resourcesExpireResourcesService
+    ) {
         $this->assertJson();
+        $group = null;
 
-        $this->GroupsUsers->getConnection()->transactional(function () use ($id) {
+        $this->GroupsUsers->getConnection()->transactional(function () use ($id, &$group, $resourcesExpireResourcesService) { //phpcs:ignore
             $group = $this->_validateRequestData($id);
             $this->_transferContentOwners($group);
             $this->_validateDelete($group);
-            if (!$this->Groups->softDelete($group, ['checkRules' => false])) {
+            $entitiesChanges = $this->Groups->softDelete($group, ['checkRules' => false]);
+            if (!$entitiesChanges) {
                 throw new InternalErrorException('Could not delete the group, please try again later.');
             }
-            $this->_notifyUsers($group);
-            $this->success(__('The group was deleted successfully.'));
+            $deletedSecrets = $entitiesChanges->getDeletedEntities(Secret::class);
+            $resourcesExpireResourcesService->expireResourcesForSecrets($deletedSecrets);
         });
+
+        $this->_notifyUsers($group);
+        $this->success(__('The group was deleted successfully.'));
     }
 
     /**
@@ -230,6 +239,7 @@ class GroupsDeleteController extends AppController
         if (Configure::read('cipherguard.plugins.folders.enabled')) {
             $foldersIdsBlockingDelete = $this->Permissions
                 ->findSharedAcosByAroIsSoleOwner(PermissionsTable::FOLDER_ACO, $group->id)
+                ->all()
                 ->extract('aco_foreign_key')
                 ->toArray();
             $contentIdBlockingDelete = array_merge($contentIdBlockingDelete, $foldersIdsBlockingDelete);

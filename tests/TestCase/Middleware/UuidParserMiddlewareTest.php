@@ -3,22 +3,22 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         4.2.0
  */
 
 namespace App\Test\TestCase\Middleware;
 
 use App\Middleware\UuidParserMiddleware;
-use App\Test\Lib\Utility\MiddlewareTestTrait;
+use App\Test\Lib\Http\TestRequestHandler;
 use App\Utility\UuidFactory;
 use Cake\Http\ServerRequest;
 use Cake\TestSuite\TestCase;
@@ -28,8 +28,6 @@ use Cake\TestSuite\TestCase;
  */
 class UuidParserMiddlewareTest extends TestCase
 {
-    use MiddlewareTestTrait;
-
     public function testUuidParserMiddleware_LowerUuids()
     {
         $uuid = UuidFactory::uuid();
@@ -39,7 +37,7 @@ class UuidParserMiddlewareTest extends TestCase
             ->withParam('query', [$UUID, 'bar']);
 
         $middleware = new UuidParserMiddleware();
-        $middleware->process($request, $this->mockHandler());
+        $middleware->process($request, new TestRequestHandler());
 
         $request = $middleware->getRequest();
         $this->assertSame($uuid, $request->getParam('pass')[0]);
@@ -62,7 +60,7 @@ class UuidParserMiddlewareTest extends TestCase
             ]);
 
         $middleware = new UuidParserMiddleware();
-        $middleware->process($request, $this->mockHandler());
+        $middleware->process($request, new TestRequestHandler());
 
         $request = $middleware->getRequest();
         $expectedQuery = [

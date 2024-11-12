@@ -1,9 +1,9 @@
 {
   "name": "cipherguard_api",
-  "version": "3.9.0",
+  "version": "4.7.0",
   "description": "The backend application for the open source password manager for teams",
   "repository": {
-    "url": "https://github.com/khulnasoft/cipherguard_api"
+    "url": "https://github.com/cipherguard/cipherguard_api"
   },
   "engines": {
     "node": ">=16.14.0",
@@ -13,16 +13,21 @@
     "cipherguard",
     "API"
   ],
-  "author": "Khulnasoft Ltd'",
+  "author": "Cipherguard SA",
   "license": "AGPL-3.0",
-  "homepage": "https://cipherguard.khulnasoft.com",
+  "homepage": "https://www.cipherguard.github.io",
   "devDependencies": {
     "babel-polyfill": "^6.26.0",
     "grunt": "^1.5.3",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-watch": "^1.1.0",
     "jquery": "^3.5.1",
-    "openpgp": "^5.11.0",
-    "cipherguard-styleguide": "^4.4.1"
+    "lockfile-lint": "^4.12.1",
+    "openpgp": "5.2.1",
+    "passbolt-styleguide": "^4.9.2"
+  },
+  "scripts": {
+    "lint": "npm run lint:lockfile",
+    "lint:lockfile": "lockfile-lint --path package-lock.json --allowed-hosts npm --allowed-schemes \"https:\" --empty-hostname false"
   }
 }

@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.5.0
  */
 namespace Cipherguard\WebInstaller\Test\TestCase\Controller;
@@ -21,7 +21,6 @@ use App\Test\Factory\UserFactory;
 use App\Utility\Filesystem\DirectoryUtility;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
-use Cake\ORM\TableRegistry;
 use Cake\Validation\Validation;
 use Cipherguard\WebInstaller\Form\DatabaseConfigurationForm;
 use Cipherguard\WebInstaller\Service\WebInstallerChangeConfigFolderPermissionService;
@@ -40,7 +39,6 @@ class InstallationControllerTest extends WebInstallerIntegrationTestCase
     public function tearDown(): void
     {
         $this->restoreConfiguration();
-        TableRegistry::getTableLocator()->clear();
         parent::tearDown();
     }
 
@@ -213,7 +211,7 @@ UZNFZWTIXO4n0jwpTTOt6DvtqeRyjjw2nK3XUSiJu3izvn0791l4tofy
             ],
             'email' => [
                 'sender_name' => 'Webinstaller test',
-                'sender_email' => 'webinstaller@cipherguard.khulnasoft.com',
+                'sender_email' => 'webinstaller@cipherguard.github.io',
                 'host' => 'unreachable_host.dev',
                 'tls' => 1,
                 'port' => 587,
@@ -229,7 +227,7 @@ UZNFZWTIXO4n0jwpTTOt6DvtqeRyjjw2nK3XUSiJu3izvn0791l4tofy
                     'first_name' => 'Web',
                     'last_name' => 'Installer',
                 ],
-                'username' => 'webinstaller@cipherguard.khulnasoft.com',
+                'username' => 'webinstaller@cipherguard.github.io',
                 'deleted' => 0,
                 'role_id' => '0d6990c8-4aaa-4456-a333-00e803ba0828',
             ],

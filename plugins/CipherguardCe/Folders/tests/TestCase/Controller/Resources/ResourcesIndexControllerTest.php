@@ -7,25 +7,26 @@ use App\Model\Entity\Permission;
 use App\Test\Lib\Model\PermissionsModelTrait;
 use App\Test\Lib\Utility\FixtureProviderTrait;
 use App\Utility\UuidFactory;
-use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use Closure;
+use Cipherguard\Folders\Model\Behavior\FolderizableBehavior;
+use Cipherguard\Folders\Test\Factory\ResourceFactory;
 use Cipherguard\Folders\Test\Lib\FoldersIntegrationTestCase;
 use Cipherguard\Folders\Test\Lib\Model\FoldersModelTrait;
 use Cipherguard\Folders\Test\Lib\Model\FoldersRelationsModelTrait;
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.13.0
  */
 class ResourcesIndexControllerTest extends FoldersIntegrationTestCase
@@ -39,17 +40,6 @@ class ResourcesIndexControllerTest extends FoldersIntegrationTestCase
         'app.Base/Users', 'app.Base/Profiles', 'app.Base/Roles', 'app.Base/Groups', 'app.Base/GroupsUsers',
         'app.Base/Resources', 'app.Base/Favorites', 'app.Base/Permissions',
     ];
-
-    /**
-     * setUp method
-     *
-     * @return void
-     */
-    public function setUp(): void
-    {
-        parent::setUp();
-        Configure::write('cipherguard.plugins.folders', ['enabled' => true]);
-    }
 
     /**
      * @param string $folderParentId Folder parent id
@@ -185,7 +175,7 @@ class ResourcesIndexControllerTest extends FoldersIntegrationTestCase
      * @param array $expectedFolderChildrenIds
      * @return void
      */
-    public function testFoldersIndexFilterHasParentSuccess(Closure $fixture, $hasParentFilterId, array $expectedFolderChildrenIds)
+    public function testResourcesIndexController_FilterHasParentSuccess(Closure $fixture, $hasParentFilterId, array $expectedFolderChildrenIds)
     {
         $this->executeFixture($fixture);
 
@@ -207,5 +197,17 @@ class ResourcesIndexControllerTest extends FoldersIntegrationTestCase
         foreach ($expectedFolderChildrenIds as $expectedFolderChildrenId) {
             $this->assertContains($expectedFolderChildrenId, $resultFolderIds, 'Expected children is missing for the given parent folder.');
         }
+    }
+
+    public function testResourcesIndexController_Personal_Should_Be_Unset_If_Null()
+    {
+        $user = $this->logInAsUser();
+        $resource = ResourceFactory::make()->withPermissionsFor([$user])->persist();
+        ResourceFactory::find()->all();
+        $this->getJson('/resources.json');
+
+        $result = (array)$this->_responseJsonBody[0];
+        $this->assertArrayHasKey('id', $result);
+        $this->assertArrayNotHasKey(FolderizableBehavior::PERSONAL_PROPERTY, $result);
     }
 }

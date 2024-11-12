@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 
@@ -45,12 +45,13 @@ use Cake\Validation\Validator;
  * @property \Cipherguard\Log\Model\Table\SecretAccessesTable&\Cake\ORM\Association\HasMany $SecretAccesses
  * @method \App\Model\Entity\Secret newEmptyEntity()
  * @method \App\Model\Entity\Secret saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Secret[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\Secret[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\Secret[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\Secret[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method iterable<\App\Model\Entity\Secret>|iterable<\Cake\Datasource\EntityInterface>|false saveMany(iterable $entities, $options = [])
+ * @method iterable<\App\Model\Entity\Secret>|iterable<\Cake\Datasource\EntityInterface> saveManyOrFail(iterable $entities, $options = [])
+ * @method iterable<\App\Model\Entity\Secret>|iterable<\Cake\Datasource\EntityInterface>|false deleteMany(iterable $entities, $options = [])
+ * @method iterable<\App\Model\Entity\Secret>|iterable<\Cake\Datasource\EntityInterface> deleteManyOrFail(iterable $entities, $options = [])
  * @method \Cake\ORM\Query findByResourceId(string $resourceId)
  * @method \Cake\ORM\Query findByResourceIdAndUserId(string $resourceId, string $userId)
+ * @method \Cake\ORM\Query findByUserId(string $id)
  */
 class SecretsTable extends Table
 {
@@ -181,22 +182,6 @@ class SecretsTable extends Table
         return $this->find()
             ->where([
                 'resource_id' => $resourceId,
-                'user_id' => $userId,
-            ]);
-    }
-
-    /**
-     * Retrieve all the resources secrets that belong to a given user
-     *
-     * @param array $resourcesIds The list of resources to find the secrets for
-     * @param string $userId The user to find the secrets for
-     * @return \Cake\ORM\Query
-     */
-    public function findByResourcesUser(array $resourcesIds, string $userId)
-    {
-        return $this->find()
-            ->where([
-                'resource_id IN' => $resourcesIds,
                 'user_id' => $userId,
             ]);
     }

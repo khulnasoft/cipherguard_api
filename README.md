@@ -1,14 +1,14 @@
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/khulnasoft/cipherguard_styleguide/blob/master/src/img/logo/logo_white.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://github.com/khulnasoft/cipherguard_styleguide/blob/master/src/img/logo/logo.svg">
-  <img alt="cipherguard-logo" src="https://github.com/khulnasoft/cipherguard_styleguide/blob/master/src/img/logo/logo.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/cipherguard/cipherguard_styleguide/blob/master/src/img/logo/logo_white.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://github.com/cipherguard/cipherguard_styleguide/blob/master/src/img/logo/logo.svg">
+  <img alt="cipherguard-logo" src="https://github.com/cipherguard/cipherguard_styleguide/blob/master/src/img/logo/logo.svg">
 </picture>
 <br>
 <br>
 
 The open source password manager for teams.
 
-[![License](https://img.shields.io/github/license/khulnasoft/cipherguard)](LICENSE.txt)
+[![License](https://img.shields.io/github/license/cipherguard/cipherguard)](LICENSE.txt)
 [![PHPStan Enabled](https://img.shields.io/badge/PHPStan-level%206-brightgreen.svg?style=flat)](https://github.com/phpstan/phpstan)
 [![Psalm level](https://img.shields.io/badge/Psalm-level%204-brightgreen.svg?style=flat)](https://psalm.dev/)
 
@@ -33,14 +33,14 @@ The open source password manager for teams.
 ---
 <br>
 
-![Cipherguard on desktop, mobile, and cli](https://github.com/khulnasoft/cipherguard-links/blob/main/assets/readme/cipherguard-insitu.png)
+![Cipherguard on desktop, mobile, and cli](https://github.com/cipherguard/cipherguard-links/blob/main/assets/readme/cipherguard-insitu.png)
 
 # Introducing Cipherguard
 
 Cipherguard is a security-first, open source password manager for teams. It helps organizations centralize, organize and share passwords and secrets securely.
 
 What makes cipherguard different?
-- **Security:** Cipherguard security model features user-owned secret keys and end-to-end encryption. It is audited multiple times annually, and [findings](https://help.cipherguard.khulnasoft.com/faq/security/code-review) are made public.
+- **Security:** Cipherguard security model features user-owned secret keys and end-to-end encryption. It is audited multiple times annually, and [findings](https://help.cipherguard.github.io/faq/security/code-review) are made public.
 - **Collaboration:** Securely share and audit credentials, with powerful and dependable policies for power users.
 - **Privacy:** Cipherguard is headquartered in the EU,:european_union: specifically in Luxembourg. Cipherguard doesn't collect personal data or telemetry, and can be deployed in an air-gapped environment.
 
@@ -48,36 +48,36 @@ What makes cipherguard different?
 
 # Get Started
 
-<a href="https://www.cipherguard.khulnasoft.com/ce/">
+<a href="https://www.cipherguard.github.io/ce/">
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/khulnasoft/cipherguard-links/blob/main/assets/readme/cipherguard-CE-cta-light.png">
-  <source media="(prefers-color-scheme: light)" srcset="https://github.com/khulnasoft/cipherguard-links/blob/main/assets/readme/cipherguard-CE-cta-dark.png">
-  <img alt="cipherguard.khulnasoft.community edition CTA" src="https://github.com/khulnasoft/cipherguard-links/blob/main/assets/readme/cipherguard-CE-cta-dark.png">
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/cipherguard/cipherguard-links/blob/main/assets/readme/cipherguard-CE-cta-light.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://github.com/cipherguard/cipherguard-links/blob/main/assets/readme/cipherguard-CE-cta-dark.png">
+  <img alt="cipherguard community edition CTA" src="https://github.com/cipherguard/cipherguard-links/blob/main/assets/readme/cipherguard-CE-cta-dark.png">
 </picture>
 </a>
 &nbsp; &nbsp;
-<a href="https://www.cipherguard.khulnasoft.com/contact/pro/free-trial">
+<a href="https://www.cipherguard.github.io/contact/pro/free-trial">
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/khulnasoft/cipherguard-links/blob/main/assets/readme/cipherguard-pro-cta-light.png">
-  <source media="(prefers-color-scheme: light)" srcset="https://github.com/khulnasoft/cipherguard-links/blob/main/assets/readme/cipherguard-pro-cta-dark.png">
-  <img alt="cipherguard PRO edition CTA" src="https://github.com/khulnasoft/cipherguard-links/blob/main/assets/readme/cipherguard-pro-cta-dark.png">
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/cipherguard/cipherguard-links/blob/main/assets/readme/cipherguard-pro-cta-light.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://github.com/cipherguard/cipherguard-links/blob/main/assets/readme/cipherguard-pro-cta-dark.png">
+  <img alt="cipherguard PRO edition CTA" src="https://github.com/cipherguard/cipherguard-links/blob/main/assets/readme/cipherguard-pro-cta-dark.png">
 </picture>
 </a>
 &nbsp; &nbsp;
-<a href="https://www.cipherguard.khulnasoft.com/cloud/signup">
+<a href="https://www.cipherguard.github.io/cloud/signup">
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/khulnasoft/cipherguard-links/blob/main/assets/readme/cipherguard-cloud-cta-light.png">
-  <source media="(prefers-color-scheme: light)" srcset="https://github.com/khulnasoft/cipherguard-links/blob/main/assets/readme/cipherguard-cloud-cta-dark.png">
-  <img alt="cipherguard Cloud edition CTA" src="https://github.com/khulnasoft/cipherguard-links/blob/main/assets/readme/cipherguard-cloud-cta-dark.png">
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/cipherguard/cipherguard-links/blob/main/assets/readme/cipherguard-cloud-cta-light.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://github.com/cipherguard/cipherguard-links/blob/main/assets/readme/cipherguard-cloud-cta-dark.png">
+  <img alt="cipherguard Cloud edition CTA" src="https://github.com/cipherguard/cipherguard-links/blob/main/assets/readme/cipherguard-cloud-cta-dark.png">
 </picture>
 </a>
 <br>
 
 ### Run it on your own server, natively
 
-|[![Install cipherguard on Docker](https://github.com/khulnasoft/cipherguard-links/blob/main/assets/readme/docker-icon.svg)](https://www.cipherguard.khulnasoft.com/ce/docker) | [![Install cipherguard on Kubernetes](https://github.com/khulnasoft/cipherguard-links/blob/main/assets/readme/kubernetes-icon.svg)](https://www.cipherguard.khulnasoft.com/ce/kubernetes) | [![Install cipherguard on Ubuntu](https://github.com/khulnasoft/cipherguard-links/blob/main/assets/readme/ubuntu-icon.svg)](https://www.cipherguard.khulnasoft.com/ce/ubuntu) |[![Install cipherguard on Debian](https://github.com/khulnasoft/cipherguard-links/blob/main/assets/readme/debian-icon.svg)](https://www.cipherguard.khulnasoft.com/ce/debian) | [![Install cipherguard on RedHat](https://github.com/khulnasoft/cipherguard-links/blob/main/assets/readme/Redhat-icon.svg)](https://www.cipherguard.khulnasoft.com/ce/redhat) | [![Install cipherguard on Raspberry Pi](https://github.com/khulnasoft/cipherguard-links/blob/main/assets/readme/raspberry-pi-icon.svg)](https://www.cipherguard.khulnasoft.com/ce/raspberry)  | [![Install cipherguard on RockyLinux](https://github.com/khulnasoft/cipherguard-links/blob/main/assets/readme/rockylinux-icon.svg)](https://www.cipherguard.khulnasoft.com/ce/rockylinux) |
+|[![Install cipherguard on Docker](https://github.com/cipherguard/cipherguard-links/blob/main/assets/readme/docker-icon.svg)](https://www.cipherguard.github.io/ce/docker) | [![Install cipherguard on Kubernetes](https://github.com/cipherguard/cipherguard-links/blob/main/assets/readme/kubernetes-icon.svg)](https://www.cipherguard.github.io/ce/kubernetes) | [![Install cipherguard on Ubuntu](https://github.com/cipherguard/cipherguard-links/blob/main/assets/readme/ubuntu-icon.svg)](https://www.cipherguard.github.io/ce/ubuntu) |[![Install cipherguard on Debian](https://github.com/cipherguard/cipherguard-links/blob/main/assets/readme/debian-icon.svg)](https://www.cipherguard.github.io/ce/debian) | [![Install cipherguard on RedHat](https://github.com/cipherguard/cipherguard-links/blob/main/assets/readme/Redhat-icon.svg)](https://www.cipherguard.github.io/ce/redhat) | [![Install cipherguard on Raspberry Pi](https://github.com/cipherguard/cipherguard-links/blob/main/assets/readme/raspberry-pi-icon.svg)](https://www.cipherguard.github.io/ce/raspberry)  | [![Install cipherguard on RockyLinux](https://github.com/cipherguard/cipherguard-links/blob/main/assets/readme/rockylinux-icon.svg)](https://www.cipherguard.github.io/ce/rockylinux) |
 |:--:|:--:|:--:|:--:|:--:|:--:|:--:|
-| [![Install cipherguard on AlmaLinux](https://github.com/khulnasoft/cipherguard-links/blob/main/assets/readme/almalinux-icon.svg)](https://www.cipherguard.khulnasoft.com/ce/almalinux) | [![Install cipherguard on Oracle](https://github.com/khulnasoft/cipherguard-links/blob/main/assets/readme/oracle-icon.svg)](https://www.cipherguard.khulnasoft.com/ce/oracle)  | [![Install cipherguard on Fedora](https://github.com/khulnasoft/cipherguard-links/blob/main/assets/readme/fedora-icon.svg)](https://www.cipherguard.khulnasoft.com/ce/fedora) | [![Install cipherguard on openSuse](https://github.com/khulnasoft/cipherguard-links/blob/main/assets/readme/openSUSE-icon.svg)](https://www.cipherguard.khulnasoft.com/ce/opensuse)  | [![Install cipherguard on AWS](https://github.com/khulnasoft/cipherguard-links/blob/main/assets/readme/AWS-icon.svg)](https://www.cipherguard.khulnasoft.com/ce/aws) |  [![Install cipherguard on DigitalOcean](https://github.com/khulnasoft/cipherguard-links/blob/main/assets/readme/digitalocean-icon.svg)](https://www.cipherguard.khulnasoft.com/ce/digitalocean) | [![Install cipherguard on CentOS](https://github.com/khulnasoft/cipherguard-links/blob/main/assets/readme/centos-icon.svg)](https://www.cipherguard.khulnasoft.com/ce/centos) |
+| [![Install cipherguard on AlmaLinux](https://github.com/cipherguard/cipherguard-links/blob/main/assets/readme/almalinux-icon.svg)](https://www.cipherguard.github.io/ce/almalinux) | [![Install cipherguard on Oracle](https://github.com/cipherguard/cipherguard-links/blob/main/assets/readme/oracle-icon.svg)](https://www.cipherguard.github.io/ce/oracle)  | [![Install cipherguard on Fedora](https://github.com/cipherguard/cipherguard-links/blob/main/assets/readme/fedora-icon.svg)](https://www.cipherguard.github.io/ce/fedora) | [![Install cipherguard on openSuse](https://github.com/cipherguard/cipherguard-links/blob/main/assets/readme/openSUSE-icon.svg)](https://www.cipherguard.github.io/ce/opensuse)  | [![Install cipherguard on AWS](https://github.com/cipherguard/cipherguard-links/blob/main/assets/readme/AWS-icon.svg)](https://www.cipherguard.github.io/ce/aws) |  [![Install cipherguard on DigitalOcean](https://github.com/cipherguard/cipherguard-links/blob/main/assets/readme/digitalocean-icon.svg)](https://www.cipherguard.github.io/ce/digitalocean) | [![Install cipherguard on CentOS](https://github.com/cipherguard/cipherguard-links/blob/main/assets/readme/centos-icon.svg)](https://www.cipherguard.github.io/ce/centos) |
 
 <br>
 
@@ -96,22 +96,22 @@ What makes cipherguard different?
 
 ### CLI
 
-Install cipherguard CLI tool: [go-cipherguard-CLI](https://github.com/khulnasoft/go-cipherguard-cli)
+Install cipherguard CLI tool: [go-cipherguard-CLI](https://github.com/cipherguard/go-cipherguard-cli)
 
 ### Desktop App
-Coming soon [see the pre-alpha version here](https://github.com/khulnasoft/cipherguard-windows).
+Coming soon [see the pre-alpha version here](https://github.com/cipherguard/cipherguard-windows).
 
 <br>
 
 # Contributing
 
-Contributing to cipherguard with code starts by reading [Contributing.md](https://github.com/khulnasoft/cipherguard_api/blob/master/CONTRIBUTING.md). Join the [community forum](https://community.cipherguard.khulnasoft.com) to join discussions about feature requests, translations, development, and more.
+Contributing to cipherguard with code starts by reading [Contributing.md](https://github.com/cipherguard/cipherguard_api/blob/master/CONTRIBUTING.md). Join the [community forum](https://community.cipherguard.github.io) to join discussions about feature requests, translations, development, and more.
 
 <br>
 
 # Reporting a security issue
 
-If you've found a security-related issue with cipherguard, please email [security@cipherguard.khulnasoft.com](mailto:security@cipherguard.khulnasoft.com). Submitting to GitHub makes the vulnerability public, making it easy to exploit. We'll do a public disclosure of the security issue once it's been fixed.
+If you've found a security-related issue with cipherguard, please email [security@cipherguard.github.io](mailto:security@cipherguard.github.io). Submitting to GitHub makes the vulnerability public, making it easy to exploit. We'll do a public disclosure of the security issue once it's been fixed.
 
 After receiving a report, cipherguard will take the following steps:
 
@@ -128,7 +128,7 @@ After receiving a report, cipherguard will take the following steps:
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License (AGPL) as published by the Free Software Foundation version 3.
 
-The name "Cipherguard" is a registered trademark of Khulnasoft Ltd', and Khulnasoft Ltd' hereby declines to grant a trademark license to "Cipherguard" pursuant to the GNU Affero General Public License version 3 Section 7(e), without a separate agreement with Khulnasoft Ltd'.
+The name "Cipherguard" is a registered trademark of Cipherguard SA, and Cipherguard SA hereby declines to grant a trademark license to "Cipherguard" pursuant to the GNU Affero General Public License version 3 Section 7(e), without a separate agreement with Cipherguard SA.
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See GNU Affero General Public License for more details.
 

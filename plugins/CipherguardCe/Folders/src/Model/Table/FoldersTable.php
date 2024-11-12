@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.13.0
  */
 
@@ -46,10 +46,10 @@ use Cipherguard\Folders\Model\Traits\Folders\FoldersFindersTrait;
  * @property \App\Model\Table\ResourcesTable&\Cake\ORM\Association\BelongsToMany $ChildrenResources
  * @property \Cipherguard\Folders\Model\Table\FoldersHistoryTable&\Cake\ORM\Association\BelongsTo $FoldersHistory
  * @method \Cipherguard\Folders\Model\Entity\Folder newEmptyEntity()
- * @method \Cipherguard\Folders\Model\Entity\Folder[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \Cipherguard\Folders\Model\Entity\Folder[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \Cipherguard\Folders\Model\Entity\Folder[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \Cipherguard\Folders\Model\Entity\Folder[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method iterable<\Cipherguard\Folders\Model\Entity\Folder>|iterable<\Cake\Datasource\EntityInterface>|false saveMany(iterable $entities, $options = [])
+ * @method iterable<\Cipherguard\Folders\Model\Entity\Folder>|iterable<\Cake\Datasource\EntityInterface> saveManyOrFail(iterable $entities, $options = [])
+ * @method iterable<\Cipherguard\Folders\Model\Entity\Folder>|iterable<\Cake\Datasource\EntityInterface>|false deleteMany(iterable $entities, $options = [])
+ * @method iterable<\Cipherguard\Folders\Model\Entity\Folder>|iterable<\Cake\Datasource\EntityInterface> deleteManyOrFail(iterable $entities, $options = [])
  * @method \Cake\ORM\Query findById(string $id)
  */
 class FoldersTable extends Table
@@ -86,6 +86,7 @@ class FoldersTable extends Table
         $this->hasOne('Permission', [
             'className' => 'Permissions',
             'foreignKey' => 'aco_foreign_key',
+            'joinType' => 'INNER',
         ]);
         $this->hasMany('Permissions', [
             'foreignKey' => 'aco_foreign_key',

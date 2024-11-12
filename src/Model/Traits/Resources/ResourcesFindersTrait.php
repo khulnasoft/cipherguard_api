@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 
@@ -24,6 +24,8 @@ use App\Model\Table\PermissionsTable;
 use Cake\Collection\CollectionInterface;
 use Cake\Core\Configure;
 use Cake\Database\Expression\IdentifierExpression;
+use Cake\Database\Expression\QueryExpression;
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Query;
 use Cake\Validation\Validation;
 use Cipherguard\Folders\Model\Entity\Folder;
@@ -81,7 +83,7 @@ trait ResourcesFindersTrait
 
         // Filter on resources owned by me.
         if (isset($options['filter']['is-owned-by-me'])) {
-            $query = $this->_filterQueryIsOwnedByUser($query, $userId);
+            $this->_filterQueryIsOwnedByUser($query, $userId);
         }
 
         // Filter on resource shared with me.
@@ -106,19 +108,16 @@ trait ResourcesFindersTrait
         // to the resources table with an INNER join, see the hasOne definition.
         if (isset($options['contain']['permission'])) {
             $query->contain('Permission', function (Query $q) use ($userId) {
-                $subQueryOptions = ['checkGroupsUsers' => true];
+                $acoForeignKey = new IdentifierExpression('Resources.id');
                 $permissionIdSubQuery = $this->Permissions
-                    ->findAllByAro(PermissionsTable::RESOURCE_ACO, $userId, $subQueryOptions)
-                    ->where(['Permissions.aco_foreign_key' => new IdentifierExpression('Resources.id')])
-                    ->orderDesc('Permissions.type')
-                    ->limit(1)
+                    ->findHighestByAcoAndAro(PermissionsTable::RESOURCE_ACO, $acoForeignKey, $userId)
                     ->select(['Permissions.id']);
 
                 return $q->where(['Permission.id' => $permissionIdSubQuery]);
             });
         } else {
             // If not already filtered by the contains on Permission, then filter only the resources the user has access.
-            $query = $this->_filterQueryByPermissions($query, $userId);
+            $this->filterResourcesByPermissions($query, $userId);
         }
 
         // If contains Secrets.
@@ -282,22 +281,23 @@ trait ResourcesFindersTrait
      *
      * @param \Cake\ORM\Query $query The query to filter.
      * @param string $userId The user to check the permissions for.
-     * @return \Cake\ORM\Query
+     * @return void
      * @throws \InvalidArgumentException if the user id is not a uuid
      */
-    private function _filterQueryByPermissions(Query $query, string $userId)
+    public function filterResourcesByPermissions(Query $query, string $userId): void
     {
         $subQueryOptions = [
             'checkGroupsUsers' => true,
         ];
-        $resourcesFilterByPermissionTypeSubQuery = $this->Permissions
+        $resourcePermissions = $this->Permissions
             ->findAllByAro(PermissionsTable::RESOURCE_ACO, $userId, $subQueryOptions)
-            ->select(['Permissions.aco_foreign_key'])
-            ->distinct();
+            ->select(['Permissions.id'])
+            ->where(['Permissions.aco_foreign_key' => new IdentifierExpression('Resources.id')])
+            ->limit(1);
 
-        $query->where(['Resources.id IN' => $resourcesFilterByPermissionTypeSubQuery]);
-
-        return $query;
+        $query->innerJoin(['ResourcePermissions' => 'permissions'], [
+            'ResourcePermissions.id' => $resourcePermissions,
+        ]);
     }
 
     /**
@@ -359,6 +359,37 @@ trait ResourcesFindersTrait
     }
 
     /**
+     * Find all resources that are not expired
+     *
+     * @param \Cake\ORM\Query $query Query to filter on
+     * @param array $options Array of parent ids
+     * @return \Cake\ORM\Query
+     */
+    public function findNotExpired(Query $query, array $options): Query
+    {
+        return $query->where(function () {
+            return $this->notExpiredQueryExpression();
+        });
+    }
+
+    /**
+     * Query expression to insert in a where clause in order to select resources
+     * that are not expired
+     *
+     * @return \Cake\Database\Expression\QueryExpression
+     */
+    public function notExpiredQueryExpression(): QueryExpression
+    {
+        $isNull = $this->find()->newExpr()->isNull('expired');
+        $isFuture = $this->find()->newExpr()->gt('expired', FrozenTime::now());
+
+        return $this->find()->newExpr()->or([
+            $isNull,
+            $isFuture,
+        ]);
+    }
+
+    /**
      * Filter a query by parents ids.
      *
      * @param \Cake\ORM\Query $query Query to filter on
@@ -385,10 +416,10 @@ trait ResourcesFindersTrait
         return $query->innerJoinWith('FoldersRelations', function (Query $q) use ($parentIds, $includeRoot) {
             $conditions = [];
             if (!empty($parentIds)) {
-                $conditions[] = ['folder_parent_id IN' => $parentIds];
+                $conditions[] = $q->expr()->in('FoldersRelations.folder_parent_id', $parentIds);
             }
             if ($includeRoot === true) {
-                $conditions[] = ['folder_parent_id IS NULL'];
+                $conditions[] = $q->expr()->isNull('FoldersRelations.folder_parent_id');
             }
 
             return $q->where(['OR' => $conditions]);

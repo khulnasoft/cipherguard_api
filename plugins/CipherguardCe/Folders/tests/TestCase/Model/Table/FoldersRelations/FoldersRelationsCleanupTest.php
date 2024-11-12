@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.13.0
  */
 
@@ -212,6 +212,7 @@ class FoldersRelationsCleanupTest extends FoldersTestCase
         // - A folder at the root of multiple users trees
         // - A resource placed in a folder of a user tree
         $folderA = FolderFactory::make()->withPermissionsFor([$userAda, $userBetty])->withFoldersRelationsFor([$userAda, $userBetty])->persist();
+        /** @var \App\Model\Entity\Resource $resourceA */
         $resourceA = ResourceFactory::make()->withFoldersRelationsFor([$userAda], $folderA)->withPermissionsFor([$userAda])->persist();
 
         // The resources missing a folder relation:

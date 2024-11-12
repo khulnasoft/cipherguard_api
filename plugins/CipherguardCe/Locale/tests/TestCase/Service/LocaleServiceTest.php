@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.2.0
  */
 
@@ -53,6 +53,7 @@ class LocaleServiceTest extends TestCase
             'pl-PL',
             'pt-BR',
             'ro-RO',
+            'ru-RU',
             'sv-SE',
         ], LocaleService::getSystemLocales());
     }
@@ -83,27 +84,27 @@ class LocaleServiceTest extends TestCase
         );
     }
 
-    public function dataProviderForTestLocaleServiceLocaleTranslateString_On_Existing_Locale_English_Default()
+    public function dataProviderForTestLocaleServiceLocaleTranslateString_On_Existing_Locale_English_Default(): array
     {
         return [
-            ['fr-FR', 'Courriel envoyé de: admin@cipherguard.khulnasoft.com'],
-            ['fr_FR', 'Courriel envoyé de: admin@cipherguard.khulnasoft.com'],
-            ['en-UK', 'Sending email from: admin@cipherguard.khulnasoft.com'],
-            ['en_UK', 'Sending email from: admin@cipherguard.khulnasoft.com'],
-            ['foo_BAR', 'Sending email from: admin@cipherguard.khulnasoft.com'],
-            ['', 'Sending email from: admin@cipherguard.khulnasoft.com'],
+            ['fr-FR', 'Courriel envoyé de: admin@cipherguard.github.io'],
+            ['fr_FR', 'Courriel envoyé de: admin@cipherguard.github.io'],
+            ['en-UK', 'Sending email from: admin@cipherguard.github.io'],
+            ['en_UK', 'Sending email from: admin@cipherguard.github.io'],
+            ['foo_BAR', 'Sending email from: admin@cipherguard.github.io'],
+            ['', 'Sending email from: admin@cipherguard.github.io'],
         ];
     }
 
-    public function dataProviderForTestLocaleServiceLocaleTranslateString_On_Existing_Locale_French_Default()
+    public function dataProviderForTestLocaleServiceLocaleTranslateString_On_Existing_Locale_French_Default(): array
     {
         return [
-            ['fr-FR', 'Courriel envoyé de: admin@cipherguard.khulnasoft.com'],
-            ['fr_FR', 'Courriel envoyé de: admin@cipherguard.khulnasoft.com'],
-            ['en-UK', 'Sending email from: admin@cipherguard.khulnasoft.com'],
-            ['en_UK', 'Sending email from: admin@cipherguard.khulnasoft.com'],
-            ['foo_BAR', 'Courriel envoyé de: admin@cipherguard.khulnasoft.com'],
-            ['', 'Courriel envoyé de: admin@cipherguard.khulnasoft.com'],
+            ['fr-FR', 'Courriel envoyé de: admin@cipherguard.github.io'],
+            ['fr_FR', 'Courriel envoyé de: admin@cipherguard.github.io'],
+            ['en-UK', 'Sending email from: admin@cipherguard.github.io'],
+            ['en_UK', 'Sending email from: admin@cipherguard.github.io'],
+            ['foo_BAR', 'Courriel envoyé de: admin@cipherguard.github.io'],
+            ['', 'Courriel envoyé de: admin@cipherguard.github.io'],
         ];
     }
 
@@ -131,7 +132,7 @@ class LocaleServiceTest extends TestCase
 
         $service = new LocaleService();
         $translation = $service->translateString($locale, function () {
-            return __('Sending email from: {0}', 'admin@cipherguard.khulnasoft.com');
+            return __('Sending email from: {0}', 'admin@cipherguard.github.io');
         });
 
         $this->assertSame($expectedSubject, $translation);
@@ -151,7 +152,7 @@ class LocaleServiceTest extends TestCase
 
         $service = new LocaleService();
         $translation = $service->translateString($locale, function () {
-            return __('Sending email from: {0}', 'admin@cipherguard.khulnasoft.com');
+            return __('Sending email from: {0}', 'admin@cipherguard.github.io');
         });
 
         $this->assertSame($expectedSubject, $translation);

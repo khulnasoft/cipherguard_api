@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.3.0
  */
 namespace Cipherguard\JwtAuthentication\Test\TestCase\Command;
@@ -19,6 +19,7 @@ namespace Cipherguard\JwtAuthentication\Test\TestCase\Command;
 use App\Test\Lib\AppTestCase;
 use App\Test\Lib\Utility\CipherguardCommandTestTrait;
 use Cake\Console\TestSuite\ConsoleIntegrationTestTrait;
+use Cipherguard\JwtAuthentication\JwtAuthenticationPlugin;
 
 /**
  * @uses \Cipherguard\JwtAuthentication\Command\CreateJwtKeysCommand
@@ -37,13 +38,7 @@ class CreateJwtKeysCommandTest extends AppTestCase
     {
         parent::setUp();
         $this->useCommandRunner();
-        $this->enableFeaturePlugin('JwtAuthentication');
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        $this->disableFeaturePlugin('JwtAuthentication');
+        $this->enableFeaturePlugin(JwtAuthenticationPlugin::class);
     }
 
     /**

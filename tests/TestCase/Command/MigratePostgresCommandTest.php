@@ -3,20 +3,21 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.5.0
  */
 namespace App\Test\TestCase\Command;
 
 use App\Command\MigratePostgresCommand;
+use App\Service\Command\ProcessUserService;
 use App\Test\Lib\AppTestCase;
 use App\Test\Lib\Utility\CipherguardCommandTestTrait;
 use Cake\Console\TestSuite\ConsoleIntegrationTestTrait;
@@ -44,12 +45,12 @@ class MigratePostgresCommandTest extends AppTestCase
     {
         parent::setUp();
         $this->useCommandRunner();
-        MigratePostgresCommand::$isUserRoot = false;
+        $this->mockProcessUserService('www-data');
     }
 
     protected function countMigrations(): int
     {
-        return (int)ConnectionManager::get('test')->newQuery()
+        return (int)ConnectionManager::get('test')->selectQuery()
             ->select('COUNT(*)')
             ->from('phinxlog')
             ->execute()
@@ -69,7 +70,7 @@ class MigratePostgresCommandTest extends AppTestCase
 
     public function testPostgresMigrateCommandAsRoot()
     {
-        $this->assertCommandCannotBeRunAsRootUser(MigratePostgresCommand::class);
+        $this->assertCommandCannotBeRunAsRootUser('migrate_postgres');
     }
 
     /**
@@ -96,7 +97,7 @@ class MigratePostgresCommandTest extends AppTestCase
      */
     public function testPostgresMigrateCommand_DeletePostgresRelevantMigrations()
     {
-        $cmd = new MigratePostgresCommand();
+        $cmd = new MigratePostgresCommand(new ProcessUserService());
         $connection = ConnectionManager::get('test');
         $count = $this->countMigrations();
         $cmd->deletePostgresRelevantMigrations($connection);

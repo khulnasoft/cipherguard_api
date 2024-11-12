@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         4.1.0
  */
 
@@ -19,6 +19,7 @@ namespace Cipherguard\Rbacs\Service\UiActions;
 
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
+use Cipherguard\Rbacs\Model\Entity\UiAction;
 use Cipherguard\Rbacs\Model\Table\UiActionsTable;
 
 class UiActionsInsertDefaultsService
@@ -32,25 +33,26 @@ class UiActionsInsertDefaultsService
      * Default UI Actions
      */
     public const DEFAULT_UI_ACTIONS = [
-        'Resources.import',
-        'Resources.export',
-        'Secrets.preview',
-        'Secrets.copy',
-        'Resources.toggleDescription',
-        'Resources.seeComments',
-        'Resources.seeActivities',
-        'Folders.use',
-        'Resources.filterByGroups',
-        'Tags.use',
-        'Share.viewList',
-        'Share.viewUsersInAutocomplete',
-        'Share.viewGroupsInAutocomplete',
-        'InFormMenu.use',
-        'Resources.editPasswordGeneratorSettings',
-        'Users.viewWorkspace',
-        'Users.viewGroups',
-        'Mobile.transfer',
-        'Desktop.transfer',
+        UiAction::NAME_RESOURCES_IMPORT,
+        UiAction::NAME_RESOURCES_EXPORT,
+        UiAction::NAME_SECRETS_PREVIEW,
+        UiAction::NAME_SECRETS_COPY,
+        UiAction::NAME_RESOURCES_TOGGLE_DESCRIPTION,
+        UiAction::NAME_RESOURCES_SEE_COMMENTS,
+        UiAction::NAME_RESOURCES_SEE_ACTIVITIES,
+        UiAction::NAME_FOLDERS_USE,
+        UiAction::NAME_RESOURCES_FILTER_BY_GROUPS,
+        UiAction::NAME_TAGS_USE,
+        UiAction::NAME_SHARE_VIEW_LIST,
+        UiAction::NAME_SHARE_VIEW_USERS_IN_AUTOCOMPLETE,
+        UiAction::NAME_SHARE_VIEW_GROUPS_IN_AUTOCOMPLETE,
+        UiAction::NAME_IN_FORM_MENU_USE,
+        UiAction::NAME_RESOURCES_EDIT_PASSWORD_GENERATOR_SETTINGS,
+        UiAction::NAME_USERS_VIEW_WORKSPACE,
+        UiAction::NAME_USERS_VIEW_GROUPS,
+        UiAction::NAME_MOBILE_TRANSFER,
+        UiAction::NAME_DESKTOP_TRANSFER,
+        UiAction::NAME_FOLDERS_SHARE,
     ];
 
     /**

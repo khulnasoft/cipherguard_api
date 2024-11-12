@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 namespace App\Test\Lib;
@@ -31,12 +31,14 @@ use App\Test\Lib\Utility\ErrorTestTrait;
 use App\Test\Lib\Utility\ObjectTrait;
 use App\Test\Lib\Utility\UserAccessControlTrait;
 use App\Utility\Application\FeaturePluginAwareTrait;
+use App\Utility\UserAction;
 use Cake\Core\Configure;
 use Cake\TestSuite\TestCase;
 use CakephpFixtureFactories\ORM\FactoryTableRegistry;
 use CakephpTestSuiteLight\Fixture\TruncateDirtyTables;
 use Cipherguard\EmailDigest\Utility\Digest\DigestTemplateRegistry;
 use Cipherguard\EmailNotificationSettings\Utility\EmailNotificationSettings;
+use Cipherguard\MultiFactorAuthentication\MultiFactorAuthenticationPlugin;
 
 abstract class AppTestCase extends TestCase
 {
@@ -65,14 +67,19 @@ abstract class AppTestCase extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        Configure::write('cipherguard.plugins.multiFactorAuthentication.enabled', false);
-        Configure::write('cipherguard.plugins.log.enabled', false);
-        Configure::write('cipherguard.plugins.folders.enabled', false);
+        // Disable feature plugins listed in default.php
+        $plugins = array_keys(Configure::read('cipherguard.plugins'));
+        foreach ($plugins as $plugin) {
+            $this->disableFeaturePlugin(ucfirst($plugin));
+        }
+        $this->disableFeaturePlugin('Log');
+        $this->disableFeaturePlugin('Folders');
+        $this->disableFeaturePlugin(MultiFactorAuthenticationPlugin::class);
         $this->loadRoutes();
     }
 
     /**
-     * Tear dow
+     * Tear down
      */
     public function tearDown(): void
     {
@@ -80,6 +87,7 @@ abstract class AppTestCase extends TestCase
         EmailNotificationSettings::flushCache();
         $this->clearPlugins();
         FactoryTableRegistry::getTableLocator()->clear();
+        UserAction::destroy();
 
         parent::tearDown();
     }

@@ -3,20 +3,19 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  */
 namespace Cipherguard\Log\Model\Table;
 
 use App\Error\Exception\ValidationException;
-use App\Model\Entity\Secret;
 use App\Utility\UserAccessControl;
 use Cake\Http\Exception\InternalErrorException;
 use Cake\ORM\Table;
@@ -38,10 +37,10 @@ use Cipherguard\Log\Model\Entity\SecretAccess;
  * @method \Cipherguard\Log\Model\Entity\SecretAccess[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \Cipherguard\Log\Model\Entity\SecretAccess|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \Cipherguard\Log\Model\Entity\SecretAccess saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \Cipherguard\Log\Model\Entity\SecretAccess[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \Cipherguard\Log\Model\Entity\SecretAccess[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \Cipherguard\Log\Model\Entity\SecretAccess[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \Cipherguard\Log\Model\Entity\SecretAccess[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method iterable<\Cipherguard\Log\Model\Entity\SecretAccess>|iterable<\Cake\Datasource\EntityInterface>|false saveMany(iterable $entities, $options = [])
+ * @method iterable<\Cipherguard\Log\Model\Entity\SecretAccess>|iterable<\Cake\Datasource\EntityInterface> saveManyOrFail(iterable $entities, $options = [])
+ * @method iterable<\Cipherguard\Log\Model\Entity\SecretAccess>|iterable<\Cake\Datasource\EntityInterface>|false deleteMany(iterable $entities, $options = [])
+ * @method iterable<\Cipherguard\Log\Model\Entity\SecretAccess>|iterable<\Cake\Datasource\EntityInterface> deleteManyOrFail(iterable $entities, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class SecretAccessesTable extends Table
@@ -134,12 +133,12 @@ class SecretAccessesTable extends Table
      * Create a new SecretAccess from a secret entity
      *
      * @param \App\Utility\UserAccessControl $uac user access control object
-     * @param \App\Model\Entity\Secret $secret the secret entity
+     * @param \App\Model\Entity\Secret|array $secret the secret entity
      * @return bool|\Cake\Datasource\EntityInterface|false|mixed
      */
-    public function createFromSecretEntity(UserAccessControl $uac, Secret $secret)
+    public function createFromSecretEntity(UserAccessControl $uac, $secret)
     {
-        return $this->createFromSecretDetails($uac, $secret->resource_id, $secret->id);
+        return $this->createFromSecretDetails($uac, $secret['resource_id'], $secret['id']);
     }
 
     /**

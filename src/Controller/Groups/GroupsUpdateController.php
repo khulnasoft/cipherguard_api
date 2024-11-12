@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.0.0
  */
 
@@ -68,12 +68,13 @@ class GroupsUpdateController extends AppController
      * Group Update action.
      *
      * @param string $id The group identifier.
+     * @param \App\Service\Groups\GroupsUpdateService $groupsUpdateService Service to update the group associations.
      * @return void
      * @throws \Cake\Http\Exception\ForbiddenException If the user is not an admin
      * @throws \App\Error\Exception\ValidationException If an error occurred when patching or saving the group
      * @throws \Exception If an unexpected error occurred
      */
-    public function update(string $id)
+    public function update(string $id, GroupsUpdateService $groupsUpdateService)
     {
         $this->assertJson();
 
@@ -89,7 +90,6 @@ class GroupsUpdateController extends AppController
         $changes = Hash::get($data, 'groups_users', []);
         $secrets = Hash::get($data, 'secrets', []);
 
-        $groupsUpdateService = new GroupsUpdateService();
         $groupsUpdateService->update($uac, $id, $metaData, $changes, $secrets);
 
         // The v1 expect the updated group to be returned.

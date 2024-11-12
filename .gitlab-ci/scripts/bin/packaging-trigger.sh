@@ -56,14 +56,14 @@ fi
 
 echo "Creating the following variables"
 echo "================================="
-echo "CIPHERGURD_VERSION=${version}"
+echo "CIPHERGUARD_VERSION=${version}"
 
 cipherguard_version="${version}"
 
 curl -X POST \
      -F token="$PACKAGING_TOKEN" \
      -F "ref=$branch" \
-     -F "variables[CIPHERGURD_FLAVOUR]=$CIPHERGURD_FLAVOUR" \
-     -F "variables[CIPHERGURD_VERSION]=$cipherguard_version" \
-     -F "variables[CIPHERGURD_BRANCH]=$tag" \
+     -F "variables[CIPHERGUARD_FLAVOUR]=$CIPHERGUARD_FLAVOUR" \
+     -F "variables[CIPHERGUARD_VERSION]=$cipherguard_version" \
+     -F "variables[CIPHERGUARD_BRANCH]=$tag" \
      "https://gitlab.com/api/v4/projects/$DOWNSTREAM_PROJECT_ID/trigger/pipeline"

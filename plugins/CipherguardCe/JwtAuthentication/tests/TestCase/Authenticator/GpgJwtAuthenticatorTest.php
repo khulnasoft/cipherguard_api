@@ -3,21 +3,22 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.3.0
  */
 namespace Cipherguard\JwtAuthentication\Test\TestCase\Authenticator;
 
 use App\Middleware\ContainerInjectorMiddleware;
 use App\Test\Lib\Utility\Gpg\GpgAdaSetupTrait;
+use App\Utility\Application\FeaturePluginAwareTrait;
 use App\Utility\OpenPGP\OpenPGPBackendFactory;
 use App\Utility\UuidFactory;
 use Authentication\Authenticator\Result;
@@ -35,9 +36,11 @@ use CakephpTestSuiteLight\Fixture\TruncateDirtyTables;
 use Cipherguard\JwtAuthentication\Authenticator\GpgJwtAuthenticator;
 use Cipherguard\JwtAuthentication\Authenticator\JwtArmoredChallengeInterface;
 use Cipherguard\JwtAuthentication\Authenticator\JwtArmoredChallengeService;
+use Cipherguard\JwtAuthentication\JwtAuthenticationPlugin;
 
 class GpgJwtAuthenticatorTest extends TestCase
 {
+    use FeaturePluginAwareTrait;
     use GpgAdaSetupTrait;
     use TruncateDirtyTables;
 
@@ -53,6 +56,7 @@ class GpgJwtAuthenticatorTest extends TestCase
         OpenPGPBackendFactory::reset();
         $this->sut = new GpgJwtAuthenticator(new TokenIdentifier());
         EventManager::instance()->setEventList(new EventList());
+        $this->enableFeaturePlugin(JwtAuthenticationPlugin::class);
     }
 
     public function testGpgJwtAuthenticatorAuthenticateError_NoData()
@@ -60,7 +64,7 @@ class GpgJwtAuthenticatorTest extends TestCase
         $this->gpgSetup();
         $request = new ServerRequest();
         $result = $this->sut->authenticate($request);
-        $this->assertEquals($result->getStatus(), Result::FAILURE_CREDENTIALS_INVALID);
+        $this->assertEquals(Result::FAILURE_CREDENTIALS_INVALID, $result->getStatus());
     }
 
     public function testGpgJwtAuthenticatorAuthenticateError_InvalidUserId()
@@ -69,7 +73,7 @@ class GpgJwtAuthenticatorTest extends TestCase
         $request = new ServerRequest();
         $request = $request->withData('user_id', 'nope');
         $result = $this->sut->authenticate($request);
-        $this->assertEquals($result->getStatus(), Result::FAILURE_CREDENTIALS_INVALID);
+        $this->assertEquals(Result::FAILURE_CREDENTIALS_INVALID, $result->getStatus());
     }
 
     public function testGpgJwtAuthenticatorAuthenticateError_NotFoundUser()
@@ -78,7 +82,7 @@ class GpgJwtAuthenticatorTest extends TestCase
         $request = new ServerRequest();
         $request = $request->withData('user_id', UuidFactory::uuid());
         $result = $this->sut->authenticate($request);
-        $this->assertEquals($result->getStatus(), Result::FAILURE_IDENTITY_NOT_FOUND);
+        $this->assertEquals(Result::FAILURE_IDENTITY_NOT_FOUND, $result->getStatus());
     }
 
     public function testGpgJwtAuthenticatorAuthenticateError_NoChallenge()
@@ -87,7 +91,7 @@ class GpgJwtAuthenticatorTest extends TestCase
         $request = new ServerRequest();
         $request = $request->withData('user_id', UuidFactory::uuid('user.id.ada'));
         $result = $this->sut->authenticate($request);
-        $this->assertEquals($result->getStatus(), Result::FAILURE_CREDENTIALS_INVALID);
+        $this->assertEquals(Result::FAILURE_CREDENTIALS_INVALID, $result->getStatus());
     }
 
     public function testGpgJwtAuthenticatorAuthenticateError_NotOpenPGPChallenge()
@@ -99,7 +103,7 @@ class GpgJwtAuthenticatorTest extends TestCase
         $request = $request->withData('challenge', 'nope');
         $result = $this->sut->authenticate($request);
 
-        $this->assertEquals($result->getStatus(), Result::FAILURE_CREDENTIALS_INVALID);
+        $this->assertEquals(Result::FAILURE_CREDENTIALS_INVALID, $result->getStatus());
     }
 
     public function testGpgJwtAuthenticatorAuthenticateError_WrongSignatureChallenge()
@@ -115,7 +119,7 @@ class GpgJwtAuthenticatorTest extends TestCase
         $request = $request->withData('challenge', $msg);
         $result = $this->sut->authenticate($request);
 
-        $this->assertEquals($result->getStatus(), Result::FAILURE_CREDENTIALS_INVALID);
+        $this->assertEquals(Result::FAILURE_CREDENTIALS_INVALID, $result->getStatus());
     }
 
     public function testGpgJwtAuthenticatorAuthenticateError_WrongChallengeFormat()
@@ -131,7 +135,7 @@ class GpgJwtAuthenticatorTest extends TestCase
         $request = $request->withData('challenge', $msg);
         $result = $this->sut->authenticate($request);
 
-        $this->assertEquals($result->getStatus(), Result::FAILURE_CREDENTIALS_INVALID);
+        $this->assertEquals(Result::FAILURE_CREDENTIALS_INVALID, $result->getStatus());
     }
 
     public function testGpgJwtAuthenticatorAuthenticateError_WrongVersion()
@@ -153,7 +157,7 @@ class GpgJwtAuthenticatorTest extends TestCase
         $request = $request->withData('challenge', $msg);
         $result = $this->sut->authenticate($request);
 
-        $this->assertEquals($result->getStatus(), Result::FAILURE_CREDENTIALS_INVALID);
+        $this->assertEquals(Result::FAILURE_CREDENTIALS_INVALID, $result->getStatus());
     }
 
     public function testGpgJwtAuthenticatorAuthenticateError_WrongDomain()
@@ -165,7 +169,7 @@ class GpgJwtAuthenticatorTest extends TestCase
         $this->gpg->setSignKeyFromFingerprint($this->adaKeyId, '');
         $challenge = [
             'version' => '1.0.0',
-            'domain' => 'https://cloud.cipherguard.khulnasoft.com/test',
+            'domain' => 'https://cloud.cipherguard.github.io/test',
             'verify_token' => UuidFactory::uuid(),
             'verify_token_expiry' => time() + 60,
         ];
@@ -175,7 +179,7 @@ class GpgJwtAuthenticatorTest extends TestCase
         $request = $request->withData('challenge', $msg);
         $result = $this->sut->authenticate($request);
 
-        $this->assertEquals($result->getStatus(), Result::FAILURE_CREDENTIALS_INVALID);
+        $this->assertEquals(Result::FAILURE_CREDENTIALS_INVALID, $result->getStatus());
     }
 
     public function testGpgJwtAuthenticatorAuthenticateError_ExpiredToken()
@@ -197,7 +201,7 @@ class GpgJwtAuthenticatorTest extends TestCase
         $request = $request->withData('challenge', $msg);
         $result = $this->sut->authenticate($request);
 
-        $this->assertEquals($result->getStatus(), Result::FAILURE_CREDENTIALS_INVALID);
+        $this->assertEquals(Result::FAILURE_CREDENTIALS_INVALID, $result->getStatus());
     }
 
     public function testGpgJwtAuthenticatorAuthenticateError_WrongVerifyToken()
@@ -219,7 +223,7 @@ class GpgJwtAuthenticatorTest extends TestCase
         $request = $request->withData('challenge', $msg);
         $result = $this->sut->authenticate($request);
 
-        $this->assertEquals($result->getStatus(), Result::FAILURE_CREDENTIALS_INVALID);
+        $this->assertEquals(Result::FAILURE_CREDENTIALS_INVALID, $result->getStatus());
     }
 
     public function testGpgJwtAuthenticatorAuthenticateSuccess()
@@ -253,7 +257,7 @@ class GpgJwtAuthenticatorTest extends TestCase
         // Assert user is part of results
         $user = $data['user'];
         $this->assertEquals(UuidFactory::uuid('user.id.ada'), $user['id']);
-        $this->assertEquals('ada@cipherguard.khulnasoft.com', $user['username']);
+        $this->assertEquals('ada@cipherguard.github.io', $user['username']);
         $this->assertEquals('Lovelace', $user['profile']['last_name']);
         $this->assertEquals('03F60E958F4CB29723ACDF761353B5B15D9B054F', $user['gpgkey']['fingerprint']);
 

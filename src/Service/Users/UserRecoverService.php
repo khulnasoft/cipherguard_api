@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.5.0
  */
 
@@ -94,7 +94,7 @@ class UserRecoverService implements UserRecoverServiceInterface
             $eventName = UsersRecoverController::RECOVER_SUCCESS_EVENT_NAME;
         } else {
             // The user has not completed the setup, restart setup
-            // Fixes https://github.com/khulnasoft/cipherguard_api/issues/73
+            // Fixes https://github.com/cipherguard/cipherguard_api/issues/73
             $options['token'] = $this->AuthenticationTokens->generate($user->id, AuthenticationToken::TYPE_REGISTER);
             // Detect if the user is being added by an administrator
             // or if the user is performing a recovery. The email sent will be different.

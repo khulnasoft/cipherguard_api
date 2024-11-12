@@ -3,21 +3,22 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.11.0
  */
 
 namespace Cipherguard\SmtpSettings\Test\TestCase\Event;
 
 use App\Mailer\Transport\SmtpTransport;
+use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Mailer\Message;
 use Cake\TestSuite\TestCase;
@@ -69,7 +70,7 @@ class SmtpTransportBeforeSendEventListenerTest extends TestCase
         $senderOnDBConfig = [$senderEmail => $senderName];
         $this->encryptAndPersistSmtpSettings($configInDb);
 
-        $to = 'john@cipherguard.khulnasoft.com';
+        $to = 'john@cipherguard.github.io';
         $senderOnFileConfig = ['onFile@test.test' => 'onFile'];
         $message = new Message();
         $message->setTo($to);
@@ -94,7 +95,7 @@ class SmtpTransportBeforeSendEventListenerTest extends TestCase
 
     public function testSmtpTransportSendEventListener_SetFromWithoutSettingsInDB(): void
     {
-        $to = 'john@cipherguard.khulnasoft.com';
+        $to = 'john@cipherguard.github.io';
         $from = ['onFile@test.test' => 'onFile'];
         $message = new Message();
         $message->setTo($to);
@@ -112,5 +113,81 @@ class SmtpTransportBeforeSendEventListenerTest extends TestCase
         $this->assertSame($from, $message->getFrom());
         $this->assertSame($from, $message->getSender());
         $this->assertSame($from, $message->getReturnPath());
+    }
+
+    /**
+     * @return array
+     */
+    public function smtpSettingsContextSslOptionsDataProvider(): array
+    {
+        return [
+            [
+                [
+                    'sslVerifyPeer' => false,
+                    'sslVerifyPeerName' => false,
+                    'sslAllowSelfSigned' => true,
+                ],
+            ],
+            [
+                [
+                    'sslVerifyPeer' => true,
+                    'sslVerifyPeerName' => true,
+                    'sslAllowSelfSigned' => true,
+                    'sslCafile' => '/path/to/rootCA.crt',
+                ],
+            ],
+            [
+                [],
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider smtpSettingsContextSslOptionsDataProvider
+     */
+    public function testSmtpTransportSendEventListener_ContextSslOptionsAreMerged_NoDBConfig(array $options): void
+    {
+        $configInFile = $this->getSmtpSettingsData();
+        $subject = new SmtpTransport($configInFile);
+        $event = new Event('foo', $subject, ['tls' => false]);
+        Configure::write('cipherguard.plugins.smtpSettings.security', $options);
+
+        $this->listener->initializeTransport($event);
+
+        $result = $subject->getConfig();
+        $this->assertFalse($result['tls']);
+        if (!empty($options)) {
+            // Assert context.ssl data is properly set
+            $this->assertArrayHasKey('context', $result);
+            $this->assertEqualsCanonicalizing($options, $result['context']['ssl']);
+        } else {
+            $this->assertArrayNotHasKey('context', $result);
+        }
+    }
+
+    /**
+     * @dataProvider smtpSettingsContextSslOptionsDataProvider
+     */
+    public function testSmtpTransportSendEventListener_ContextSslOptionsAreMerged_WithConfigInDB(array $options): void
+    {
+        $config = $this->getSmtpSettingsData();
+        $config['port'] = 1025;
+        $config['tls'] = false;
+        $this->encryptAndPersistSmtpSettings($config);
+        $subject = new SmtpTransport($config);
+        $event = new Event('foo', $subject, []);
+        Configure::write('cipherguard.plugins.smtpSettings.security', $options);
+
+        $this->listener->initializeTransport($event);
+
+        $result = $subject->getConfig();
+        $this->assertNull($result['tls']);
+        if (!empty($options)) {
+            // Assert context.ssl data is properly set
+            $this->assertArrayHasKey('context', $result);
+            $this->assertEqualsCanonicalizing($options, $result['context']['ssl']);
+        } else {
+            $this->assertArrayNotHasKey('context', $result);
+        }
     }
 }

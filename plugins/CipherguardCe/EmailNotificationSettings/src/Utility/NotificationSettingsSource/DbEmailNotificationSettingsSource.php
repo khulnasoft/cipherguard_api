@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.13.0
  */
 
@@ -20,7 +20,6 @@ namespace Cipherguard\EmailNotificationSettings\Utility\NotificationSettingsSour
 use App\Utility\UserAccessControl;
 use Cake\Http\Exception\InternalErrorException;
 use Cake\ORM\TableRegistry;
-use Exception;
 use Cipherguard\EmailNotificationSettings\Utility\EmailNotificationSettings;
 use function json_decode;
 
@@ -46,7 +45,7 @@ class DbEmailNotificationSettingsSource implements ReadableEmailNotificationSett
      * @param \App\Utility\UserAccessControl $userAccessControl Instance of user access control
      * @return void
      */
-    public function write(array $notificationSettingsData, UserAccessControl $userAccessControl)
+    public function write(array $notificationSettingsData, UserAccessControl $userAccessControl): void
     {
         $data = json_encode($notificationSettingsData);
 
@@ -72,7 +71,7 @@ class DbEmailNotificationSettingsSource implements ReadableEmailNotificationSett
      * @throws \Cake\Datasource\Exception\RecordNotFoundException If a matching DB config doesn't exist
      * @throws \Cake\Http\Exception\InternalErrorException If the DB config is not valid json string
      */
-    public function read()
+    public function read(): array
     {
         $notificationSettingFromDb = $this->organizationSettingsTable->getFirstSettingOrFail(static::NAMESPACE);
         $settings = json_decode($notificationSettingFromDb->get('value'), true);
@@ -83,23 +82,5 @@ class DbEmailNotificationSettingsSource implements ReadableEmailNotificationSett
         }
 
         return $settings;
-    }
-
-    /**
-     * Check if the table exists with a simple query to the database.
-     * This check must be done before using this notification settings source to avoid
-     * DB exception raised during installation because of queries run against the table when it does exist .
-     *
-     * @return bool
-     */
-    public function isAvailable()
-    {
-        try {
-            $this->organizationSettingsTable->exists([]);
-        } catch (Exception $exception) {
-            return false;
-        }
-
-        return true;
     }
 }

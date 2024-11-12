@@ -2,6 +2,518 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.9.1] - 2024-08-13
+### Fixed
+- PB-34220 As a user I can search by users and groups case insensitively on PostgreSQL
+
+### Improved
+- PB-34246 As an administrator purging the action logs table, I can set a limit option (100k per default)
+- PB-34247 Adds a set of actions to be purged by the cipherguard action_logs_purge command
+- PB-33939 As an administrator when running bin/cake cipherguard -h, I should see all the cipherguard commands listed
+
+### Maintenance
+- PB-32991 Optimizes CI pipeline run time on api repositories
+- PB-34219 Adds validation to retention days option in the action_logs_purge command
+- PB-33333 Refactor various tests to use fixture factories
+
+## [4.9.1-test.1] - 2024-08-12
+### Fixed
+- PB-34220 As a user I can search by users and groups case insensitively on PostgreSQL
+
+### Improved
+- PB-34246 As an administrator purging the action logs table, I can set a limit option (100k per default)
+- PB-34247 Adds a set of actions to be purged by the cipherguard action_logs_purge command
+- PB-33939 As an administrator when running bin/cake cipherguard -h, I should see all the cipherguard commands listed
+
+### Maintenance
+- PB-32991 Optimizes CI pipeline run time on api repositories
+- PB-34219 Adds validation to retention days option in the action_logs_purge command
+- PB-33333 Refactor various tests to use fixture factories
+
+## [4.9.0] - 2024-07-23
+### Added
+- PB-33690 Improves response times by adding an index to gpgkeys.user_id column
+- PB-33639 Adds additional contain parameters to share/search-aros.json for enhanced performance
+- PB-33936 Adds a has-users filter to gpgkeys.json index endpoint
+- PB-33813 Adds a fixed limit to the search-aros.json endpoint
+
+### Fixed
+- PB-33616 As a user creating a resource I should get a validation error if the secret is a string and not an array
+- PB-33664 Fix missing "is" in the database schema up to date sentence (GITHUB #517)
+
+### Improved
+- PB-33429 As a user I should retrieve resources and folders parent folders in a single query
+- PB-33826 Improves the performance of resources.json by improving the datetime fields processing
+- PB-24995 Improves last_logged_in property query performance to reduce response time of users.json endpoint
+- PB-33653 Improves is_mfa_enabled property query performance to reduce response time of users.json endpoint
+- PB-33702 Improves has-access filter performance on users.json
+- PB-32591 Validate cipherguard.plugins.smtpSettings.security configuration values before passing it to SMTP server
+- PB-33214 Update sql export / improve mysql backup command compatibility with mariadb-dump
+
+### Maintenance
+- PB-33692 Bump enygma/yubikey to v3.8
+
+### Security
+- PB-33747 Fix command injections vulnerabilities in composer/composer package
+
+## [4.9.0-rc.1] - 2024-07-18
+### Added
+- PB-33690 Improves response times by adding an index to gpgkeys.user_id column
+- PB-33639 Adds additional contain parameters to share/search-aros.json for enhanced performance
+- PB-33936 Adds a has-users filter to gpgkeys.json index endpoint
+- PB-33813 Adds a fixed limit to the search-aros.json endpoint
+
+### Improved
+- PB-33429 As a user I should retrieve resources and folders parent folders in a single query
+- PB-33826 Improves the performance of resources.json by improving the datetime fields processing
+- PB-24995 Improves last_logged_in property query performance to reduce response time of users.json endpoint
+- PB-33653 Improves is_mfa_enabled property query performance to reduce response time of users.json endpoint
+- PB-33702 Improves has-access filter performance on users.json
+- PB-32591 Validate cipherguard.plugins.smtpSettings.security configuration values before passing it to SMTP server
+- PB-33214 Update sql export / improve mysql backup command compatibility with mariadb-dump
+
+### Security
+- PB-33747 Fix command injections vulnerabilities in composer/composer package
+
+### Fixed
+- PB-33616 As a user creating a resource I should get a validation error if the secret is a string and not an array
+
+### Maintenance
+- PB-33692 Bump enygma/yubikey to v3.8
+
+## [4.9.0-test.2] - 2024-07-17
+### Added
+- PB-33690 Improves response times by adding an index to gpgkeys.user_id column
+- PB-33639 Adds additional contain parameters to share/search-aros.json for enhanced performance
+- PB-33936 Adds a has-users filter to gpgkeys.json index endpoint
+- PB-33813 Adds a fixed limit to the search-aros.json endpoint
+
+### Improved
+- PB-33429 As a user I should retrieve resources and folders parent folders in a single query
+- PB-33826 Improves the performance of resources.json by improving the datetime fields processing
+- PB-24995 Improves last_logged_in property query performance to reduce response time of users.json endpoint
+- PB-33653 Improves is_mfa_enabled property query performance to reduce response time of users.json endpoint
+- PB-33702 Improves has-access filter performance on users.json
+- PB-32591 Validate cipherguard.plugins.smtpSettings.security configuration values before passing it to SMTP server
+- PB-33214 Update sql export / improve mysql backup command compatibility with mariadb-dump
+
+### Security
+- PB-33747 Fix command injections vulnerabilities in composer/composer package
+
+### Fixed
+- PB-33616 As a user creating a resource I should get a validation error if the secret is a string and not an array
+
+### Maintenance
+- PB-33692 Bump enygma/yubikey to v3.8
+
+## [4.9.0-test.1] - 2024-07-15
+### Added
+- PB-33690 Improves response times by adding an index to gpgkeys.user_id column
+- PB-33639 Adds additional contain parameters to share/search-aros.json for enhanced performance
+- PB-33936 Adds a has-users filter to gpgkeys.json index endpoint
+- PB-33813 Adds a fixed limit to the search-aros.json endpoint
+
+### Improved
+- PB-33429 As a user I should retrieve resources and folders parent folders in a single query
+- PB-33826 Improves the performance of resources.json by improving the datetime fields processing
+- PB-24995 Improves last_logged_in property query performance to reduce response time of users.json endpoint
+- PB-33653 Improves is_mfa_enabled property query performance to reduce response time of users.json endpoint
+- PB-33702 Improves has-access filter performance on users.json
+- PB-32591 Validate cipherguard.plugins.smtpSettings.security configuration values before passing it to SMTP server
+- PB-33214 Update sql export / improve mysql backup command compatibility with mariadb-dump
+
+### Security
+- PB-33747 Fix command injections vulnerabilities in composer/composer package
+
+### Fixed
+- PB-33616 As a user creating a resource I should get a validation error if the secret is a string and not an array
+
+### Maintenance
+- PB-33692 Bump enygma/yubikey to v3.8
+
+## [4.8.0] - 2024-05-21
+### Added
+- PB-33071 As an administrator I can purge the action logs table with a dedicated command
+- PB-33231 As an administrator I want to know if a custom certificate is in use for SMTP
+- PB-32579 As an administrator I can view email_queue records via cipherguard command
+
+### Improved
+- PB-32888 As an admin I should not get a time-out on health checks on air-gapped network
+- PB-32983 Access email settings only when emails are sent
+
+### Fixed
+- PB-33451 Fix 500 error on authentication when nonce is not a string
+- PB-33073 As a user logging in, invalid login operation should not be logged as success in the audit logs
+- PB-33234 The application should not throw an error if the JWT public key is not parsable
+
+### Maintenance
+- PB-30314 Bump passbolt/passbolt-test-data to v4.8
+
+## [4.8.0-rc.1] - 2024-05-17
+### Added
+- PB-33071 As an administrator I can purge the action logs table with a dedicated command
+- PB-33231 As an administrator I want to know if a custom certificate is in use for SMTP
+- PB-32579 As an administrator I can view email_queue records via cipherguard command
+
+### Improved
+- PB-32888 As an admin I should not get a time-out on health checks on air-gapped network
+- PB-32983 Access email settings only when emails are sent
+
+### Fixed
+- PB-33451 Fix 500 error on authentication when nonce is not a string
+- PB-33073 As a user logging in, invalid login operation should not be logged as success in the audit logs
+- PB-33234 The application should not throw an error if the JWT public key is not parsable
+
+### Maintenance
+- PB-30314 Bump passbolt/passbolt-test-data to v4.8
+
+## [4.8.0-test.1] - 2024-05-16
+### Added
+- PB-33071 As an administrator I can purge the action logs table with a dedicated command
+- PB-33231 As an administrator I want to know if a custom certificate is in use for SMTP
+- PB-32579 As an administrator I can view email_queue records via cipherguard command
+
+### Improved
+- PB-32888 As an admin I should not get a time-out on health checks on air-gapped network
+- PB-32983 Access email settings only when emails are sent
+
+### Fixed
+- PB-33451 Fix 500 error on authentication when nonce is not a string
+- PB-33073 As a user logging in, invalid login operation should not be logged as success in the audit logs
+- PB-33234 The application should not throw an error if the JWT public key is not parsable
+
+### Maintenance
+- PB-30314 Bump passbolt/passbolt-test-data to v4.8
+
+## [4.7.0] - 2024-04-30
+### Added
+- PB-30330 Add HTTP HEAD method support to /healthcheck/status.json to support more uptime monitoring tools (GITHUB #507)
+- PB-26156 As an administrator I can configure SMTP to use TLS with a self-signed cert on my mail server (GITHUB #498)
+
+### Security
+- PB-30255 As an authenticated user I cannot access to the healthcheck endpoint when debug is on
+
+### Fixed
+- PB-30379 As an authenticating user I should not get a 500 if the gpg_auth is not an array
+- PB-32889 As an administrator I should not get an exception when running core healthcheck and the host cannot be resolved
+- PB-32928 As user I should see the accurate URL in the email footer when cipherguard runs on multiple instances
+- PB-32566 As a user setting up my account I should not get an unexpected 500
+- PB-32903 Fix deprecation error on password expiry settings validation
+
+### Maintenance
+- PB-29983 Refactor health check code domain for better maintenance
+- PB-30394 Moves code in ActionLogsModelListener into a dedicated service
+- PB-32881 Disable by default all plugins in integration tests
+- PB-32978 Use dependency proxy to reduce docker pull limit
+- PB-22605 Refactor ShareSearchControllerTest, SecretViewControllerTest and GroupsDeleteControllerTest with fixture factories
+- PB-32594 Add tests for SecretCreateService
+
+## [4.7.0-rc.1] - 2024-04-26
+### Added
+- PB-30330 Add HTTP HEAD method support to /healthcheck/status.json to support more uptime monitoring tools (GITHUB #507)
+- PB-26156 As an administrator I can configure SMTP to use TLS with a self-signed cert on my mail server (GITHUB #498)
+
+### Security
+- PB-30255 As an authenticated user I cannot access to the healthcheck endpoint when debug is on
+
+### Fixed
+- PB-30379 As an authenticating user I should not get a 500 if the gpg_auth is not an array
+- PB-32889 As an administrator I should not get an exception when running core healthcheck and the host cannot be resolved
+- PB-32928 As user I should see the accurate URL in the email footer when cipherguard runs on multiple instances
+- PB-32566 As a user setting up my account I should not get an unexpected 500
+- PB-32903 Fix deprecation error on password expiry settings validation
+
+### Maintenance
+- PB-29983 Refactor health check code domain for better maintenance
+- PB-30394 Moves code in ActionLogsModelListener into a dedicated service
+- PB-32881 Disable by default all plugins in integration tests
+- PB-32978 Use dependency proxy to reduce docker pull limit
+- PB-22605 Refactor ShareSearchControllerTest, SecretViewControllerTest and GroupsDeleteControllerTest with fixture factories
+- PB-32594 Add tests for SecretCreateService
+
+## [4.7.0-test.2] - 2024-04-26
+### Fixed
+- PB-33084 New release with fixed release pipes
+
+## [4.7.0-test.1] - 2024-04-24
+### Added
+- PB-30330 Add HTTP HEAD method support to /healthcheck/status.json to support more uptime monitoring tools (GITHUB #507)
+- PB-26156 As an administrator I can configure SMTP to use TLS with a self-signed cert on my mail server (GITHUB #498)
+
+### Security
+- PB-30255 As an authenticated user I cannot access to the healthcheck endpoint when debug is on
+
+### Fixed
+- PB-30379 As an authenticating user I should not get a 500 if the gpg_auth is not an array
+- PB-32889 As an administrator I should not get an exception when running core healthcheck and the host cannot be resolved
+- PB-32928 As user I should see the accurate URL in the email footer when cipherguard runs on multiple instances
+- PB-32566 As a user setting up my account I should not get an unexpected 500
+- PB-32903 Fix deprecation error on password expiry settings validation
+
+### Maintenance
+- PB-29983 Refactor health check code domain for better maintenance
+- PB-30394 Moves code in ActionLogsModelListener into a dedicated service
+- PB-32881 Disable by default all plugins in integration tests
+- PB-32978 Use dependency proxy to reduce docker pull limit
+- PB-22605 Refactor ShareSearchControllerTest, SecretViewControllerTest and GroupsDeleteControllerTest with fixture factories
+- PB-32594 Add tests for SecretCreateService
+
+## [4.6.2] - 2024-04-11
+### Security
+- PB-32932 Fix error template title
+
+## [4.6.2-test.2] - 2024-04-11
+### Security
+- PB-32932 Fix error template title
+
+## [4.6.1] - 2024-03-27
+### Fixed
+- PB-32354 As an admin, I can re-enable a suspended user (GITHUB #512)
+
+## [4.6.1-test.1] - 2024-03-26
+### Fixed
+- PB-32354 As an admin, I can re-enable a suspended user (GITHUB #512)
+
+## [4.6.0] - 2024-03-14
+### Added
+- PB-24485 As an administrator I can view the API healthcheck in the administration section
+- PB-29396 As an administrator I can hide the share folder capability with a RBAC
+- PB-25463 As an administrator I can disable the healthcheck index endpoint with a flag
+- PB-29397 As an administrator I can disable the healthcheck administration panel with a flag
+
+### Improved
+- PB-29009 As an administrator completing my setup I should not receive a notification that I completed my setup
+- PB-26152 The API should identify openpgpjs v5.10 revoked key as revoked
+- PB-29437 As an administrator I can log internal errors with the complete trace in Json format
+
+### Security
+- PB-30155 Update phpseclib/phpseclib to fix composer security vulnerability
+
+### Fixed
+- PB-30019 As a user I should not get a 500 when editing a user with payload containing integers as fields
+- PB-29964 As an administrator disabling a user I should not get a 500 if the disabled date is not valid
+- PB-29970 As a group manager I should receive an accurate summary in my notifications on group permission changes
+- PB-29054 As an administrator I should not get an error when running the cleanup command and the users table does not exist
+- PB-28719 As an administrator sending emails the timezone displayed in the emails should be in the correct time zone
+- PB-30266 As an administrator sending emails with the email digest the message ID should be defined
+
+### Maintenance
+- PB-28247 Update cakephp/cakephp to version 4.5
+
+## [4.6.0-rc.2] - 2024-03-13
+### Fixed
+- PB-30182 Build the styleguide on version 4.6.1
+
+## [4.6.0-rc.1] - 2024-03-11
+### Added
+- PB-24485 As an administrator I can view the API healthcheck in the administration section
+- PB-29396 As an administrator I can hide the share folder capability with a RBAC
+- PB-25463 As an administrator I can disable the healthcheck index endpoint with a flag
+- PB-29397 As an administrator I can disable the healthcheck administration panel with a flag
+
+### Improved
+- PB-29009 As an administrator completing my setup I should not receive a notification that I completed my setup
+- PB-26152 The API should identify openpgpjs v5.10 revoked key as revoked
+- PB-29437 As an administrator I can log internal errors with the complete trace in Json format
+
+### Security
+- PB-30155 Update phpseclib/phpseclib to fix composer security vulnerability
+
+### Fixed
+- PB-30019 As a user I should not get a 500 when editing a user with payload containing integers as fields
+- PB-29964 As an administrator disabling a user I should not get a 500 if the disabled date is not valid
+- PB-29970 As a group manager I should receive an accurate summary in my notifications on group permission changes
+- PB-29054 As an administrator I should not get an error when running the cleanup command and the users table does not exist
+- PB-28719 As an administrator sending emails the timezone displayed in the emails should be in the correct time zone
+- PB-30266 As an administrator sending emails with the email digest the message ID should be defined
+
+### Maintenance
+- PB-28247 Update cakephp/cakephp to version 4.5
+
+## [4.6.0-test.1] - 2024-03-07
+### Added
+- PB-24485 As an administrator I can view the API healthcheck in the administration section
+- PB-29396 As an administrator I can hide the share folder capability with a RBAC
+- PB-25463 As an administrator I can disable the healthcheck index endpoint with a flag
+- PB-29397 As an administrator I can disable the healthcheck administration panel with a flag
+
+### Improved
+- PB-29009 As an administrator completing my setup I should not receive a notification that I completed my setup
+- PB-26152 The API should identify openpgpjs v5.10 revoked key as revoked
+- PB-29437 As an administrator I can log internal errors with the complete trace in Json format
+
+### Security
+- PB-30155 Update phpseclib/phpseclib to fix composer security vulnerability
+
+### Fixed
+- PB-30019 As a user I should not get a 500 when editing a user with payload containing integers as fields
+- PB-29964 As an administrator disabling a user I should not get a 500 if the disabled date is not valid
+- PB-29970 As a group manager I should receive an accurate summary in my notifications on group permission changes
+- PB-29054 As an administrator I should not get an error when running the cleanup command and the users table does not exist
+- PB-28719 As an administrator sending emails the timezone displayed in the emails should be in the correct time zone
+- PB-30266 As an administrator sending emails with the email digest the message ID should be defined
+
+### Maintenance
+- PB-28247 Update cakephp/cakephp to version 4.5
+
+## [4.5.2] - 2024-02-14
+### Fixed
+- PB-29621 As a user I should get a 400 if the locale passed in the URL is not a string
+- PB-28867 As a user I should see an improved performance when requesting the folder index endpoint
+
+### Improved
+- PB-28635 As an administrator I can disable the email digest without having to change the command sending the emails
+
+### Security
+- PB-29680 Bump dependency composer/composer to v2.7.0
+
+### Maintenance
+- PB-29109 Support PHP 8.3 for cipherguard API
+- PB-29376 GITHUB-506 Bump dependency duosecurity/duo_universal_php to 1.0.2 (#506)
+- PB-29514 Fix password expiry test which randomly fails
+- PB-29625 Fix CI to support latest composer dependency version
+
+## [4.5.2-test.1] - 2024-02-13
+### Fixed
+- PB-29621 As a user I should get a 400 if the locale passed in the URL is not a string
+- PB-28867 Fix folder serialization performance
+
+### Improved
+- PB-28635 As a user I want to use one single command to send emails
+
+### Security
+- PB-29680 Bump dependency composer/composer to v2.7.0
+
+### Maintenance
+- PB-29109 Support PHP 8.3 for cipherguard API
+- PB-29376 GITHUB-506 Bump dependency duosecurity/duo_universal_php to 1.0.2 (#506)
+- PB-29514 Fix password expiry test which randomly fails
+- PB-29625 Fix CI to support latest composer dependency version
+
+## [4.5.0] - 2024-02-08
+### Added
+- PB-23913 As a user I can see my passwords marked as expired when users lose permissions on these
+- PB-23913 As an administrator I can activate the password expiry feature
+- PB-28923 As a user I want to be able to use cipherguard in Russian
+- PB-21484 As an administrator I can define Microsoft 365 and Outlook providers in SMTP settings
+- PB-19652 As an administrator I can cleanup groups with no members with the cleanup command
+- PB-27707 As administrator, with RBAC I should be able to set “can see users workspace” to “Allow if group manager”
+- PB-28716 Desktop application flag is now enabled by default
+- PB-26203 Desktop app define the account kit exportation help page
+
+### Improved
+- PB-27616 Improve resources serialization performance on GET resources.json
+
+### Security
+- PB-29148 Bump selenium API plugin version to v4.5
+- PB-29005 Upgrades phpseclib/phpseclib to fix composer audit security vulnerability
+- PB-22336 As an admin I should be able to enable/disable request group managers to add users to groups emails separately (LDAP/AD)
+- PB-28871 Mitigate supply chain attack on PR and lint lock files
+- PB-28658 Mitigate supply chain attack on post npm install script
+
+### Fixed
+- PB-29200 Fixes the recover_user command (GITHUB #504)
+- PB-29164 Fix recent InstallCommand changes breaking selenium tests
+- PB-29132 Fix composer lock file not up-to-date message when installing dependencies
+- PB-29160 Fix failing static analysis job in CI
+- PB-29137 Fix failing in UsersEditDisableControllerTest file due to purifier
+- PB-29113 Fix a typo in the email sent when admins lose their admin role
+- PB-28130 Fix invalid cookie name should not trigger a 500
+- PB-29007 Fix constantly failing test in RbacsUpdateControllerTest file
+- PB-28991 Fix email queue entries not marked as sent
+
+### Maintenance
+- PB-28857 Require phpunit-speedtrap to track down slow tests
+- PB-25516 Remove --dev from .gitlab test options, it has not effect and will break with composer v3
+- PB-28844 Improves the methods testing email content
+- PB-28845 Skip unauthenticated exception from logging
+- PB-28653 Speed-up tests by mocking the client in healthcheck relevant tests
+
+## [4.5.0-rc.1] - 2024-02-01
+### Added
+- PB-23913 As a user I can see my passwords marked as expired when users lose permissions on these
+- PB-23913 As an administrator I can activate the password expiry feature
+- PB-28923 As a user I want to be able to use cipherguard in Russian
+- PB-21484 As an administrator I can define Microsoft 365 and Outlook providers in SMTP settings
+- PB-19652 As an administrator I can cleanup groups with no members with the cleanup command
+- PB-27707 As administrator, with RBAC I should be able to set “can see users workspace” to “Allow if group manager”
+- PB-28716 Desktop application flag is now enabled by default
+- PB-26203 Desktop app define the account kit exportation help page
+
+### Improved
+- PB-27616 Improve resources serialization performance on GET resources.json
+
+### Security
+- PB-29148 Bump selenium API plugin version to v4.5
+- PB-29005 Upgrades phpseclib/phpseclib to fix composer audit security vulnerability
+- PB-22336 As an admin I should be able to enable/disable request group managers to add users to groups emails separately (LDAP/AD)
+- PB-28871 Mitigate supply chain attack on PR and lint lock files
+- PB-28658 Mitigate supply chain attack on post npm install script
+
+### Fixed
+- PB-29200 Fixes the recover_user command (GITHUB #504)
+- PB-29164 Fix recent InstallCommand changes breaking selenium tests
+- PB-29132 Fix composer lock file not up-to-date message when installing dependencies
+- PB-29160 Fix failing static analysis job in CI
+- PB-29137 Fix failing in UsersEditDisableControllerTest file due to purifier
+- PB-29113 Fix a typo in the email sent when admins lose their admin role
+- PB-28130 Fix invalid cookie name should not trigger a 500
+- PB-29007 Fix constantly failing test in RbacsUpdateControllerTest file
+- PB-28991 Fix email queue entries not marked as sent
+
+### Maintenance
+- PB-28857 Require phpunit-speedtrap to track down slow tests
+- PB-25516 Remove --dev from .gitlab test options, it has not effect and will break with composer v3
+- PB-28844 Improves the methods testing email content
+- PB-28845 Skip unauthenticated exception from logging
+- PB-28653 Speed-up tests by mocking the client in healthcheck relevant tests
+
+## [4.5.0-test.1] - 2024-01-29
+### Added
+- PB-23913 As a user I can see my passwords marked as expired after a user loses permissions
+- PB-23913 As an administrator I can activate the password expiry feature
+- PB-23913 As a user I can define the expiry date of a passwor
+- PB-23913 As an administrator I can define advanced password expiry settings
+- PB-28923 As a user I want to be able to use cipherguard in Russian
+- PB-21484 Add support for Microsoft 365 and Outlook providers in SMTP settings
+- PB-19652 Add cleanup task to check for groups with no members
+- PB-27707 As administrator, with RBAC I should be able to set “can see users workspace” to ‘Allow if group manager’
+- PB-28716 Enable desktop application flag by default
+- PB-26203 Desktop app define the account kit exportation help page
+
+### Improved
+- PB-27835 As signed-in user configuring MFA TOTP I can see the TOTP secret so I can use it instead of the QR code
+- PB-27616 Improve resources serialization performance on GET resources.json
+- PB-28521 Add migration to alter gpgkeys.uid column length to 769
+
+### Security
+- PB-29148 Bump selenium API plugin version to v4.5
+- PB-27760 As administrator, I can hide the administrator identity behind LDAP triggered emails
+- PB-29005 Upgrades phpseclib/phpseclib to fix composer audit security vulnerability
+- PB-22336 As an admin I should be able to enable/disable request group managers to add users to groups emails separately (LDAP/AD)
+- PB-28871 Mitigate supply chain attack on PR and lint lock files
+- PB-28658 Mitigate supply chain attack on post npm install script
+
+### Fixed
+- PB-29200 Fixes the recover_user command (GITHUB #504)
+- PB-29164 Fix recent InstallCommand changes breaking selenium tests
+- PB-29132 Fix composer lock file not up-to-date message when installing dependencies
+- PB-29160 Fix failing static analysis job in CI
+- PB-29137 Fix failing in UsersEditDisableControllerTest file due to purifier
+- PB-27788 Correct gendered language on ldap sync ignore messages
+- PB-29113 Fix a typo in the email sent when admins lose their admin role
+- PB-28130 Fix invalid cookie name should not trigger a 500
+- PB-29007 Fix constantly failing test in RbacsUpdateControllerTest file
+- PB-28991 Fix email queue entries not marked as sent
+
+### Maintenance
+- PB-28636 Speed-up cloud tests by storing avatars on local storage
+- PB-28857 Require phpunit-speedtrap to track down slow tests
+- PB-25516 Remove --dev from .gitlab test options, it has not effect and will break with composer v3
+- PB-28844 Improves the methods testing email content
+- PB-28845 Skip unauthenticated exception from logging
+- PB-28653 Speed-up tests by mocking the client in healthcheck relevant tests
+
 ## [4.4.2] - 2023-11-29
 ### Improved
 - PB-27616 As a user I should see improved performances when retrieving resources on the GET resources.json entry point
@@ -522,7 +1034,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - PB-22019 As a server administrator I want to configure TOTP MFA secret length
 
 ### Maintenance
-- PB-22327 env variable CIPHERGURD_PLUGINS_SMTP_SETTINGS renamed in CIPHERGURD_PLUGINS_SMTP_SETTINGS_ENABLED (backward compatible)
+- PB-22327 env variable CIPHERGUARD_PLUGINS_SMTP_SETTINGS renamed in CIPHERGUARD_PLUGINS_SMTP_SETTINGS_ENABLED (backward compatible)
 - PB-22406 curl and openssl extensions requirements added
 - PB-22413 bump CakePHP to ^4.3.11
 
@@ -542,7 +1054,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - PB-19653 Rename Google authenticator into Totp authenticator
 - PB-19807 As an administrator I want to know if email hostname availability is enabled in the health check report
 - PB-20985 As an administrator I shouldn't be able to send a test email in command line without defining the recipient
-- PB-21502 As an administrator I want to know if I run a cipherguard.khulnasoft.command without using the webserver user
+- PB-21502 As an administrator I want to know if I run a cipherguard command without using the webserver user
 - PB-21635 As an administrator I want to the cron events to be logged
 - PB-21751 As anonymous user I don't want to see the TOTP field auto-completed when I verify my second factor authentication
 - PB-19715 As an administrator I want to lock the SMTP settings entry points
@@ -1001,128 +1513,128 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - PB-95: Implement Import / Export enable switch
 
 ### Fixed
-- CIPHERGURD-2121: Fix cipherguard should run in a subdirectory
+- CIPHERGUARD-2121: Fix cipherguard should run in a subdirectory
 - Fix short tag use in the webinstaller server gpg key import screen
 - Username and password should not be compulsory in email settings, in web installer
 
 ## [2.7.1] - 2019-02-13
 ### Fixed
-- CIPHERGURD-3416: Fix the uses of php shortags in the webinstaller template files
+- CIPHERGUARD-3416: Fix the uses of php shortags in the webinstaller template files
 
 ## [2.7.0] - 2019-02-12
 ### Added
-- CIPHERGURD-2995: As LU I should be able to copy the permalink of a password
+- CIPHERGUARD-2995: As LU I should be able to copy the permalink of a password
 
 ### Improved
-- CIPHERGURD-3403: As LU I should export only selected passwords
-- CIPHERGURD-3397: Remove the list of secrets from the API request while loading the list of passwords
-- CIPHERGURD-3319: As LU I should retrieve a secret when I'm editing it
-- CIPHERGURD-3318: As LU I should retrieve a secret when I'm copying it
-- CIPHERGURD-3317: Display significant information as soon as possible while opening the application
-- CIPHERGURD-3312: As GM adding a user to a group I should see a relevant feedback in case of network/proxy errors
-- CIPHERGURD-3314: Improve the performance of the application by adding missing indexes
-- CIPHERGURD-2974: As LU I should be able to follow links targeting passwords from my emails
+- CIPHERGUARD-3403: As LU I should export only selected passwords
+- CIPHERGUARD-3397: Remove the list of secrets from the API request while loading the list of passwords
+- CIPHERGUARD-3319: As LU I should retrieve a secret when I'm editing it
+- CIPHERGUARD-3318: As LU I should retrieve a secret when I'm copying it
+- CIPHERGUARD-3317: Display significant information as soon as possible while opening the application
+- CIPHERGUARD-3312: As GM adding a user to a group I should see a relevant feedback in case of network/proxy errors
+- CIPHERGUARD-3314: Improve the performance of the application by adding missing indexes
+- CIPHERGUARD-2974: As LU I should be able to follow links targeting passwords from my emails
 
 ### Fixed
-- CIPHERGURD-3363: The webinstaller should not use the exec php primitive to create/import the gpg server key
-- CIPHERGURD-3370: Auth verify error should not leak data
-- CIPHERGURD-3368 Fix html injection in email
+- CIPHERGUARD-3363: The webinstaller should not use the exec php primitive to create/import the gpg server key
+- CIPHERGUARD-3370: Auth verify error should not leak data
+- CIPHERGUARD-3368 Fix html injection in email
 
 ## [2.5.0] - 2018-11-14
 ### Added
-- CIPHERGURD-2694: Implement the Web Installer feature
-- CIPHERGURD-3093: As LU I can select all passwords to perform a bulk operation
+- CIPHERGUARD-2694: Implement the Web Installer feature
+- CIPHERGUARD-3093: As LU I can select all passwords to perform a bulk operation
 
 ### Improved
-- CIPHERGURD-3166: Add PHP 7.3 job on travis
-- CIPHERGURD-3119: The Web Installer should control the route with a middleware
-- CIPHERGURD-3153: The Web Installer healtchecks should ensure the config files can be written before continuing
-- CIPHERGURD-3120: Improve the Web Installer code coverage
-- CIPHERGURD-3127: The Web Installer should change the config folder permissions after the installation is completed
-- CIPHERGURD-3152: As AN completing the registration process, if I'm following the link to download the browser extension I cannot go back easily to the registration process
-- CIPHERGURD-3189: As AD migrating cipherguard to the latest version I would like the CakePHP cache to be cleared with the same operation
+- CIPHERGUARD-3166: Add PHP 7.3 job on travis
+- CIPHERGUARD-3119: The Web Installer should control the route with a middleware
+- CIPHERGUARD-3153: The Web Installer healtchecks should ensure the config files can be written before continuing
+- CIPHERGUARD-3120: Improve the Web Installer code coverage
+- CIPHERGUARD-3127: The Web Installer should change the config folder permissions after the installation is completed
+- CIPHERGUARD-3152: As AN completing the registration process, if I'm following the link to download the browser extension I cannot go back easily to the registration process
+- CIPHERGUARD-3189: As AD migrating cipherguard to the latest version I would like the CakePHP cache to be cleared with the same operation
 
 ### Fixed
-- CIPHERGURD-3150: I should not see duplicates rows when I filter my passwords by keywords
+- CIPHERGUARD-3150: I should not see duplicates rows when I filter my passwords by keywords
 - GITHUB-290: A user who have not completed the setup should be allowed to request a new token using recover
-- CIPHERGURD-3188: As LU the UI shouldn't crash if the uri of a password cannot be parsed
+- CIPHERGUARD-3188: As LU the UI shouldn't crash if the uri of a password cannot be parsed
 
 ## [2.4.0] - 2018-10-12
 ### Added
-- CIPHERGURD-2709: Implement the remember me feature
-- CIPHERGURD-2951: Merge the remember me on CE
-- CIPHERGURD-2972: As LU I should be able to delete multiple passwords in bulk
-- CIPHERGURD-2329: As an administrator deleting a group which is sole owner of one or several passwords, I should be requested to select a new owner for these passwords
-- CIPHERGURD-2983: As LU I should be able to share multiple passwords in bulk
+- CIPHERGUARD-2709: Implement the remember me feature
+- CIPHERGUARD-2951: Merge the remember me on CE
+- CIPHERGUARD-2972: As LU I should be able to delete multiple passwords in bulk
+- CIPHERGUARD-2329: As an administrator deleting a group which is sole owner of one or several passwords, I should be requested to select a new owner for these passwords
+- CIPHERGUARD-2983: As LU I should be able to share multiple passwords in bulk
 
 ### Improved
-- CIPHERGURD-3009: Add types to authentication tokens
+- CIPHERGUARD-3009: Add types to authentication tokens
 - GITHUB#275: Adding SSL configuration environment variables for cake mysql driver
-- CIPHERGURD-2534: As LU I should not be able to copy to clipboard empty login/url
-- CIPHERGURD-2017: As LU when I save a password (create/edit) the dialog shouldn't persist until the request is processed by the API
-- CIPHERGURD-3073: As LU I should get a visual feedback directly after filtering the passwords or the users workspace
-- CIPHERGURD-2972: As LU I should be able to select multiple passwords with classic keyboard interactions (command and shift keys)
-- CIPHERGURD-3090: Extend the CSRF protection
+- CIPHERGUARD-2534: As LU I should not be able to copy to clipboard empty login/url
+- CIPHERGUARD-2017: As LU when I save a password (create/edit) the dialog shouldn't persist until the request is processed by the API
+- CIPHERGUARD-3073: As LU I should get a visual feedback directly after filtering the passwords or the users workspace
+- CIPHERGUARD-2972: As LU I should be able to select multiple passwords with classic keyboard interactions (command and shift keys)
+- CIPHERGUARD-3090: Extend the CSRF protection
 
 ### Fixed
-- CIPHERGURD-2966: As LU I can't see passwords shared with me clicking on the "shared with me" shortcut filter
+- CIPHERGUARD-2966: As LU I can't see passwords shared with me clicking on the "shared with me" shortcut filter
 - GITHUB#246: Fix healthcheck tips relative to tmp folder
 - Fix Email notifications being sent several times when an AppShell is instantiated inside an AppShell
-- CIPHERGURD-3063: Fix appjs base url and subfolder
-- CIPHERGURD-3074: As a logged in user selecting a "remember me" duration the  checkbox should be selected automatically
-- CIPHERGURD-2976: Fix API requests issues when the user is going to another workspace
-- CIPHERGURD-3082: ezyang/htmlpurifier cache should be stored in the application cache directory
-- CIPHERGURD-2982: Fix session expired check
-- CIPHERGURD-3086: As LU when I have 100+ passwords I cannot see the passwords after the 100th more than once
+- CIPHERGUARD-3063: Fix appjs base url and subfolder
+- CIPHERGUARD-3074: As a logged in user selecting a "remember me" duration the  checkbox should be selected automatically
+- CIPHERGUARD-2976: Fix API requests issues when the user is going to another workspace
+- CIPHERGUARD-3082: ezyang/htmlpurifier cache should be stored in the application cache directory
+- CIPHERGUARD-2982: Fix session expired check
+- CIPHERGUARD-3086: As LU when I have 100+ passwords I cannot see the passwords after the 100th more than once
 
 ## [2.3.0] - 2018-08-30
 ### Fixed
-- CIPHERGURD-2965: Group filter link stays active after switching to a non group filter
+- CIPHERGUARD-2965: Group filter link stays active after switching to a non group filter
 - Route rewriting of the appjs should take in account cipherguard installed in a subdirectory
 - Fix the loading bar stuck in the initialization state in some cases
-- CIPHERGURD-2969: Enforce steal to load the latest version of the appjs
+- CIPHERGUARD-2969: Enforce steal to load the latest version of the appjs
 
 ### Improved
-- CIPHERGURD-2950: Display empty feedbacks content
-- CIPHERGURD-2971: Reset the workspaces filters when a resource or a user is created
-- CIPHERGURD-2267: As an admin deleting a user I can transfer ownership of this user shared passwords to another user or a group that have read access.
+- CIPHERGUARD-2950: Display empty feedbacks content
+- CIPHERGUARD-2971: Reset the workspaces filters when a resource or a user is created
+- CIPHERGUARD-2267: As an admin deleting a user I can transfer ownership of this user shared passwords to another user or a group that have read access.
 
 ## [2.2.0] - 2018-08-13
 ### Added
-- CIPHERGURD-2906: Enable CSRF protection
-- CIPHERGURD-2940: Implement app-js primary routes
+- CIPHERGUARD-2906: Enable CSRF protection
+- CIPHERGUARD-2940: Implement app-js primary routes
 
 ### Fixed
-- CIPHERGURD-2805: Sort by date fix and sort by user first_name by default
-- CIPHERGURD-2896: Fix filter by tag from the password details sidebar
-- CIPHERGURD-2903: Fix logout link. It should target a full based url link
-- CIPHERGURD-2926: Fix session timeout check
-- CIPHERGURD-2927: Fix appjs ajax error handler
-- CIPHERGURD-2941: Grid performance fix
+- CIPHERGUARD-2805: Sort by date fix and sort by user first_name by default
+- CIPHERGUARD-2896: Fix filter by tag from the password details sidebar
+- CIPHERGUARD-2903: Fix logout link. It should target a full based url link
+- CIPHERGUARD-2926: Fix session timeout check
+- CIPHERGUARD-2927: Fix appjs ajax error handler
+- CIPHERGUARD-2941: Grid performance fix
 
 ### Improved
-- CIPHERGURD-2933: Upgrade to canjs 4
+- CIPHERGUARD-2933: Upgrade to canjs 4
 
 ## [2.1.0] - 2018-06-14
 ### Added
-- CIPHERGURD-2878: Integrate dark theme
-- CIPHERGURD-2861: Make username clickable for copy to clipboard
+- CIPHERGUARD-2878: Integrate dark theme
+- CIPHERGUARD-2861: Make username clickable for copy to clipboard
 
 ### Fixed
 - GITHUB-101: Fix the readme should point to the documentation for how to upgrade cipherguard
-- CIPHERGURD-2682: Fix healthcheck entry point when logged in as admin and debug is false
-- CIPHERGURD-2869: Fix GPG wrapper should recognize the correct type and bit length
-- CIPHERGURD-1917: Migrate to canjs 3.x
-- CIPHERGURD-2883: Fix logout link should not prevent event propagation
-- CIPHERGURD-2886: Fix fingerprint tooltips in user group management dialog
-- CIPHERGURD-2894: Fix missing div breaking elipsis on long url in password workspace
-- CIPHERGURD-2891: Fix group edit users tooltips
-- CIPHERGURD-2884: Update header left menu. Remove home and add help.
-- CIPHERGURD-2885: Update user settings menus
-- CIPHERGURD-2895: Fix notifications homogeneity
-- CIPHERGURD-1337: Fix a logged in user should not be allowed to login or recover
-- CIPHERGURD-1337: Remove gpg json sign middleware
-- CIPHERGURD-1337: Wordsmithing healthcheck GPG feedback
+- CIPHERGUARD-2682: Fix healthcheck entry point when logged in as admin and debug is false
+- CIPHERGUARD-2869: Fix GPG wrapper should recognize the correct type and bit length
+- CIPHERGUARD-1917: Migrate to canjs 3.x
+- CIPHERGUARD-2883: Fix logout link should not prevent event propagation
+- CIPHERGUARD-2886: Fix fingerprint tooltips in user group management dialog
+- CIPHERGUARD-2894: Fix missing div breaking elipsis on long url in password workspace
+- CIPHERGUARD-2891: Fix group edit users tooltips
+- CIPHERGUARD-2884: Update header left menu. Remove home and add help.
+- CIPHERGUARD-2885: Update user settings menus
+- CIPHERGUARD-2895: Fix notifications homogeneity
+- CIPHERGUARD-1337: Fix a logged in user should not be allowed to login or recover
+- CIPHERGUARD-1337: Remove gpg json sign middleware
+- CIPHERGUARD-1337: Wordsmithing healthcheck GPG feedback
 
 ## [2.0.7] - 2018-05-09
 ### Fixed
@@ -1131,9 +1643,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [2.0.5] - 2018-05-08
 ### Fixed
-- CIPHERGURD-2764: Fix Groups autocomplete doesn't work with less than 3 characters
-- CIPHERGURD-2826: Upgrade styleguide to v2.1.0
-- CIPHERGURD-2812: Rebuild fixtures with updated public keys
+- CIPHERGUARD-2764: Fix Groups autocomplete doesn't work with less than 3 characters
+- CIPHERGUARD-2826: Upgrade styleguide to v2.1.0
+- CIPHERGUARD-2812: Rebuild fixtures with updated public keys
 
 ## [2.0.4] - 2018-04-25
 ### Fixed
@@ -1142,77 +1654,77 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [2.0.3] - 2018-04-20
 ### Fixed
-- CIPHERGURD-2849: Fix issue ResourcesTable::_filterByPermissionType and MariaDB 5.5
-- CIPHERGURD-2848: Fix unsafe mode and ssl offloading
+- CIPHERGUARD-2849: Fix issue ResourcesTable::_filterByPermissionType and MariaDB 5.5
+- CIPHERGUARD-2848: Fix unsafe mode and ssl offloading
 
 ## [2.0.2] - 2018-04-16
 ### Improved
 - GITHUB-242: Add Auto-Submitted header to the email notifications
 
 ### Fixed
-- CIPHERGURD-2806: Force database columns charset and collation
-- CIPHERGURD-2781: Increase length of resource uri field in model validation
-- CIPHERGURD-2696: Fix regression: placeholders in registration form are missing
-- CIPHERGURD-2791: Fix providing a string instead of an array in Email. From configuration generates a warning in SendTestEmailTask.php
+- CIPHERGUARD-2806: Force database columns charset and collation
+- CIPHERGUARD-2781: Increase length of resource uri field in model validation
+- CIPHERGUARD-2696: Fix regression: placeholders in registration form are missing
+- CIPHERGUARD-2791: Fix providing a string instead of an array in Email. From configuration generates a warning in SendTestEmailTask.php
 
 ## [2.0.1] - 2018-04-09
 ### Fixed
 - GITHUB-239: Fix unsafe mode logic
 - GITHUB-240: Make sure unconfigured 'cipherguard.plugins' doesn't break the extension
-- CIPHERGURD-2511: Improve healthcheck tables list so that tables are listed per major version number
+- CIPHERGUARD-2511: Improve healthcheck tables list so that tables are listed per major version number
 
 ## [2.0.0] - 2018-04-09
 ### Added
-- CIPHERGURD-2725: Implement start page when cipherguard is not configured
-- CIPHERGURD-2740: Update <3 link and add unsafe mode warning
-- CIPHERGURD-2697: Add cipherguard migrate shell with backup option prior migration
-- CIPHERGURD-2803: Make the privacy policy footer link configurable in the settings
-- CIPHERGURD-2720 Move dev dependencies out of the cipherguard_api repo
-- CIPHERGURD-2511: cipherguard pro bootstrap is moved in a separate folder
+- CIPHERGUARD-2725: Implement start page when cipherguard is not configured
+- CIPHERGUARD-2740: Update <3 link and add unsafe mode warning
+- CIPHERGUARD-2697: Add cipherguard migrate shell with backup option prior migration
+- CIPHERGUARD-2803: Make the privacy policy footer link configurable in the settings
+- CIPHERGUARD-2720 Move dev dependencies out of the cipherguard_api repo
+- CIPHERGUARD-2511: cipherguard pro bootstrap is moved in a separate folder
 
 ### Fixed
 - GITHUB-229: Fix cipherguard can not run in a subdirectory
 - COMMUNITY-533: Fix plaintext should be initialized prior verification
-- CIPHERGURD-2776: Fix: As AN, settings entry point should be able to have plugins settings whitelisted
-- CIPHERGURD-2762: Fix unexpected error on resource share
-- CIPHERGURD-2754: Change the way to define if cipherguard is installed while running the unit tests
-- CIPHERGURD-2571: Delete secrets when a password is soft deleted
-- CIPHERGURD-2688: Fix healtcheck warning if the development plugin cipherguard_test_data is not loaded
-- CIPHERGURD-2711: Delete orphans secrets
-- CIPHERGURD-2678: Edit Appjs API calls to use version number
-- CIPHERGURD-2694: Improve GPG lib to handle private keys validation
-- CIPHERGURD-2744: Favorites delete on group user delete
-- CIPHERGURD-2743: Favorites delete on permissions update
-- CIPHERGURD-2705: Increase coverage, ensure all users who lost access to a resource have no a secret in db for this resource
-- CIPHERGURD-2735: Display a specific message if a sidebar section has not content to display
-- CIPHERGURD-2664: Change cakephpConfig into settings entry point and adjusted app-js to work with it
+- CIPHERGUARD-2776: Fix: As AN, settings entry point should be able to have plugins settings whitelisted
+- CIPHERGUARD-2762: Fix unexpected error on resource share
+- CIPHERGUARD-2754: Change the way to define if cipherguard is installed while running the unit tests
+- CIPHERGUARD-2571: Delete secrets when a password is soft deleted
+- CIPHERGUARD-2688: Fix healtcheck warning if the development plugin cipherguard_test_data is not loaded
+- CIPHERGUARD-2711: Delete orphans secrets
+- CIPHERGUARD-2678: Edit Appjs API calls to use version number
+- CIPHERGUARD-2694: Improve GPG lib to handle private keys validation
+- CIPHERGUARD-2744: Favorites delete on group user delete
+- CIPHERGUARD-2743: Favorites delete on permissions update
+- CIPHERGUARD-2705: Increase coverage, ensure all users who lost access to a resource have no a secret in db for this resource
+- CIPHERGUARD-2735: Display a specific message if a sidebar section has not content to display
+- CIPHERGUARD-2664: Change cakephpConfig into settings entry point and adjusted app-js to work with it
 
 ## [2.0.0-rc2] - 2018-02-20
 ### Added
-- CIPHERGURD-2638: Added command to test email configuration and SMTP communication
-- CIPHERGURD-2608: Implement Sidebar v2 in the Appjs
-- CIPHERGURD-2660: Add codacy badge
-- CIPHERGURD-1741: Add more GPG healthchecks
-- CIPHERGURD-1741: Add PHP extension checks to the healthcheck
-- CIPHERGURD-2597: Add check before upgrade to ensure cipherguard is already in latest 1.x
-- CIPHERGURD-2631: Add an env var to control which email transport to use and defaults to Smtp
-- CIPHERGURD-2601: Add Travis v2: phpunit, coverage, phpcs
+- CIPHERGUARD-2638: Added command to test email configuration and SMTP communication
+- CIPHERGUARD-2608: Implement Sidebar v2 in the Appjs
+- CIPHERGUARD-2660: Add codacy badge
+- CIPHERGUARD-1741: Add more GPG healthchecks
+- CIPHERGUARD-1741: Add PHP extension checks to the healthcheck
+- CIPHERGUARD-2597: Add check before upgrade to ensure cipherguard is already in latest 1.x
+- CIPHERGUARD-2631: Add an env var to control which email transport to use and defaults to Smtp
+- CIPHERGUARD-2601: Add Travis v2: phpunit, coverage, phpcs
 
 ### Fixed
-- CIPHERGURD-2618: Fixes for PHP 7.2 compatibility
-- CIPHERGURD-2624: PR#219 Fixed use CONFIG instead of "ROOT . DS . 'config'"
-- CIPHERGURD-2631: Fixed default class for EmailTransport to Smtp in configuration
-- CIPHERGURD-2640: Fixed incomplete urls in email templates
-- CIPHERGURD-2640: Fixed escaping of non safe characters in emails
-- CIPHERGURD-2667: Fixed regression: create a user that has been deleted previously returns an error
-- CIPHERGURD-2673: Fixed regression: as AD I cannot create a group with the name of previously deleted group
-- CIPHERGURD-2545: Fixed regression: As AD deleting a group I should be notified that all members of the group gonna lose access to the passwords shared with the group
-- CIPHERGURD-2139: Fixed check sessions calls are logged as error
-- CIPHERGURD-2139: Fixed not found image on password workspace
-- CIPHERGURD-1741: Fixed set license to AGPL-3.0-or-later for composer compatibility
-- CIPHERGURD-2589: Fixed App-js should check request response code from the http response header and not from the body header
-- CIPHERGURD-2533: Fixed resource name, username, uri, description min length should be 1 char not 3
-- CIPHERGURD-2660: Fixed remove flash message from login layout
+- CIPHERGUARD-2618: Fixes for PHP 7.2 compatibility
+- CIPHERGUARD-2624: PR#219 Fixed use CONFIG instead of "ROOT . DS . 'config'"
+- CIPHERGUARD-2631: Fixed default class for EmailTransport to Smtp in configuration
+- CIPHERGUARD-2640: Fixed incomplete urls in email templates
+- CIPHERGUARD-2640: Fixed escaping of non safe characters in emails
+- CIPHERGUARD-2667: Fixed regression: create a user that has been deleted previously returns an error
+- CIPHERGUARD-2673: Fixed regression: as AD I cannot create a group with the name of previously deleted group
+- CIPHERGUARD-2545: Fixed regression: As AD deleting a group I should be notified that all members of the group gonna lose access to the passwords shared with the group
+- CIPHERGUARD-2139: Fixed check sessions calls are logged as error
+- CIPHERGUARD-2139: Fixed not found image on password workspace
+- CIPHERGUARD-1741: Fixed set license to AGPL-3.0-or-later for composer compatibility
+- CIPHERGUARD-2589: Fixed App-js should check request response code from the http response header and not from the body header
+- CIPHERGUARD-2533: Fixed resource name, username, uri, description min length should be 1 char not 3
+- CIPHERGUARD-2660: Fixed remove flash message from login layout
 
 ## [2.0.0-rc1] - 2018-01-12
 ### Security
@@ -1253,329 +1765,329 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.6.9] - 2018-01-12
 ### Fixed
-- CIPHERGURD-2599: PR#209: Expose the 'client' variable in the default email conf
-- CIPHERGURD-2599: PR#211: Remove stray apostrophe in the filter by group component
-- CIPHERGURD-2599: PR#214: Remove html purifier submodule
-- CIPHERGURD-2599: PR#208: Fix typos in emails
-- CIPHERGURD-2599: PR#159: Rename license file
-- CIPHERGURD-2599 Fixed Travis
-- CIPHERGURD-1453: Add optional predictable UUID for auth token in selenium testing
-- CIPHERGURD-2474 New contributing guidelines for community forum
+- CIPHERGUARD-2599: PR#209: Expose the 'client' variable in the default email conf
+- CIPHERGUARD-2599: PR#211: Remove stray apostrophe in the filter by group component
+- CIPHERGUARD-2599: PR#214: Remove html purifier submodule
+- CIPHERGUARD-2599: PR#208: Fix typos in emails
+- CIPHERGUARD-2599: PR#159: Rename license file
+- CIPHERGUARD-2599 Fixed Travis
+- CIPHERGUARD-1453: Add optional predictable UUID for auth token in selenium testing
+- CIPHERGUARD-2474 New contributing guidelines for community forum
 
 ## [1.6.5] - 2017-09-12
 ### Added
-- CIPHERGURD-2383: Add + and \ to the list of allowed characters for the Resource fields: name, username and description
+- CIPHERGUARD-2383: Add + and \ to the list of allowed characters for the Resource fields: name, username and description
 
 ### Fixed
-- CIPHERGURD-2371: Force the charset of the cake_sessions table in utf8
-- CIPHERGURD-2325: As system administrator I shouldn't be able to execute cipherguard CLI commands as root
-- CIPHERGURD-2397: As system administrator I should see in the healthcheck if app/tmp content and app/webroot/img/public content are writable
-- CIPHERGURD-1991: As system administrator I should see in the healthcheck if the server key can be used for encrypting/decrypting
+- CIPHERGUARD-2371: Force the charset of the cake_sessions table in utf8
+- CIPHERGUARD-2325: As system administrator I shouldn't be able to execute cipherguard CLI commands as root
+- CIPHERGUARD-2397: As system administrator I should see in the healthcheck if app/tmp content and app/webroot/img/public content are writable
+- CIPHERGUARD-1991: As system administrator I should see in the healthcheck if the server key can be used for encrypting/decrypting
 
 ### Security
-- CIPHERGURD-2409: Noopener on resource url in password workspace
-- CIPHERGURD-2402: XSS on resource url in password workspace
+- CIPHERGUARD-2409: Noopener on resource url in password workspace
+- CIPHERGUARD-2402: XSS on resource url in password workspace
 
 ## [1.6.4] - 2017-08-31
 ### Fixed
-- CIPHERGURD-2358: As a user registering on the demo instance I must understand the disclaimer
+- CIPHERGUARD-2358: As a user registering on the demo instance I must understand the disclaimer
 
 ## [1.6.3] - 2017-08-21
 ### Fixed
-- CIPHERGURD-2316: Merge the selenium & phpunit dummy data sets
-- CIPHERGURD-2317: Speed up dummy secret creation task
-- CIPHERGURD-2327: Add a large set of dummy data for performance testing
-- CIPHERGURD-2282: As admin on the user workspace, I should be able to distinguish visually the users who haven't activated their account yet
+- CIPHERGUARD-2316: Merge the selenium & phpunit dummy data sets
+- CIPHERGUARD-2317: Speed up dummy secret creation task
+- CIPHERGUARD-2327: Add a large set of dummy data for performance testing
+- CIPHERGUARD-2282: As admin on the user workspace, I should be able to distinguish visually the users who haven't activated their account yet
 
 ## [1.6.2] - 2017-08-12
 ### Added
-- CIPHERGURD-2284: As an administrator I can set which notifications are enabled for my organization #98
-- CIPHERGURD-2284: As an administrator I can prevent encrypted secret or username to be sent in email notification #114
+- CIPHERGUARD-2284: As an administrator I can set which notifications are enabled for my organization #98
+- CIPHERGUARD-2284: As an administrator I can prevent encrypted secret or username to be sent in email notification #114
 
 ### Fixed
-- CIPHERGURD-2301: Remove additional slashes in cipherguard.js urls such as model/users::find #142
-- CIPHERGURD-2270: Fix modified_by not set on resource edit regression
-- CIPHERGURD-2271: Fix no wrap issue on resource description
-- CIPHERGURD-1943: As an administrator I should not be able to install cipherguard on a hostname that is not RFC3986 compliant
-- CIPHERGURD-1937: As an administrator I should not be be able to install cipherguard with a server key without an email id
-- CIPHERGURD-2002: Refactor install script to reuse healthcheck library
+- CIPHERGUARD-2301: Remove additional slashes in cipherguard.js urls such as model/users::find #142
+- CIPHERGUARD-2270: Fix modified_by not set on resource edit regression
+- CIPHERGUARD-2271: Fix no wrap issue on resource description
+- CIPHERGUARD-1943: As an administrator I should not be able to install cipherguard on a hostname that is not RFC3986 compliant
+- CIPHERGUARD-1937: As an administrator I should not be be able to install cipherguard with a server key without an email id
+- CIPHERGUARD-2002: Refactor install script to reuse healthcheck library
 
 ## [1.6.1] - 2017-07-26
 ### Added
-- CIPHERGURD-2147: As a group member I should receive a notification when my role in the group has changed
-- CIPHERGURD-2148: As a group manager I should receive a notification when a user who is part of one (or more) groups I manage is deleted
-- CIPHERGURD-2225: As a demo user it should be explicit that I need to use a throway email account
-- CIPHERGURD-2133: As LU I should be able to filter passwords by group on the passwords workspace
-- CIPHERGURD-2012: As a user I can see which groups a user is a member of from the sidebar
+- CIPHERGUARD-2147: As a group member I should receive a notification when my role in the group has changed
+- CIPHERGUARD-2148: As a group manager I should receive a notification when a user who is part of one (or more) groups I manage is deleted
+- CIPHERGUARD-2225: As a demo user it should be explicit that I need to use a throway email account
+- CIPHERGUARD-2133: As LU I should be able to filter passwords by group on the passwords workspace
+- CIPHERGUARD-2012: As a user I can see which groups a user is a member of from the sidebar
 
 ### Fixed
-- CIPHERGURD-2171: The group list component should be marked as ready once the API request is completed
-- CIPHERGURD-2172: Newly added group manager shouldn't receive the group update summary notification
-- CIPHERGURD-2174: Edit group dialog should be marked as ready if an admin edit a group the admin is not group manager
-- CIPHERGURD-2155: As AD I shouldn't be able to delete as user if the user is the sole group manager of a group
-- CIPHERGURD-2075: Users should be removed from the groups they are member of after a soft delete operation
-- CIPHERGURD-1934: GITHUB-40, GITHUB-120: As a user I should be allowed to add the a ldap path as username
-- CIPHERGURD-2156: GITHUB-94: As a user I should be allowed to add text in JSON format in the description
-- CIPHERGURD-2122: GITHUB-85: Username should be Minimum 1 characters in length (and not 3)
-- CIPHERGURD-2180: GITHUB-85: As a user I should be allowed to add a space in a resource username
-- CIPHERGURD-2125: GITHUB-86: As a logged in user creating/editing a password I should be able to use new line characters in the description
-- CIPHERGURD-2188: Regression: As LU when I search for a user it shouldn't make an API request
-- CIPHERGURD-2234: Regression: As newly added GM I shouldn't receive the group update summary when I'm just added as GM
-- CIPHERGURD-2235: As AD editing a group the dialog shouldn't be marked as ready until the members list is loaded
-- CIPHERGURD-2105: Anonymous statistics: fix "Warning Error: file_put_contents" issue at installation
-- CIPHERGURD-2005: PR#44: Update allowed characters in a uri
+- CIPHERGUARD-2171: The group list component should be marked as ready once the API request is completed
+- CIPHERGUARD-2172: Newly added group manager shouldn't receive the group update summary notification
+- CIPHERGUARD-2174: Edit group dialog should be marked as ready if an admin edit a group the admin is not group manager
+- CIPHERGUARD-2155: As AD I shouldn't be able to delete as user if the user is the sole group manager of a group
+- CIPHERGUARD-2075: Users should be removed from the groups they are member of after a soft delete operation
+- CIPHERGUARD-1934: GITHUB-40, GITHUB-120: As a user I should be allowed to add the a ldap path as username
+- CIPHERGUARD-2156: GITHUB-94: As a user I should be allowed to add text in JSON format in the description
+- CIPHERGUARD-2122: GITHUB-85: Username should be Minimum 1 characters in length (and not 3)
+- CIPHERGUARD-2180: GITHUB-85: As a user I should be allowed to add a space in a resource username
+- CIPHERGUARD-2125: GITHUB-86: As a logged in user creating/editing a password I should be able to use new line characters in the description
+- CIPHERGUARD-2188: Regression: As LU when I search for a user it shouldn't make an API request
+- CIPHERGUARD-2234: Regression: As newly added GM I shouldn't receive the group update summary when I'm just added as GM
+- CIPHERGUARD-2235: As AD editing a group the dialog shouldn't be marked as ready until the members list is loaded
+- CIPHERGUARD-2105: Anonymous statistics: fix "Warning Error: file_put_contents" issue at installation
+- CIPHERGUARD-2005: PR#44: Update allowed characters in a uri
 
 ## [1.6.0] - 2017-06-21
 ### Added
-- CIPHERGURD-2099: As a user I should receive a notification when I am added to a group
-- CIPHERGURD-2100: As a user I should receive a notification when I am deleted of a group
-- CIPHERGURD-2102: As a group manager I should receive a notification when another group manager added a user to a group I manage
-- CIPHERGURD-2103: As a group manager I should receive a notification when another group manager removed a user from a group I manage
-- CIPHERGURD-2140: As a group manager I should receive a notification when another group manager changed the role of a user of a group I manage
-- CIPHERGURD-2138: The TLS parameter should be part of the default email configuration
+- CIPHERGUARD-2099: As a user I should receive a notification when I am added to a group
+- CIPHERGUARD-2100: As a user I should receive a notification when I am deleted of a group
+- CIPHERGUARD-2102: As a group manager I should receive a notification when another group manager added a user to a group I manage
+- CIPHERGUARD-2103: As a group manager I should receive a notification when another group manager removed a user from a group I manage
+- CIPHERGUARD-2140: As a group manager I should receive a notification when another group manager changed the role of a user of a group I manage
+- CIPHERGUARD-2138: The TLS parameter should be part of the default email configuration
 
 ### Fixed
-- CIPHERGURD-2044: As an admin I shouldn’t be able to delete a user who is the sole owner of passwords shared with others
-- CIPHERGURD-2078: As GM/AD I shouldn't be able to add a user who didn't complete the registration process to a group I edit/create
-- CIPHERGURD-2111: As an admin I should be able to install cipherguard under mydomain.tld/cipherguard
-- CIPHERGURD-2142: As an admin I should not see multiple ASCII banner when running the install script
-- CIPHERGURD-1959: As LU when I unshare a password with a user or a group, associated secrets should be destroyed
-- CIPHERGURD-1954: Security: Trackable behavior should override created_by and deleted_by when provided
+- CIPHERGUARD-2044: As an admin I shouldn’t be able to delete a user who is the sole owner of passwords shared with others
+- CIPHERGUARD-2078: As GM/AD I shouldn't be able to add a user who didn't complete the registration process to a group I edit/create
+- CIPHERGUARD-2111: As an admin I should be able to install cipherguard under mydomain.tld/cipherguard
+- CIPHERGUARD-2142: As an admin I should not see multiple ASCII banner when running the install script
+- CIPHERGUARD-1959: As LU when I unshare a password with a user or a group, associated secrets should be destroyed
+- CIPHERGUARD-1954: Security: Trackable behavior should override created_by and deleted_by when provided
 
 ## [1.5.1] - 2017-05-23
 ### Fixed
-- CIPHERGURD-2070: Delete unused code / exclude external libs from coverage
-- CIPHERGURD-2071: Drop exec bits from files which don't need them (@OdyX GITHUB PR #67)
-- CIPHERGURD-2073: As AP I should see a warning on the login page if the plugin and the api are not compatible
-- CIPHERGURD-2029: PHP7 compatibility, fix deprecated cakePHP String class calls (@leomazzo GITHUB-64)
-- CIPHERGURD-2074: Delete confirmation dialogs should fit the latest styleguide
+- CIPHERGUARD-2070: Delete unused code / exclude external libs from coverage
+- CIPHERGUARD-2071: Drop exec bits from files which don't need them (@OdyX GITHUB PR #67)
+- CIPHERGUARD-2073: As AP I should see a warning on the login page if the plugin and the api are not compatible
+- CIPHERGUARD-2029: PHP7 compatibility, fix deprecated cakePHP String class calls (@leomazzo GITHUB-64)
+- CIPHERGUARD-2074: Delete confirmation dialogs should fit the latest styleguide
 
 ## [1.5.0] - 2017-05-16
 ### Added
-- CIPHERGURD-1950: As a user I can see which groups a password is shared with from the sidebar
-- CIPHERGURD-1953: As a user I can share a password with a group
-- CIPHERGURD-1940: As a user when editing a password for a group, the secret should be encrypted for all the members
-- CIPHERGURD-1639: As a user editing a password description in the right sidebar should not get duplicated items in shared with section
-- CIPHERGURD-1938: As a user I can browse the list of groups in the groups section of the user workspace
-- CIPHERGURD-2000: As a user I can see which users are part of a given group from the sidebar and the users section
-- CIPHERGURD-1960: As a user I can see the list of users that are part of the group in the users grid by using the group filter
-- CIPHERGURD-1838: As a group manager I can edit the membership roles
-- CIPHERGURD-1838: As a group manager I can add a user to a group
-- CIPHERGURD-1838: As a group manager I can remove a user from a group using the edit group dialog
-- CIPHERGURD-1969: As a group manager I can edit a group from the contextual menu and from the groups sidebar
-- CIPHERGURD-1969: As a group manager I can see which users are part of a given group from the group edit dialog
-- CIPHERGURD-2000: As a group manager I can see which users are part of a given group from the sidebar and the users section
-- CIPHERGURD-2006: As an administrator I can delete a group from the group contextual menu
-- CIPHERGURD-1969: As an administrator I can edit a group
-- CIPHERGURD-2006: As an administrator I can delete a group
-- CIPHERGURD-1955: As an administrator I can create a group using the new button in the users workspace
-- CIPHERGURD-1939: As an administrator the healthcheck should be accessible in command line
-- CIPHERGURD-1943: As an administrator the healthcheck should tell if not using a proper domain name as base url
-- CIPHERGURD-1943: As an administrator the healthcheck should tell if SSL certificate is invalid
-- CIPHERGURD-1885: As an administrator the healthcheck should tell if the full base url is not reachable
-- CIPHERGURD-1838: Add v1.5.0 migration script
-- CIPHERGURD-1881: Add support for groups in the permission system
-- CIPHERGURD-1952: Add support for groups in the fixtures
-- CIPHERGURD-1928: Deploy styleguide with groups support
+- CIPHERGUARD-1950: As a user I can see which groups a password is shared with from the sidebar
+- CIPHERGUARD-1953: As a user I can share a password with a group
+- CIPHERGUARD-1940: As a user when editing a password for a group, the secret should be encrypted for all the members
+- CIPHERGUARD-1639: As a user editing a password description in the right sidebar should not get duplicated items in shared with section
+- CIPHERGUARD-1938: As a user I can browse the list of groups in the groups section of the user workspace
+- CIPHERGUARD-2000: As a user I can see which users are part of a given group from the sidebar and the users section
+- CIPHERGUARD-1960: As a user I can see the list of users that are part of the group in the users grid by using the group filter
+- CIPHERGUARD-1838: As a group manager I can edit the membership roles
+- CIPHERGUARD-1838: As a group manager I can add a user to a group
+- CIPHERGUARD-1838: As a group manager I can remove a user from a group using the edit group dialog
+- CIPHERGUARD-1969: As a group manager I can edit a group from the contextual menu and from the groups sidebar
+- CIPHERGUARD-1969: As a group manager I can see which users are part of a given group from the group edit dialog
+- CIPHERGUARD-2000: As a group manager I can see which users are part of a given group from the sidebar and the users section
+- CIPHERGUARD-2006: As an administrator I can delete a group from the group contextual menu
+- CIPHERGUARD-1969: As an administrator I can edit a group
+- CIPHERGUARD-2006: As an administrator I can delete a group
+- CIPHERGUARD-1955: As an administrator I can create a group using the new button in the users workspace
+- CIPHERGUARD-1939: As an administrator the healthcheck should be accessible in command line
+- CIPHERGUARD-1943: As an administrator the healthcheck should tell if not using a proper domain name as base url
+- CIPHERGUARD-1943: As an administrator the healthcheck should tell if SSL certificate is invalid
+- CIPHERGUARD-1885: As an administrator the healthcheck should tell if the full base url is not reachable
+- CIPHERGUARD-1838: Add v1.5.0 migration script
+- CIPHERGUARD-1881: Add support for groups in the permission system
+- CIPHERGUARD-1952: Add support for groups in the fixtures
+- CIPHERGUARD-1928: Deploy styleguide with groups support
 
 ### Fixed
-- CIPHERGURD-1614: Abstract user/password grid functions into the mad framework grid library
-- CIPHERGURD-1571: API query string filters: better naming conventions and implementation
-- CIPHERGURD-1915: Remove legacy references related to old user passwords
-- CIPHERGURD-1761: Remove legacy references to throttle login
-- CIPHERGURD-1268: Remove legacy dictionary controller
-- CIPHERGURD-1268: Use exceptions instead of message component errors and misc refactoring
-- CIPHERGURD-2036: Fix travis database configuration issue
-- CIPHERGURD-2037: Schema should allow resources fields username and uri to be null
-- CIPHERGURD-2038: Travis and php54
+- CIPHERGUARD-1614: Abstract user/password grid functions into the mad framework grid library
+- CIPHERGUARD-1571: API query string filters: better naming conventions and implementation
+- CIPHERGUARD-1915: Remove legacy references related to old user passwords
+- CIPHERGUARD-1761: Remove legacy references to throttle login
+- CIPHERGUARD-1268: Remove legacy dictionary controller
+- CIPHERGUARD-1268: Use exceptions instead of message component errors and misc refactoring
+- CIPHERGUARD-2036: Fix travis database configuration issue
+- CIPHERGUARD-2037: Schema should allow resources fields username and uri to be null
+- CIPHERGUARD-2038: Travis and php54
 
 ## [1.4.0] - 2017-02-07
 ### Fixed
-- CIPHERGURD-1863: Remove references to legacy features Category and Tags
-- CIPHERGURD-1883: Fix wrong usage of the permission entry point viewByAco
-- CIPHERGURD-1887: Remove the entry point PermissionController::simulateAcoPermissionsAfterChange
-- CIPHERGURD-1886: Remove the controller component PermissionHelperComponent
-- CIPHERGURD-1888: Remove the model behavior function PermissionableBehavior::getUsersWithAPermissionSet
-- CIPHERGURD-1889: Remove references to legacy models and tables (AuthenticationLogs, AuthenticationBlackList, Email, Adress, PhoneNumber)
-- CIPHERGURD-1890: Clean the Permission model validation functions & augment coverage
-- CIPHERGURD-1894: Reorganize ACL models tests
-- CIPHERGURD-1896: Remove references to legacy permission types CREATE and DENY
-- CIPHERGURD-1511: removed tracking of config file Config/email.php (@BaumannMisys GITHUB-34)
-- CIPHERGURD-1835: As a user I should be able to create an account with the same username as an account that was previously deleted (@bestlibre GITHUB-33)
-- CIPHERGURD-1646: GITHUB-20 Permissions views and queries do not work with Mysql57 / only_full_group_by enabled
+- CIPHERGUARD-1863: Remove references to legacy features Category and Tags
+- CIPHERGUARD-1883: Fix wrong usage of the permission entry point viewByAco
+- CIPHERGUARD-1887: Remove the entry point PermissionController::simulateAcoPermissionsAfterChange
+- CIPHERGUARD-1886: Remove the controller component PermissionHelperComponent
+- CIPHERGUARD-1888: Remove the model behavior function PermissionableBehavior::getUsersWithAPermissionSet
+- CIPHERGUARD-1889: Remove references to legacy models and tables (AuthenticationLogs, AuthenticationBlackList, Email, Adress, PhoneNumber)
+- CIPHERGUARD-1890: Clean the Permission model validation functions & augment coverage
+- CIPHERGUARD-1894: Reorganize ACL models tests
+- CIPHERGUARD-1896: Remove references to legacy permission types CREATE and DENY
+- CIPHERGUARD-1511: removed tracking of config file Config/email.php (@BaumannMisys GITHUB-34)
+- CIPHERGUARD-1835: As a user I should be able to create an account with the same username as an account that was previously deleted (@bestlibre GITHUB-33)
+- CIPHERGUARD-1646: GITHUB-20 Permissions views and queries do not work with Mysql57 / only_full_group_by enabled
 
 ## [1.3.2] - 2017-01-16
 ### Fixed
-- CIPHERGURD-811: Error message look and feel is not consistent on register / recover
+- CIPHERGUARD-811: Error message look and feel is not consistent on register / recover
 
 ## [1.3.1] - 2017-01-03
 ### Fixed
-- CIPHERGURD-1758: As LU sharing a password I should be able to filter users based on first name and last name
-- CIPHERGURD-1779: Remove debug statement
-- CIPHERGURD-1585: As AN I should be allowed to register if my lastname or firstname are 2 chars in length
-- CIPHERGURD-1783: Form validation and translation: malformed error messages
-- CIPHERGURD-1619: As AP I should not be allowed to recover my account if I have not completed the setup first
-- CIPHERGURD-1767: As a AD installing cipherguard I should be told if webroot/img/public is not writable.
-- CIPHERGURD-1793: Upgrade to CakePHP v2.9.4
-- CIPHERGURD-1784: GITHUB-29 PHP7 compatibility issue in migration console tasks
-- CIPHERGURD-1790: Fixed update context sent by anonymous usage statistics
+- CIPHERGUARD-1758: As LU sharing a password I should be able to filter users based on first name and last name
+- CIPHERGUARD-1779: Remove debug statement
+- CIPHERGUARD-1585: As AN I should be allowed to register if my lastname or firstname are 2 chars in length
+- CIPHERGUARD-1783: Form validation and translation: malformed error messages
+- CIPHERGUARD-1619: As AP I should not be allowed to recover my account if I have not completed the setup first
+- CIPHERGUARD-1767: As a AD installing cipherguard I should be told if webroot/img/public is not writable.
+- CIPHERGUARD-1793: Upgrade to CakePHP v2.9.4
+- CIPHERGUARD-1784: GITHUB-29 PHP7 compatibility issue in migration console tasks
+- CIPHERGUARD-1790: Fixed update context sent by anonymous usage statistics
 
 ## [1.3.0] - 2016-11-25
 ### Fixed
-- CIPHERGURD-1721: SSL detection not working in healthcheck
-- CIPHERGURD-1708: Accept JSON data content type for HTTP PUT during setup
+- CIPHERGUARD-1721: SSL detection not working in healthcheck
+- CIPHERGUARD-1708: Accept JSON data content type for HTTP PUT during setup
 
 ### Added
-- CIPHERGURD-1725: Misc changes for Chrome support
-- CIPHERGURD-1726: Implement anonymous usage data
+- CIPHERGUARD-1725: Misc changes for Chrome support
+- CIPHERGUARD-1726: Implement anonymous usage data
 
 ## [1.2.1] - 2016-10-19
 ### Fixed
-- CIPHERGURD-1719: GITHUB-14 The "." is not allowed in email address field
-- CIPHERGURD-1525: Remove unused controllers and components
-- CIPHERGURD-1718: Tidy up readme and contribution guidelines
+- CIPHERGUARD-1719: GITHUB-14 The "." is not allowed in email address field
+- CIPHERGUARD-1525: Remove unused controllers and components
+- CIPHERGUARD-1718: Tidy up readme and contribution guidelines
 
 ## [1.2.0] - 2016-10-17
 ### Added
-- CIPHERGURD-1706: GITHUB-18 Resource Description length is too short, should be 10K characters
-- CIPHERGURD-1658: GITHUB-18 Resource URI length is too short, should be 1024 characters
-- CIPHERGURD-1637: GITHUB-14 The "+" is not allowed in the email address field while adding a new user
-- CIPHERGURD-1525: Test coverage for SetupControllerTest & CakeErrorController
-- CIPHERGURD-1694: Default config change: debug should be set to 0
-- CIPHERGURD-1660: Refactoring to simplify Chrome plugin development
-- CIPHERGURD-1649: Adjusted coveralls markup
-- CIPHERGURD-1648: Upgrade to Cakephp 2.9.1
-- CIPHERGURD-1250: Contribution guidelines
+- CIPHERGUARD-1706: GITHUB-18 Resource Description length is too short, should be 10K characters
+- CIPHERGUARD-1658: GITHUB-18 Resource URI length is too short, should be 1024 characters
+- CIPHERGUARD-1637: GITHUB-14 The "+" is not allowed in the email address field while adding a new user
+- CIPHERGUARD-1525: Test coverage for SetupControllerTest & CakeErrorController
+- CIPHERGUARD-1694: Default config change: debug should be set to 0
+- CIPHERGUARD-1660: Refactoring to simplify Chrome plugin development
+- CIPHERGUARD-1649: Adjusted coveralls markup
+- CIPHERGUARD-1648: Upgrade to Cakephp 2.9.1
+- CIPHERGUARD-1250: Contribution guidelines
 
 ### Fixed
-- CIPHERGURD-1700: Event names should stay backward compatible
-- CIPHERGURD-1668: Remove GPGAuth debug count
-- CIPHERGURD-1673: Restore avatars during quick install
+- CIPHERGUARD-1700: Event names should stay backward compatible
+- CIPHERGUARD-1668: Remove GPGAuth debug count
+- CIPHERGUARD-1673: Restore avatars during quick install
 
 ## [1.1.0] - 2016-08-09
 ### Added
-- CIPHERGURD-1124: As LU on user workspace I should be able to see the last logged in date of a user.
-- CIPHERGURD-1216: As LU I should be able to sort the tableview in passwords workspace
-- CIPHERGURD-1217: As LU I should be able to sort the tableview in users workspace.
-- CIPHERGURD-1535: Fix mysql 5.7 schema issues and improve compatibility.
-- CIPHERGURD-1633: Travis and Coveralls integration.
-- CIPHERGURD-1597: Implemented schema versioning and migration tool.
+- CIPHERGUARD-1124: As LU on user workspace I should be able to see the last logged in date of a user.
+- CIPHERGUARD-1216: As LU I should be able to sort the tableview in passwords workspace
+- CIPHERGUARD-1217: As LU I should be able to sort the tableview in users workspace.
+- CIPHERGUARD-1535: Fix mysql 5.7 schema issues and improve compatibility.
+- CIPHERGUARD-1633: Travis and Coveralls integration.
+- CIPHERGUARD-1597: Implemented schema versioning and migration tool.
 
 ### Fixed
-- CIPHERGURD-1604: As a AD I should be able to see the healthcheck page when debug is set to 0
-- CIPHERGURD-1525: Misc unit test code coverage & phpcs cleanup
-- CIPHERGURD-1653: After migration, Gpgkey.uid should be sanitized in DB.
-- CIPHERGURD-1634: Authentication logs are moved in each authentication stage.
-- CIPHERGURD-1383: Cleanup cakephp config & prevent future regressions like CIPHERGURD-1621 with a default.
-- CIPHERGURD-1486: After deleting a user, I should be able to recreate a user with the same username.
-- CIPHERGURD-1620: Duplicate users in the list when selecting a user and using filters.
-- CIPHERGURD-1652: As LU I cannot use cipherguard with long public key.
+- CIPHERGUARD-1604: As a AD I should be able to see the healthcheck page when debug is set to 0
+- CIPHERGUARD-1525: Misc unit test code coverage & phpcs cleanup
+- CIPHERGUARD-1653: After migration, Gpgkey.uid should be sanitized in DB.
+- CIPHERGUARD-1634: Authentication logs are moved in each authentication stage.
+- CIPHERGUARD-1383: Cleanup cakephp config & prevent future regressions like CIPHERGUARD-1621 with a default.
+- CIPHERGUARD-1486: After deleting a user, I should be able to recreate a user with the same username.
+- CIPHERGUARD-1620: Duplicate users in the list when selecting a user and using filters.
+- CIPHERGUARD-1652: As LU I cannot use cipherguard with long public key.
 
 ### Tests
-- CIPHERGURD-1642: Increased selenium tests coverage when browser is restarted.
-- CIPHERGURD-1643: Increased selenium tests coverage when cipherguard tab is closed and restored.
+- CIPHERGUARD-1642: Increased selenium tests coverage when browser is restarted.
+- CIPHERGUARD-1643: Increased selenium tests coverage when cipherguard tab is closed and restored.
 
 
 ## [1.0.14] - 2016-07-06
 ### Fixed
-- CIPHERGURD-1616: Fixed bad merge during the previous release.
-- CIPHERGURD-1599: GITHUB-10 cipherguard.js requesting wrong path for config.json.
+- CIPHERGUARD-1616: Fixed bad merge during the previous release.
+- CIPHERGUARD-1599: GITHUB-10 cipherguard.js requesting wrong path for config.json.
 
 ## [1.0.13] - 2016-06-30
 ### Fixed
-- CIPHERGURD-1605: Set::extract to Hash::extract refactoring regression.
-- CIPHERGURD-1601: ControllerLog Model should support IVP6 addresses.
-- CIPHERGURD-1366: Worker bug when multiple cipherguard instances are open in multiple windows.
-- CIPHERGURD-1590: Styleguide bump to v1.0.38.
-- CIPHERGURD-1613: As a user losing access to a password I selected, I shouldn't encounter an error.
-- CIPHERGURD-1569: Cleanup: remove SetupController::ping.
+- CIPHERGUARD-1605: Set::extract to Hash::extract refactoring regression.
+- CIPHERGUARD-1601: ControllerLog Model should support IVP6 addresses.
+- CIPHERGUARD-1366: Worker bug when multiple cipherguard instances are open in multiple windows.
+- CIPHERGUARD-1590: Styleguide bump to v1.0.38.
+- CIPHERGUARD-1613: As a user losing access to a password I selected, I shouldn't encounter an error.
+- CIPHERGUARD-1569: Cleanup: remove SetupController::ping.
 
 ### Added
-- CIPHERGURD-1077: As a LU searching for a password (or a user) search results should filter as I type.
-- CIPHERGURD-1588: As AN it should be possible to recover a cipherguard account on a new device.
+- CIPHERGUARD-1077: As a LU searching for a password (or a user) search results should filter as I type.
+- CIPHERGUARD-1588: As AN it should be possible to recover a cipherguard account on a new device.
 
 ## [1.0.12] - 2016-05-31
 ### Fixed
-- CIPHERGURD-1439: Email is sent as anonymous when a user is created from the console.
-- CIPHERGURD-1509: As LU, when a password is shared with me in read only, I should not see the delete menu available in more.
-- CIPHERGURD-1407: As LU, there is no visual feedback when I upload a picture and that the process is in progress.
-- CIPHERGURD-1579: Segfault at the end of setup when trying to display login form.
-- CIPHERGURD-1576: Fixed Hash component warning message in EmailQueue.
-- CIPHERGURD-1322: Insertion of comments in unittest dataset display an error in the console.
-- CIPHERGURD-1234: Authentication token used for account registration expiracy check.
+- CIPHERGUARD-1439: Email is sent as anonymous when a user is created from the console.
+- CIPHERGUARD-1509: As LU, when a password is shared with me in read only, I should not see the delete menu available in more.
+- CIPHERGUARD-1407: As LU, there is no visual feedback when I upload a picture and that the process is in progress.
+- CIPHERGUARD-1579: Segfault at the end of setup when trying to display login form.
+- CIPHERGUARD-1576: Fixed Hash component warning message in EmailQueue.
+- CIPHERGUARD-1322: Insertion of comments in unittest dataset display an error in the console.
+- CIPHERGUARD-1234: Authentication token used for account registration expiracy check.
 
 ### Added
-- CIPHERGURD-1572: As LU, I should be able to see which users a password is shared with directly from the sidebar.
+- CIPHERGUARD-1572: As LU, I should be able to see which users a password is shared with directly from the sidebar.
 
 ## [1.0.11] - 2016-05-16
 ### Added
-- CIPHERGURD-1388: As a user I should receive an email notification when a password is updated.
-- CIPHERGURD-1389: As a user I should receive an email notification when a password is created.
-- CIPHERGURD-1390: As a user I should receive an email notification when a password is deleted.
-- CIPHERGURD-1544: As a user I should receive an email notification when someone comments on a password.
-- CIPHERGURD-1221: API documentation with Swagger (Part I: models).
+- CIPHERGUARD-1388: As a user I should receive an email notification when a password is updated.
+- CIPHERGUARD-1389: As a user I should receive an email notification when a password is created.
+- CIPHERGUARD-1390: As a user I should receive an email notification when a password is deleted.
+- CIPHERGUARD-1544: As a user I should receive an email notification when someone comments on a password.
+- CIPHERGUARD-1221: API documentation with Swagger (Part I: models).
 
 ### Fixed
-- CIPHERGURD-1094: Frontend : Server errors happening during a request should give a visual feedback.
-- CIPHERGURD-1438: Retry button is not working at setup first step (when user doesn't have the plugin installed).
-- CIPHERGURD-1564: As a sysop, installing cipherguard with quiet mode should not output any information.
-- CIPHERGURD-1434: Wordsmithing: rename master password to passphrase.
+- CIPHERGUARD-1094: Frontend : Server errors happening during a request should give a visual feedback.
+- CIPHERGUARD-1438: Retry button is not working at setup first step (when user doesn't have the plugin installed).
+- CIPHERGUARD-1564: As a sysop, installing cipherguard with quiet mode should not output any information.
+- CIPHERGUARD-1434: Wordsmithing: rename master password to passphrase.
 
 ## [1.0.10] - 2016-05-03
 ### Fixed
-- CIPHERGURD-1502: String is depracated in Cakephp since version 2.7 use CakeText instead.
-- CIPHERGURD-1466: GET /auth/verify.json Content-Type should not be text/html but JSON.
-- CIPHERGURD-1443: Copy to clipboard icon is misleading
+- CIPHERGUARD-1502: String is depracated in Cakephp since version 2.7 use CakeText instead.
+- CIPHERGUARD-1466: GET /auth/verify.json Content-Type should not be text/html but JSON.
+- CIPHERGUARD-1443: Copy to clipboard icon is misleading
 
 ### Changed
-- CIPHERGURD-1419: Cleanup config.json for js client and remove useless config.
-- CIPHERGURD-1514: By default cipherguard app should not be indexed by search engines.
-- CIPHERGURD-1474: API: Upgrade cakephp to 2.8.3.
-- CIPHERGURD-1288: As an AD during install I should have status page to help me.
+- CIPHERGUARD-1419: Cleanup config.json for js client and remove useless config.
+- CIPHERGUARD-1514: By default cipherguard app should not be indexed by search engines.
+- CIPHERGUARD-1474: API: Upgrade cakephp to 2.8.3.
+- CIPHERGUARD-1288: As an AD during install I should have status page to help me.
 
 ## [1.0.9] - 2016-04-25
 ### Fixed
-- CIPHERGURD-1505: As AP, I should not get an error during setup if my key has been generated on a system that is not exactly on time.
-- CIPHERGURD-1457: As LU, I should not be able to create a resource without password.
-- CIPHERGURD-1441: Wordsmithing: a parenthesis is missing on set a security token step.
-- CIPHERGURD-1158: Remove all errors (plugin/client) from the browser console at cipherguard start.
+- CIPHERGUARD-1505: As AP, I should not get an error during setup if my key has been generated on a system that is not exactly on time.
+- CIPHERGUARD-1457: As LU, I should not be able to create a resource without password.
+- CIPHERGUARD-1441: Wordsmithing: a parenthesis is missing on set a security token step.
+- CIPHERGUARD-1158: Remove all errors (plugin/client) from the browser console at cipherguard start.
 
 ### Changed
-- CIPHERGURD-1456: When generating a password automatically it only generates a "fair" level password.
-- CIPHERGURD-1495: Cipherguard: update installation instructions in README file.
+- CIPHERGUARD-1456: When generating a password automatically it only generates a "fair" level password.
+- CIPHERGUARD-1495: Cipherguard: update installation instructions in README file.
 
 ## [1.0.8] - 2016-04-15
 ### Fixed
-- CIPHERGURD-1445: As a LU viewing someone else comment I should not see the delete comment button.
-- CIPHERGURD-1402: As LU, In the comment thread I should not see a hyperlink on people's name that leads to nowhere.
+- CIPHERGUARD-1445: As a LU viewing someone else comment I should not see the delete comment button.
+- CIPHERGUARD-1402: As LU, In the comment thread I should not see a hyperlink on people's name that leads to nowhere.
 
 ## [1.0.7] - 2016-04-04
 ### Added
-- CIPHERGURD-1223: Implemented state for empty password workspace.
+- CIPHERGUARD-1223: Implemented state for empty password workspace.
 
 ### Changed
-- CIPHERGURD-1450: Change information button icon. Eye becomes information.
+- CIPHERGUARD-1450: Change information button icon. Eye becomes information.
 
 ## [1.0.6] - 2016-03-28
 ### Added
-- CIPHERGURD-1343: Confirmation email link opened in chrome does not explain that cipherguard works only in firefox.
-- CIPHERGURD-1416: Improved coverage : API / Token should not be disabled when validateAccount fails.
-- CIPHERGURD-1444: Slack plugin for cipherguard to keep track of demo registrations.
+- CIPHERGUARD-1343: Confirmation email link opened in chrome does not explain that cipherguard works only in firefox.
+- CIPHERGUARD-1416: Improved coverage : API / Token should not be disabled when validateAccount fails.
+- CIPHERGUARD-1444: Slack plugin for cipherguard to keep track of demo registrations.
 
 ### Fixed
-- CIPHERGURD-1395: Regression : As LU I should not be able to select two password.
-- CIPHERGURD-1396: As LU I should not see a mix of two dashboards if I click quickly on the users and passwords menu links.
-- CIPHERGURD-1406: Space missing between first name and last name in registration email.
+- CIPHERGUARD-1395: Regression : As LU I should not be able to select two password.
+- CIPHERGUARD-1396: As LU I should not see a mix of two dashboards if I click quickly on the users and passwords menu links.
+- CIPHERGUARD-1406: Space missing between first name and last name in registration email.
 
 ## [1.0.5] - 2016-03-21
 ### Added
-- CIPHERGURD-1384: Admin user should be registered during installation.
-- CIPHERGURD-1310: As user whose account is deleted I should get feedback on login.
+- CIPHERGUARD-1384: Admin user should be registered during installation.
+- CIPHERGUARD-1310: As user whose account is deleted I should get feedback on login.
 
 ### Fixed
-- CIPHERGURD-1415: Please register links are broken for AP.
-- CIPHERGURD-1157: An error page should not include any scripts.
-- CIPHERGURD-1243: I should see an error when I try to upload an avatar with a wrong file type / size
+- CIPHERGUARD-1415: Please register links are broken for AP.
+- CIPHERGUARD-1157: An error page should not include any scripts.
+- CIPHERGUARD-1243: I should see an error when I try to upload an avatar with a wrong file type / size
 
 # Terminology
 - AN: Anonymous user
@@ -1583,90 +2095,90 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - AP: User with plugin installed
 - AD: Admin
 
-[Unreleased]: https://github.com/khulnasoft/cipherguard_api/compare/v4.2.0...HEAD
-[4.2.0]: https://github.com/khulnasoft/cipherguard_api/compare/v4.1.1...v4.2.0
-[4.1.1]: https://github.com/khulnasoft/cipherguard_api/compare/v4.1.0...v4.1.1
-[4.1.0]: https://github.com/khulnasoft/cipherguard_api/compare/v4.0.2...v4.1.0
-[4.0.2]: https://github.com/khulnasoft/cipherguard_api/compare/v4.0.1...v4.0.2
-[4.0.1]: https://github.com/khulnasoft/cipherguard_api/compare/v4.0.0...v4.0.1
-[4.0.0]: https://github.com/khulnasoft/cipherguard_api/compare/v3.12.2...v4.0.0
-[3.12.2]: https://github.com/khulnasoft/cipherguard_api/compare/v3.12.0...v3.12.2
-[3.12.0]: https://github.com/khulnasoft/cipherguard_api/compare/v3.11.1...v3.12.0
-[3.11.1]: https://github.com/khulnasoft/cipherguard_api/compare/v3.11.0...v3.11.1
-[3.11.0]: https://github.com/khulnasoft/cipherguard_api/compare/v3.10.0...v3.11.0
-[3.10.0]: https://github.com/khulnasoft/cipherguard_api/compare/v3.9.0...v3.10.0
-[3.9.0]: https://github.com/khulnasoft/cipherguard_api/compare/v3.8.3...v3.9.0
-[3.8.3]: https://github.com/khulnasoft/cipherguard_api/compare/v3.8.1...v3.8.3
-[3.8.1]: https://github.com/khulnasoft/cipherguard_api/compare/v3.8.0...v3.8.1
-[3.8.0]: https://github.com/khulnasoft/cipherguard_api/compare/v3.7.3...v3.8.0
-[3.7.3]: https://github.com/khulnasoft/cipherguard_api/compare/v3.7.2...v3.7.3
-[3.7.2]: https://github.com/khulnasoft/cipherguard_api/compare/v3.7.1...v3.7.2
-[3.7.1]: https://github.com/khulnasoft/cipherguard_api/compare/v3.7.0...v3.7.1
-[3.7.0]: https://github.com/khulnasoft/cipherguard_api/compare/v3.6.0...v3.7.0
-[3.6.0]: https://github.com/khulnasoft/cipherguard_api/compare/v3.5.0...v3.6.0
-[3.5.0]: https://github.com/khulnasoft/cipherguard_api/compare/v3.4.0...v3.5.0
-[3.4.0]: https://github.com/khulnasoft/cipherguard_api/compare/v3.3.1...v3.4.0
-[3.3.1]: https://github.com/khulnasoft/cipherguard_api/compare/v3.3.0...v3.3.1
-[3.3.0]: https://github.com/khulnasoft/cipherguard_api/compare/v3.2.1...v3.3.0
-[3.2.1]: https://github.com/khulnasoft/cipherguard_api/compare/v3.2.0...v3.2.1
-[3.2.0]: https://github.com/khulnasoft/cipherguard_api/compare/v3.1.0...v3.2.0
-[3.1.0]: https://github.com/khulnasoft/cipherguard_api/compare/v3.0.2...v3.1.0
-[3.0.2]: https://github.com/khulnasoft/cipherguard_api/compare/v3.0.1...v3.0.2
-[3.0.1]: https://github.com/khulnasoft/cipherguard_api/compare/v3.0.0...v3.0.1
-[3.0.0]: https://github.com/khulnasoft/cipherguard_api/compare/v2.13.5...v3.0.0
-[2.13.5]: https://github.com/khulnasoft/cipherguard_api/compare/v2.13.1...v2.13.5
-[2.13.1]: https://github.com/khulnasoft/cipherguard_api/compare/v2.13.0...v2.13.1
-[2.13.0]: https://github.com/khulnasoft/cipherguard_api/compare/v2.12.1...v2.13.0
-[2.12.1]: https://github.com/khulnasoft/cipherguard_api/compare/v2.12.0...v2.12.1
-[2.12.0]: https://github.com/khulnasoft/cipherguard_api/compare/v2.11.0...v2.12.0
-[2.11.0]: https://github.com/khulnasoft/cipherguard_api/compare/v2.10.0...v2.11.0
-[2.10.0]: https://github.com/khulnasoft/cipherguard_api/compare/v2.9.0...v2.10.0
-[2.9.0]: https://github.com/khulnasoft/cipherguard_api/compare/v2.8.4...v2.9.0
-[2.8.4]: https://github.com/khulnasoft/cipherguard_api/compare/v2.8.3...v2.8.4
-[2.8.3]: https://github.com/khulnasoft/cipherguard_api/compare/v2.8.2...v2.8.3
-[2.8.2]: https://github.com/khulnasoft/cipherguard_api/compare/v2.8.1...v2.8.2
-[2.8.1]: https://github.com/khulnasoft/cipherguard_api/compare/v2.8.0...v2.8.1
-[2.8.0]: https://github.com/khulnasoft/cipherguard_api/compare/v2.7.1...v2.8.0
-[2.7.1]: https://github.com/khulnasoft/cipherguard_api/compare/v2.7.0...v2.7.1
-[2.7.0]: https://github.com/khulnasoft/cipherguard_api/compare/v2.5.0...v2.7.0
-[2.5.0]: https://github.com/khulnasoft/cipherguard_api/compare/v2.4.0...v2.5.0
-[2.4.0]: https://github.com/khulnasoft/cipherguard_api/compare/v2.3.0...v2.4.0
-[2.3.0]: https://github.com/khulnasoft/cipherguard_api/compare/v2.2.0...v2.3.0
-[2.2.0]: https://github.com/khulnasoft/cipherguard_api/compare/v2.1.0...v2.2.0
-[2.1.0]: https://github.com/khulnasoft/cipherguard_api/compare/v2.0.7...v2.1.0
-[2.0.7]: https://github.com/khulnasoft/cipherguard_api/compare/v2.0.5...v2.0.7
-[2.0.5]: https://github.com/khulnasoft/cipherguard_api/compare/v2.0.4...v2.0.5
-[2.0.4]: https://github.com/khulnasoft/cipherguard_api/compare/v2.0.3...v2.0.4
-[2.0.3]: https://github.com/khulnasoft/cipherguard_api/compare/v2.0.2...v2.0.3
-[2.0.2]: https://github.com/khulnasoft/cipherguard_api/compare/v2.0.1...v2.0.2
-[2.0.1]: https://github.com/khulnasoft/cipherguard_api/compare/v2.0.0...v2.0.1
-[2.0.0]: https://github.com/khulnasoft/cipherguard_api/compare/v2.0.0-rc2...v2.0.0
-[2.0.0-rc2]: https://github.com/khulnasoft/cipherguard_api/compare/v2.0.0-rc1...v2.0.0-rc2
-[2.0.0-rc1]: https://github.com/khulnasoft/cipherguard_api/compare/v1.6.9...v2.0.0-rc1
-[1.6.9]: https://github.com/khulnasoft/cipherguard_api/compare/v1.6.5...v1.6.9
-[1.6.5]: https://github.com/khulnasoft/cipherguard_api/compare/v1.6.4...v1.6.5
-[1.6.4]: https://github.com/khulnasoft/cipherguard_api/compare/v1.6.3...v1.6.4
-[1.6.3]: https://github.com/khulnasoft/cipherguard_api/compare/v1.6.2...v1.6.3
-[1.6.2]: https://github.com/khulnasoft/cipherguard_api/compare/v1.6.1...v1.6.2
-[1.6.1]: https://github.com/khulnasoft/cipherguard_api/compare/v1.6.0...v1.6.1
-[1.6.0]: https://github.com/khulnasoft/cipherguard_api/compare/v1.5.1...v1.6.0
-[1.5.1]: https://github.com/khulnasoft/cipherguard_api/compare/v1.5.0...v1.5.1
-[1.5.0]: https://github.com/khulnasoft/cipherguard_api/compare/v1.4.0...v1.5.0
-[1.4.0]: https://github.com/khulnasoft/cipherguard_api/compare/v1.3.2...v1.4.0
-[1.3.2]: https://github.com/khulnasoft/cipherguard_api/compare/v1.3.1...v1.3.2
-[1.3.1]: https://github.com/khulnasoft/cipherguard_api/compare/v1.3.0...v1.3.1
-[1.3.0]: https://github.com/khulnasoft/cipherguard_api/compare/v1.2.1...v1.3.0
-[1.2.1]: https://github.com/khulnasoft/cipherguard_api/compare/v1.2.0...v1.2.1
-[1.2.0]: https://github.com/khulnasoft/cipherguard_api/compare/v1.1.1...v1.2.0
-[1.1.1]: https://github.com/khulnasoft/cipherguard_api/compare/v1.1.0...v1.1.1
-[1.1.0]: https://github.com/khulnasoft/cipherguard_api/compare/v1.0.14...v1.1.0
-[1.0.14]: https://github.com/khulnasoft/cipherguard_api/compare/v1.0.13...v1.0.14
-[1.0.13]: https://github.com/khulnasoft/cipherguard_api/compare/v1.0.12...v1.0.13
-[1.0.12]: https://github.com/khulnasoft/cipherguard_api/compare/v1.0.11...v1.0.12
-[1.0.11]: https://github.com/khulnasoft/cipherguard_api/compare/v1.0.10...v1.0.11
-[1.0.10]: https://github.com/khulnasoft/cipherguard_api/compare/v1.0.9...v1.0.10
-[1.0.9]: https://github.com/khulnasoft/cipherguard_api/compare/v1.0.8...v1.0.9
-[1.0.8]: https://github.com/khulnasoft/cipherguard_api/compare/v1.0.7...v1.0.8
-[1.0.7]: https://github.com/khulnasoft/cipherguard_api/compare/v1.0.6...v1.0.7
-[1.0.6]: https://github.com/khulnasoft/cipherguard_api/compare/v1.0.5...v1.0.6
-[1.0.5]: https://github.com/khulnasoft/cipherguard_api/compare/6a92766...v1.0.5
+[Unreleased]: https://github.com/cipherguard/cipherguard_api/compare/v4.2.0...HEAD
+[4.2.0]: https://github.com/cipherguard/cipherguard_api/compare/v4.1.1...v4.2.0
+[4.1.1]: https://github.com/cipherguard/cipherguard_api/compare/v4.1.0...v4.1.1
+[4.1.0]: https://github.com/cipherguard/cipherguard_api/compare/v4.0.2...v4.1.0
+[4.0.2]: https://github.com/cipherguard/cipherguard_api/compare/v4.0.1...v4.0.2
+[4.0.1]: https://github.com/cipherguard/cipherguard_api/compare/v4.0.0...v4.0.1
+[4.0.0]: https://github.com/cipherguard/cipherguard_api/compare/v3.12.2...v4.0.0
+[3.12.2]: https://github.com/cipherguard/cipherguard_api/compare/v3.12.0...v3.12.2
+[3.12.0]: https://github.com/cipherguard/cipherguard_api/compare/v3.11.1...v3.12.0
+[3.11.1]: https://github.com/cipherguard/cipherguard_api/compare/v3.11.0...v3.11.1
+[3.11.0]: https://github.com/cipherguard/cipherguard_api/compare/v3.10.0...v3.11.0
+[3.10.0]: https://github.com/cipherguard/cipherguard_api/compare/v3.9.0...v3.10.0
+[3.9.0]: https://github.com/cipherguard/cipherguard_api/compare/v3.8.3...v3.9.0
+[3.8.3]: https://github.com/cipherguard/cipherguard_api/compare/v3.8.1...v3.8.3
+[3.8.1]: https://github.com/cipherguard/cipherguard_api/compare/v3.8.0...v3.8.1
+[3.8.0]: https://github.com/cipherguard/cipherguard_api/compare/v3.7.3...v3.8.0
+[3.7.3]: https://github.com/cipherguard/cipherguard_api/compare/v3.7.2...v3.7.3
+[3.7.2]: https://github.com/cipherguard/cipherguard_api/compare/v3.7.1...v3.7.2
+[3.7.1]: https://github.com/cipherguard/cipherguard_api/compare/v3.7.0...v3.7.1
+[3.7.0]: https://github.com/cipherguard/cipherguard_api/compare/v3.6.0...v3.7.0
+[3.6.0]: https://github.com/cipherguard/cipherguard_api/compare/v3.5.0...v3.6.0
+[3.5.0]: https://github.com/cipherguard/cipherguard_api/compare/v3.4.0...v3.5.0
+[3.4.0]: https://github.com/cipherguard/cipherguard_api/compare/v3.3.1...v3.4.0
+[3.3.1]: https://github.com/cipherguard/cipherguard_api/compare/v3.3.0...v3.3.1
+[3.3.0]: https://github.com/cipherguard/cipherguard_api/compare/v3.2.1...v3.3.0
+[3.2.1]: https://github.com/cipherguard/cipherguard_api/compare/v3.2.0...v3.2.1
+[3.2.0]: https://github.com/cipherguard/cipherguard_api/compare/v3.1.0...v3.2.0
+[3.1.0]: https://github.com/cipherguard/cipherguard_api/compare/v3.0.2...v3.1.0
+[3.0.2]: https://github.com/cipherguard/cipherguard_api/compare/v3.0.1...v3.0.2
+[3.0.1]: https://github.com/cipherguard/cipherguard_api/compare/v3.0.0...v3.0.1
+[3.0.0]: https://github.com/cipherguard/cipherguard_api/compare/v2.13.5...v3.0.0
+[2.13.5]: https://github.com/cipherguard/cipherguard_api/compare/v2.13.1...v2.13.5
+[2.13.1]: https://github.com/cipherguard/cipherguard_api/compare/v2.13.0...v2.13.1
+[2.13.0]: https://github.com/cipherguard/cipherguard_api/compare/v2.12.1...v2.13.0
+[2.12.1]: https://github.com/cipherguard/cipherguard_api/compare/v2.12.0...v2.12.1
+[2.12.0]: https://github.com/cipherguard/cipherguard_api/compare/v2.11.0...v2.12.0
+[2.11.0]: https://github.com/cipherguard/cipherguard_api/compare/v2.10.0...v2.11.0
+[2.10.0]: https://github.com/cipherguard/cipherguard_api/compare/v2.9.0...v2.10.0
+[2.9.0]: https://github.com/cipherguard/cipherguard_api/compare/v2.8.4...v2.9.0
+[2.8.4]: https://github.com/cipherguard/cipherguard_api/compare/v2.8.3...v2.8.4
+[2.8.3]: https://github.com/cipherguard/cipherguard_api/compare/v2.8.2...v2.8.3
+[2.8.2]: https://github.com/cipherguard/cipherguard_api/compare/v2.8.1...v2.8.2
+[2.8.1]: https://github.com/cipherguard/cipherguard_api/compare/v2.8.0...v2.8.1
+[2.8.0]: https://github.com/cipherguard/cipherguard_api/compare/v2.7.1...v2.8.0
+[2.7.1]: https://github.com/cipherguard/cipherguard_api/compare/v2.7.0...v2.7.1
+[2.7.0]: https://github.com/cipherguard/cipherguard_api/compare/v2.5.0...v2.7.0
+[2.5.0]: https://github.com/cipherguard/cipherguard_api/compare/v2.4.0...v2.5.0
+[2.4.0]: https://github.com/cipherguard/cipherguard_api/compare/v2.3.0...v2.4.0
+[2.3.0]: https://github.com/cipherguard/cipherguard_api/compare/v2.2.0...v2.3.0
+[2.2.0]: https://github.com/cipherguard/cipherguard_api/compare/v2.1.0...v2.2.0
+[2.1.0]: https://github.com/cipherguard/cipherguard_api/compare/v2.0.7...v2.1.0
+[2.0.7]: https://github.com/cipherguard/cipherguard_api/compare/v2.0.5...v2.0.7
+[2.0.5]: https://github.com/cipherguard/cipherguard_api/compare/v2.0.4...v2.0.5
+[2.0.4]: https://github.com/cipherguard/cipherguard_api/compare/v2.0.3...v2.0.4
+[2.0.3]: https://github.com/cipherguard/cipherguard_api/compare/v2.0.2...v2.0.3
+[2.0.2]: https://github.com/cipherguard/cipherguard_api/compare/v2.0.1...v2.0.2
+[2.0.1]: https://github.com/cipherguard/cipherguard_api/compare/v2.0.0...v2.0.1
+[2.0.0]: https://github.com/cipherguard/cipherguard_api/compare/v2.0.0-rc2...v2.0.0
+[2.0.0-rc2]: https://github.com/cipherguard/cipherguard_api/compare/v2.0.0-rc1...v2.0.0-rc2
+[2.0.0-rc1]: https://github.com/cipherguard/cipherguard_api/compare/v1.6.9...v2.0.0-rc1
+[1.6.9]: https://github.com/cipherguard/cipherguard_api/compare/v1.6.5...v1.6.9
+[1.6.5]: https://github.com/cipherguard/cipherguard_api/compare/v1.6.4...v1.6.5
+[1.6.4]: https://github.com/cipherguard/cipherguard_api/compare/v1.6.3...v1.6.4
+[1.6.3]: https://github.com/cipherguard/cipherguard_api/compare/v1.6.2...v1.6.3
+[1.6.2]: https://github.com/cipherguard/cipherguard_api/compare/v1.6.1...v1.6.2
+[1.6.1]: https://github.com/cipherguard/cipherguard_api/compare/v1.6.0...v1.6.1
+[1.6.0]: https://github.com/cipherguard/cipherguard_api/compare/v1.5.1...v1.6.0
+[1.5.1]: https://github.com/cipherguard/cipherguard_api/compare/v1.5.0...v1.5.1
+[1.5.0]: https://github.com/cipherguard/cipherguard_api/compare/v1.4.0...v1.5.0
+[1.4.0]: https://github.com/cipherguard/cipherguard_api/compare/v1.3.2...v1.4.0
+[1.3.2]: https://github.com/cipherguard/cipherguard_api/compare/v1.3.1...v1.3.2
+[1.3.1]: https://github.com/cipherguard/cipherguard_api/compare/v1.3.0...v1.3.1
+[1.3.0]: https://github.com/cipherguard/cipherguard_api/compare/v1.2.1...v1.3.0
+[1.2.1]: https://github.com/cipherguard/cipherguard_api/compare/v1.2.0...v1.2.1
+[1.2.0]: https://github.com/cipherguard/cipherguard_api/compare/v1.1.1...v1.2.0
+[1.1.1]: https://github.com/cipherguard/cipherguard_api/compare/v1.1.0...v1.1.1
+[1.1.0]: https://github.com/cipherguard/cipherguard_api/compare/v1.0.14...v1.1.0
+[1.0.14]: https://github.com/cipherguard/cipherguard_api/compare/v1.0.13...v1.0.14
+[1.0.13]: https://github.com/cipherguard/cipherguard_api/compare/v1.0.12...v1.0.13
+[1.0.12]: https://github.com/cipherguard/cipherguard_api/compare/v1.0.11...v1.0.12
+[1.0.11]: https://github.com/cipherguard/cipherguard_api/compare/v1.0.10...v1.0.11
+[1.0.10]: https://github.com/cipherguard/cipherguard_api/compare/v1.0.9...v1.0.10
+[1.0.9]: https://github.com/cipherguard/cipherguard_api/compare/v1.0.8...v1.0.9
+[1.0.8]: https://github.com/cipherguard/cipherguard_api/compare/v1.0.7...v1.0.8
+[1.0.7]: https://github.com/cipherguard/cipherguard_api/compare/v1.0.6...v1.0.7
+[1.0.6]: https://github.com/cipherguard/cipherguard_api/compare/v1.0.5...v1.0.6
+[1.0.5]: https://github.com/cipherguard/cipherguard_api/compare/6a92766...v1.0.5

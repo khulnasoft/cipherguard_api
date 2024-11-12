@@ -25,6 +25,7 @@
             <directory name="plugins/CipherguardCe/EmailDigest/templates/" />
             <directory name="plugins/CipherguardCe/EmailDigest/tests/Fixture/templates/" />
             <directory name="plugins/CipherguardCe/MultiFactorAuthentication/templates/" />
+            <directory name="plugins/CipherguardCe/PasswordExpiry/templates/" />
             <directory name="plugins/CipherguardCe/SelfRegistration/templates/" />
             <directory name="plugins/CipherguardCe/Folders/templates/" />
         </ignoreFiles>

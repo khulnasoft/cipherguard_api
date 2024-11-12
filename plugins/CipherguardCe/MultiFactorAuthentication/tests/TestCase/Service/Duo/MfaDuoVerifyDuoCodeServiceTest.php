@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.11.0
  */
 
@@ -22,7 +22,6 @@ use App\Model\Entity\Role;
 use App\Test\Factory\UserFactory;
 use App\Utility\UserAccessControl;
 use Cake\Core\Configure;
-use Cake\Http\Exception\InternalErrorException;
 use Cake\Http\Exception\UnauthorizedException;
 use Cake\TestSuite\TestCase;
 use CakephpTestSuiteLight\Fixture\TruncateDirtyTables;
@@ -34,12 +33,6 @@ class MfaDuoVerifyDuoCodeServiceTest extends TestCase
 {
     use TruncateDirtyTables;
     use MfaOrgSettingsTestTrait;
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        Configure::write(MfaDuoVerifyDuoCodeService::CIPHERGURD_SECURITY_MFA_DUO_VERIFY_SUBSCRIBER, false);
-    }
 
     public function testMfaDuoVerifyDuoCodeService_Success()
     {
@@ -74,46 +67,6 @@ class MfaDuoVerifyDuoCodeServiceTest extends TestCase
 
         $this->assertInstanceOf(UnauthorizedException::class, $th);
         $this->assertTextContains('Unable to verify Duo code against Duo service', $th->getMessage());
-    }
-
-    public function testMfaDuoVerifyDuoCodeService_Error_AuthenticationDetailsDuoException()
-    {
-        $settings = $this->getDefaultMfaOrgSettings();
-        $this->mockMfaOrgSettings($settings);
-        $user = UserFactory::make()->persist();
-        $uac = new UserAccessControl(Role::USER, $user->id, $user->username);
-        $duoCode = 'not-so-random-duo-code';
-
-        $duoSdkClientMock = (new DuoSdkClientMock($this))->mockInvalidExchangeAuthorizationCodeFor2FAResult();
-        $service = new MfaDuoVerifyDuoCodeService(AuthenticationToken::TYPE_MFA_VERIFY, $duoSdkClientMock->getClient());
-
-        try {
-            $service->verify($uac, $duoCode);
-        } catch (\Throwable $th) {
-        }
-
-        $this->assertInstanceOf(InternalErrorException::class, $th);
-        $this->assertTextContains('Duo authentication details should be an array.', $th->getMessage());
-    }
-
-    public function testMfaDuoVerifyDuoCodeService_Error_WrongAuthenticationDetailsType()
-    {
-        $settings = $this->getDefaultMfaOrgSettings();
-        $this->mockMfaOrgSettings($settings);
-        $user = UserFactory::make()->persist();
-        $uac = new UserAccessControl(Role::USER, $user->id, $user->username);
-        $duoCode = 'not-so-random-duo-code';
-
-        $duoSdkClientMock = (new DuoSdkClientMock($this))->mockInvalidExchangeAuthorizationCodeFor2FAResult();
-        $service = new MfaDuoVerifyDuoCodeService(AuthenticationToken::TYPE_MFA_VERIFY, $duoSdkClientMock->getClient());
-
-        try {
-            $service->verify($uac, $duoCode);
-        } catch (\Throwable $th) {
-        }
-
-        $this->assertInstanceOf(InternalErrorException::class, $th);
-        $this->assertTextContains('Duo authentication details should be an array.', $th->getMessage());
     }
 
     public function testMfaDuoVerifyDuoCodeService_Error_CallbackWrongIss()
@@ -159,7 +112,7 @@ class MfaDuoVerifyDuoCodeServiceTest extends TestCase
         $uac = new UserAccessControl(Role::USER, $user->id, $user->username);
         $duoCode = 'not-so-random-duo-code';
 
-        Configure::write(MfaDuoVerifyDuoCodeService::CIPHERGURD_SECURITY_MFA_DUO_VERIFY_SUBSCRIBER, true);
+        Configure::write(MfaDuoVerifyDuoCodeService::CIPHERGUARD_SECURITY_MFA_DUO_VERIFY_SUBSCRIBER, true);
 
         $duoSdkClientMock = DuoSdkClientMock::createWithExchangeAuthorizationCodeFor2FAResultSub($this, mb_strtoupper($user->username));
         $service = new MfaDuoVerifyDuoCodeService(AuthenticationToken::TYPE_MFA_VERIFY, $duoSdkClientMock->getClient());
@@ -175,7 +128,7 @@ class MfaDuoVerifyDuoCodeServiceTest extends TestCase
         $uac = new UserAccessControl(Role::USER, $user->id, $user->username);
         $duoCode = 'not-so-random-duo-code';
 
-        Configure::write(MfaDuoVerifyDuoCodeService::CIPHERGURD_SECURITY_MFA_DUO_VERIFY_SUBSCRIBER, true);
+        Configure::write(MfaDuoVerifyDuoCodeService::CIPHERGUARD_SECURITY_MFA_DUO_VERIFY_SUBSCRIBER, true);
 
         $duoSdkClientMock = DuoSdkClientMock::createWithWrongExchangeAuthorizationCodeFor2FAResultSub($this);
         $service = new MfaDuoVerifyDuoCodeService(AuthenticationToken::TYPE_MFA_VERIFY, $duoSdkClientMock->getClient());

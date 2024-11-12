@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.13.0
  */
 
@@ -41,6 +41,7 @@ class EmailDigest implements EmailDigestInterface
     private string $content;
     private string $recipient;
     private string $subject;
+    private string $fullBaseUrl;
     /**
      * @var string|null Template to use to compose the email
      */
@@ -152,6 +153,7 @@ class EmailDigest implements EmailDigestInterface
     public function setSubject(string $subject): self
     {
         $this->subject = $subject;
+        $this->addLayoutVar('title', $subject);
 
         return $this;
     }
@@ -204,5 +206,24 @@ class EmailDigest implements EmailDigestInterface
         $this->layoutVars[$name] = $value;
 
         return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setFullBaseUrl(string $fullBaseUrl): self
+    {
+        $this->fullBaseUrl = $fullBaseUrl;
+        $this->addLayoutVar('fullBaseUrl', $fullBaseUrl);
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getFullBaseUrl(): string
+    {
+        return $this->fullBaseUrl;
     }
 }

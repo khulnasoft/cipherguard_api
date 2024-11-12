@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         4.0.0
  */
 namespace App\Command;
@@ -19,6 +19,7 @@ namespace App\Command;
 use App\Error\Exception\ValidationException;
 use App\Model\Entity\AuthenticationToken;
 use App\Model\Entity\User;
+use App\Service\Command\ProcessUserService;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
@@ -30,12 +31,36 @@ use Cake\Routing\Router;
 class RecoverUserCommand extends CipherguardCommand
 {
     /**
+     * @var \App\Service\Command\ProcessUserService
+     */
+    protected ProcessUserService $processUserService;
+
+    /**
+     * @param \App\Service\Command\ProcessUserService $processUserService Process user service.
+     */
+    public function __construct(ProcessUserService $processUserService)
+    {
+        parent::__construct();
+
+        $this->processUserService = $processUserService;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function getCommandDescription(): string
+    {
+        return __('Get an existing account recovery token, or create a new one.');
+    }
+
+    /**
      * @inheritDoc
      */
     public function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
+        $parser = parent::buildOptionParser($parser);
+
         $parser
-            ->setDescription(__('Get an existing account recovery token, or create a new one.'))
             ->addOption('username', [
                 'short' => 'u',
                 'required' => true,
@@ -56,17 +81,18 @@ class RecoverUserCommand extends CipherguardCommand
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
         parent::execute($args, $io);
+
         // Root user is not allowed to execute this command.
-        $this->assertCurrentProcessUser($io);
+        $this->assertCurrentProcessUser($io, $this->processUserService);
 
         $username = $args->getOption('username');
 
-        /** @var \App\Model\Table\UsersTable $usersTable */
-        $usersTable = $this->fetchTable('Users');
+        /** @var \App\Model\Table\UsersTable $UsersTable */
+        $UsersTable = $this->fetchTable('Users');
         /** @var \App\Model\Entity\User|null $user */
-        $user = $usersTable
+        $user = $UsersTable
             ->findByUsername($username)
-            ->find('active')
+            ->find('activeNotDeleted')
             ->find('notDisabled')
             ->first();
         if (is_null($user)) {

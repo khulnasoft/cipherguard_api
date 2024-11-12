@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         2.13.0
  */
 
@@ -52,6 +52,7 @@ class CoreNotificationSettingsDefinition implements EmailNotificationSettingsDef
             ->addField('send_group_user_delete', ['type' => 'boolean', 'default' => true])
             ->addField('send_group_user_update', ['type' => 'boolean', 'default' => true])
             ->addField('send_group_manager_update', ['type' => 'boolean', 'default' => true])
+            ->addField('send_group_manager_requestAddUser', ['type' => 'boolean', 'default' => true])
             ->addField('send_password_create', ['type' => 'boolean', 'default' => false])
             ->addField('send_password_share', ['type' => 'boolean', 'default' => true])
             ->addField('send_password_update', ['type' => 'boolean', 'default' => true])
@@ -92,6 +93,10 @@ class CoreNotificationSettingsDefinition implements EmailNotificationSettingsDef
             ->boolean('send_group_user_delete', __('The send on group user deleted setting should be a boolean.'))
             ->boolean('send_group_user_update', __('The send on group user updated setting should be a boolean.'))
             ->boolean('send_group_manager_update', __('The send on group manager updated setting should be a boolean.'))
+            ->boolean(
+                'send_group_manager_requestAddUser',
+                __('The send on group manager request add user should be a boolean.')
+            )
             ->boolean('send_password_create', __('The send on password created setting should be a boolean.'))
             ->boolean('send_password_share', __('The send on password shared setting should be a boolean.'))
             ->boolean('send_password_update', __('The send on password updated setting should be a boolean.'))

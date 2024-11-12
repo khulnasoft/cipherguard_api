@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 /**
  * Cipherguard ~ Open source password manager for teams
- * Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  *
  * Licensed under GNU Affero General Public License version 3 of the or any later version.
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Khulnasoft Ltd' (https://www.cipherguard.khulnasoft.com)
+ * @copyright     Copyright (c) Cipherguard SA (https://www.cipherguard.github.io)
  * @license       https://opensource.org/licenses/AGPL-3.0 AGPL License
- * @link          https://www.cipherguard.khulnasoft.com Cipherguard(tm)
+ * @link          https://www.cipherguard.github.io Cipherguard(tm)
  * @since         3.6.0
  */
 
@@ -27,7 +27,7 @@ use Cake\I18n\FrozenTime;
  * In a ideal world we should check if a key date is set in the past from 'now'
  * where now is the time of reference of the server. But in practice we
  * allow a next day margin because users had the issue of having keys generated
- * by systems that were ahead of server time. Refs. CIPHERGURD-1505.
+ * by systems that were ahead of server time. Refs. CIPHERGUARD-1505.
  */
 class IsCreationDateInFuturePastValidationRule extends CipherguardValidationRule
 {
